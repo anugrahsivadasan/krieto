@@ -3,6 +3,7 @@ import Footer from "./components/layout/Footer"
 import Home from "./pages/Home"
 // import CursorGlow from "./components/global/CursorGlow"
 import ScrollProgress from "./components/global/ScrollProgress"
+import FloatingWhatsApp from "./components/global/FloatingWhatsApp"
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
 </div>
 
     <Footer />
+    <FloatingWhatsApp/>
     </>
   )
 }
