@@ -11,7 +11,7 @@ function App() {
     {/* <CursorGlow /> */}
   <ScrollProgress />
     <Navbar />
-    <div className="pt-[90px]">
+    <div className="pt-[]">
   <Home />
 </div>
 

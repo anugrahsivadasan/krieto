@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import {initLenis} from "./lib/lenis"
 import "./index.css";
+import "./styles/marquee.css"
 
 initLenis();
 

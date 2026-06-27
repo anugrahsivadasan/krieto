@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Star } from "lucide-react";
-
+import Aurora from "../global/Aurora";
 const Hero = () => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -28,57 +28,26 @@ const Hero = () => {
       items-center
       "
     >
-      {/* MESH GRADIENT */}
+{/* Aurora Background */}
 
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          animate={{
-            x: [0, 100, 0],
-            y: [0, -80, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="
-          absolute
-          top-[-15%]
-          left-[-10%]
-          w-[700px]
-          h-[700px]
-          rounded-full
-          bg-[#0077B6]/20
-          blur-[180px]
-          "
-        />
-
-        <motion.div
-          animate={{
-            x: [0, -120, 0],
-            y: [0, 80, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="
-          absolute
-          bottom-[-20%]
-          right-[-10%]
-          w-[800px]
-          h-[800px]
-          rounded-full
-          bg-[#00B4D8]/15
-          blur-[200px]
-          "
-        />
-      </div>
+<div className="absolute inset-0">
+  <Aurora
+    colorStops={[
+      "#03045E",
+      "#0077B6",
+      "#00B4D8",
+    ]}
+    blend={0.35}
+    amplitude={0.8}
+    speed={0.2}
+  />
+</div>
+<div className="absolute inset-0 bg-black/35" />
+   
 
       {/* NOISE */}
 
-      <div
+      {/* <div
         className="
         absolute
         inset-0
@@ -87,7 +56,7 @@ const Hero = () => {
         bg-[radial-gradient(circle,rgba(255,255,255,0.12)_1px,transparent_1px)]
         bg-[size:20px_20px]
         "
-      />
+      /> */}
 
       {/* CONTENT */}
 
