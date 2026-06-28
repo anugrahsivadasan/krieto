@@ -5,8 +5,13 @@ import { services } from "../../data/services";
 
 const ServicesOverview = () => {
   return (
-    <section className="relative bg-[#0A0A0A] py-28">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
+    <section className="relative overflow-hidden bg-[#0A0A0A] py-32">
+
+      <div className="absolute inset-0">
+        <div className="absolute left-1/2 top-0 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[180px]" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-6">
 
         {/* Heading */}
 
@@ -15,26 +20,27 @@ const ServicesOverview = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: .7 }}
-          className="text-center mb-20"
+          className="mx-auto mb-20 max-w-3xl text-center"
         >
-          <p className="uppercase tracking-[0.15em] text-[#00B4D8] text-sm font-semibold mb-5">
+
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-cyan-400">
             OUR SERVICES
           </p>
 
-          <h2 className="text-white font-heading font-extrabold text-[clamp(2.5rem,5vw,4rem)]">
-            Everything Your Brand
-            <br />
-            Needs to Win
+          <h2 className="font-heading text-[clamp(3rem,6vw,4.8rem)] font-black leading-tight text-white">
+            Built to move together.
           </h2>
 
-          <p className="text-[#9CA3AF] text-lg mt-6 max-w-2xl mx-auto">
-            From strategy to execution — we handle it all.
+          <p className="mt-6 text-lg leading-8 text-slate-400">
+            Three disciplines. One integrated system. Every output connected to
+            your growth.
           </p>
+
         </motion.div>
 
         {/* Cards */}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div className="grid gap-8 lg:grid-cols-3">
 
           {services.map((service, index) => {
 
@@ -48,89 +54,89 @@ const ServicesOverview = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{
-                  duration: .6,
-                  delay: index * .08,
+                  duration: .7,
+                  delay: index * .15,
                 }}
               >
-                <Link
-                  to={service.link}
-                  className="
-                  group
-                  relative
-                  block
-                  h-full
-                  rounded-3xl
-                  bg-[#1E1E1E]
-                  border
-                  border-white/5
-                  p-8
-                  transition-all
-                  duration-500
-                  hover:scale-[1.02]
-                  hover:border-[#00B4D8]
-                  hover:shadow-[0_0_0_1.5px_#00B4D8,0_30px_60px_rgba(0,180,216,0.15)]
-                  "
-                >
+               <Link
+  to={service.link}
+  className={`
+    group
+    relative
+    flex
+    h-full
+    flex-col
+    overflow-hidden
+    rounded-[32px]
+    border
+    border-white/10
+    bg-[#111827]
+    p-10
+    transition-all
+    duration-500
+    hover:-translate-y-3
+    ${service.border}
+  `}
+>
+  {/* Background Glow */}
 
-                  {/* Icon */}
+  <div
+    className={`absolute inset-0 bg-gradient-to-br ${service.bg} opacity-0 transition duration-500 group-hover:opacity-30`}
+  />
 
-                  <div
-                    className="
-                    w-14
-                    h-14
-                    rounded-2xl
-                    bg-[#00B4D8]/10
-                    flex
-                    items-center
-                    justify-center
-                    mb-8
-                    transition
-                    duration-300
-                    group-hover:bg-[#00B4D8]/20
-                    "
-                  >
-                    <Icon
-                      size={28}
-                      className="text-[#00B4D8]"
-                    />
-                  </div>
+  {/* Icon */}
 
-                  {/* Title */}
+  <div
+    className="relative z-10 mb-10 flex h-16 w-16 items-center justify-center rounded-2xl"
+    style={{
+      background: `${service.accent}20`,
+    }}
+  >
+    <Icon
+      size={30}
+      style={{
+        color: service.accent,
+      }}
+    />
+  </div>
 
-                  <h3 className="text-2xl font-bold text-white mb-5">
-                    {service.title}
-                  </h3>
+  {/* Content */}
 
-                  {/* Description */}
+  <div className="relative z-10 flex flex-1 flex-col">
 
-                  <p className="text-[#9CA3AF] leading-8 mb-10">
-                    {service.description}
-                  </p>
+    <p
+      className="text-sm font-bold tracking-[0.25em]"
+      style={{
+        color: service.accent,
+      }}
+    >
+      {service.title}
+    </p>
 
-                  {/* Link */}
+    <h3 className="mt-5 text-3xl font-bold leading-tight text-white">
+      {service.subtitle}
+    </h3>
 
-                  <div
-                    className="
-                    inline-flex
-                    items-center
-                    gap-2
-                    text-[#00B4D8]
-                    font-semibold
-                    "
-                  >
-                    Learn More
+    <p className="mt-6 flex-1 leading-8 text-slate-400">
+      {service.description}
+    </p>
 
-                    <ArrowRight
-                      size={18}
-                      className="
-                      transition-transform
-                      duration-300
-                      group-hover:translate-x-2
-                      "
-                    />
-                  </div>
+    <div
+      className="mt-10 inline-flex items-center gap-3 font-semibold transition-all group-hover:gap-5"
+      style={{
+        color: service.accent,
+      }}
+    >
+      {service.button}
 
-                </Link>
+      <ArrowRight
+        size={18}
+        className="transition-transform duration-300 group-hover:translate-x-2"
+      />
+    </div>
+
+  </div>
+</Link>
 
               </motion.div>
 

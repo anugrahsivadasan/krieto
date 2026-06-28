@@ -45,14 +45,12 @@ const FeaturedWork = () => {
           </p>
 
           <h2 className="mb-6 text-5xl font-heading font-bold lg:text-6xl">
-            Work That Speaks
-            <br />
-            For Itself
+            The Work Speaks First. 
           </h2>
 
           <p className="mx-auto max-w-2xl text-lg text-gray-400">
-            Every project combines strategy, creativity,
-            and measurable business growth.
+            Results are not just a promise here. They are a portfolio entry. 
+
           </p>
 
         </motion.div>
@@ -143,7 +141,7 @@ const FeaturedWork = () => {
             hover:bg-primary/10
           "
           >
-            View All Work
+            See All Work
 
             <ArrowRight size={18}/>
           </Link>

@@ -269,7 +269,7 @@ const Navbar = () => {
                 hover:shadow-[0_0_30px_rgba(0,180,216,0.4)]
                 "
               >
-                Get Your Free Audit
+                Start a Conversation
               </Link>
             </div>
 

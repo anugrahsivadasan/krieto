@@ -73,7 +73,7 @@ const Footer = () => {
       w-auto
       object-contain" />
               </Link>
-
+9
               <p className="font-body text-[#6B7280] text-sm leading-relaxed mb-8">
                 Helping businesses scale through data-driven marketing,
                 strategic advertising, and creative design.

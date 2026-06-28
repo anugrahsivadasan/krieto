@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+
 import Aurora from "../global/Aurora";
 const Hero = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -39,7 +41,7 @@ const Hero = () => {
     ]}
     blend={0.35}
     amplitude={0.8}
-    speed={0.2}
+    speed={0.8}
   />
 </div>
 <div className="absolute inset-0 bg-black/35" />
@@ -86,7 +88,7 @@ const Hero = () => {
               mb-6
               "
             >
-              Texas-Based. Globally Trusted.
+              ADVERTISING  ·  DESIGN  ·  MARKETING 
             </motion.p>
 
             {/* HEADLINE */}
@@ -113,15 +115,39 @@ const Hero = () => {
               text-[clamp(3.5rem,8vw,5.5rem)]
               "
             >
-              We Build Brands
+              Your Growth. 
               <br />
-              That Command
-              <br />
-              Attention.
+              <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-cyan-500 bg-clip-text text-transparent">
+              Engineered.
+              </span>
             </motion.h1>
 
             {/* SUBHEADLINE */}
 
+            <motion.p
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.9,
+                delay: 0.15,
+              }}
+              className="
+              text-[#9CA3AF]
+              text-xl
+              md:text-4xl
+              leading-relaxed
+              max-w-4xl
+              mb-12
+              "
+            >
+            We Build Brands That Command Attention. 
+            </motion.p>
             <motion.p
               initial={{
                 opacity: 0,
@@ -144,9 +170,8 @@ const Hero = () => {
               mb-12
               "
             >
-              Full-service advertising,
-              marketing, and design for
-              businesses that refuse to
+             We are not a marketing agency. We are the growth system your business has been missing. Design 
+that gets you chosen. Advertising that gets you seen. Marketing that keeps you relevant. 
               blend in.
             </motion.p>
 
@@ -189,7 +214,9 @@ const Hero = () => {
                 duration-300
                 "
               >
-                Get Your Free Audit
+                Start a conversation
+                            <ArrowRight size={18}/>
+
               </Link>
 
               <Link
@@ -248,8 +275,7 @@ const Hero = () => {
               </div>
 
               <p className="text-[#9CA3AF]">
-                Trusted by businesses across
-                Texas and beyond
+Trusted by ambitious businesses building the brands their markets remember. 
               </p>
             </motion.div>
           </div>

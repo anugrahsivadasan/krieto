@@ -1,29 +1,53 @@
 import {
-  Search,
-  Target,
+  Ear,
+  Stethoscope,
+  Hammer,
   Rocket,
+  BarChart3,
+  TrendingUp,
 } from "lucide-react";
 
 export const processSteps = [
   {
     number: "01",
-    title: "Discover",
-    icon: Search,
+    title: "Listen",
+    icon: Ear,
     description:
-      "We audit your current position, your competitors, and your opportunities.",
+      "We spend the first conversation understanding your business, your market, and your real targets.",
   },
   {
     number: "02",
-    title: "Strategize",
-    icon: Target,
+    title: "Diagnose",
+    icon: Stethoscope,
     description:
-      "We build a custom roadmap aligned to your revenue goals.",
+      "Full audit of your current position, competitors, and identify the highest-leverage growth opportunities before recommending anything.",
   },
   {
     number: "03",
-    title: "Execute & Scale",
+    title: "Build",
+    icon: Hammer,
+    description:
+      "Strategy before execution. We design the complete growth system, tailored to your business and built to your standards.",
+  },
+  {
+    number: "04",
+    title: "Launch",
     icon: Rocket,
     description:
-      "We implement, measure, and relentlessly optimize.",
+      "We execute everything from start to finish. No handoffs. No surprises. Just seamless delivery.",
+  },
+  {
+    number: "05",
+    title: "Report",
+    icon: BarChart3,
+    description:
+      "Honest performance reports every month with real numbers, actionable insights, and zero vanity metrics.",
+  },
+  {
+    number: "06",
+    title: "Compound",
+    icon: TrendingUp,
+    description:
+      "The work gets stronger over time. Continuous optimization ensures your growth compounds month after month.",
   },
 ];
