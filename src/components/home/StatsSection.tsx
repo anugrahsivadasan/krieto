@@ -212,7 +212,7 @@ const StatsSection = () => {
 
               <div className="relative z-10">
 
-                {stat.text ? (
+                {stat.end ? (
 
                   <h3
                     className="
@@ -223,7 +223,7 @@ const StatsSection = () => {
                     text-cyan-400
                     "
                   >
-                    {stat.text}
+                    {stat.end}
                   </h3>
 
                 ) : (
