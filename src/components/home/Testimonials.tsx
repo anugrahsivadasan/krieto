@@ -279,13 +279,30 @@ export default function Testimonials() {
         <div className="hidden md:grid grid-cols-2 gap-6 items-stretch">
           <AnimatePresence mode="popLayout" custom={direction}>
             {visibleCards.map(({ key, index }) => (
-              <motion.div
-                key={key}
-                layout
-                custom={direction}
-                initial={(dir) => cardSlideIn(dir)}
-                animate={{ x: 0, opacity: 1, scale: 1 }}
-                exit={(dir) => cardSlideOut(dir)}
+             <motion.div
+  key={key}
+  layout
+  custom={direction}
+  variants={{
+    enter: (dir: number) => ({
+      x: dir > 0 ? 120 : -120,
+      opacity: 0,
+      scale: 0.96,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+    },
+    exit: (dir: number) => ({
+      x: dir > 0 ? -120 : 120,
+      opacity: 0,
+      scale: 0.96,
+    }),
+  }}
+  initial="enter"
+  animate="center"
+  exit="exit"
                 transition={{
                   layout: spring,
                   opacity: { duration: 0.3 },
