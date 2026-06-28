@@ -4,6 +4,8 @@ import ServicesOverview from '../components/home/ServicesOverview'
 import ProcessSection from '../components/home/ProcessSection'
 import StatsSection from '../components/home/StatsSection'
 import FeaturedWork from '../components/home/FeaturedWork'
+import FinalCTA from '../components/home/FinalCTA'
+import Testimonials from '../components/home/Testimonials'
 const Home = () => {
   return (
     <div>
@@ -13,6 +15,8 @@ const Home = () => {
       <ProcessSection />
       <StatsSection />
       <FeaturedWork/>
+      <FinalCTA/>
+      <Testimonials/>
     </div>
   )
 }

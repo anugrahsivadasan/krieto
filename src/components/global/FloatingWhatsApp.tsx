@@ -5,8 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const MOBILE_BREAKPOINT = 1024;
 
 // Replace later
-const WHATSAPP_NUMBER = "15551234567";
-
+const WHATSAPP_NUMBER = "17373634769";
 const MESSAGE =
   "Hi Krieto, I'd like to learn more about your services.";
 
