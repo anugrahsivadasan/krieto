@@ -15,8 +15,8 @@ const Home = () => {
       <ProcessSection />
       <StatsSection />
       <FeaturedWork/>
-      <FinalCTA/>
       <Testimonials/>
+      <FinalCTA/>
     </div>
   )
 }

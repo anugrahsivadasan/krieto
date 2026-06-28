@@ -34,19 +34,35 @@ const ProcessSection = () => {
 
           {/* Desktop dashed line */}
 
-          <div
-            className="
-            hidden
-            lg:block
-            absolute
-            top-16
-            left-[16%]
-            right-[16%]
-            border-t-2
-            border-dashed
-            border-[#00B4D8]/20
-            "
-          />
+         {/* First Row Connector */}
+<div
+  className="
+  hidden
+  lg:block
+  absolute
+  top-16
+  left-[16%]
+  right-[16%]
+  border-t-2
+  border-dashed
+  border-[#00B4D8]/20
+  "
+/>
+
+{/* Second Row Connector */}
+<div
+  className="
+  hidden
+  lg:block
+  absolute
+  top-[30.5rem]
+  left-[16%]
+  right-[16%]
+  border-t-2
+  border-dashed
+  border-[#00B4D8]/20
+  "
+/>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 
