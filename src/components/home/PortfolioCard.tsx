@@ -32,7 +32,6 @@ const PortfolioCard = ({
       }`}
     >
       {/* Image */}
-
       <motion.img
         variants={{
           rest: { scale: 1 },
@@ -46,26 +45,61 @@ const PortfolioCard = ({
         className="absolute inset-0 h-full w-full object-cover"
       />
 
-      {/* Overlay */}
+      {/* ================= BLUR LAYER ================= */}
 
       <motion.div
         variants={{
           rest: {
-            background:
-              "linear-gradient(to top,#0A0A0A 15%,transparent 65%)",
+            backdropFilter: "blur(0px)",
           },
           hover: {
-            background:
-              "linear-gradient(to top,#0A0AEE 5%,rgba(10,10,10,.2) 45%,transparent)",
+            backdropFilter: "blur(10px)",
           },
         }}
-        className="absolute inset-0"
+        transition={{
+          duration: 0.5,
+          ease: "easeOut",
+        }}
+        className="absolute bottom-0 left-0 right-0 z-10 h-[52%]"
+        style={{
+          WebkitBackdropFilter: "blur(10px)",
+          maskImage:
+            "linear-gradient(to top, black 35%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to top, black 35%, transparent 100%)",
+        }}
+      />
+
+      {/* ================= DARK OVERLAY ================= */}
+
+      <motion.div
+        variants={{
+          rest: {
+            opacity: 0.25,
+          },
+          hover: {
+            opacity: 0.65,
+          },
+        }}
+        transition={{
+          duration: 0.45,
+        }}
+        className="
+          absolute
+          bottom-0
+          left-0
+          right-0
+          z-10
+          h-[52%]
+          bg-gradient-to-t
+          from-black
+          via-black/80
+          to-transparent
+        "
       />
 
       {/* Content */}
-
-      <div className="absolute bottom-0 left-0 right-0 p-8">
-
+      <div className="absolute bottom-0 left-0 right-0 z-20 p-8">
         <span
           className="
           inline-block
@@ -95,24 +129,30 @@ const PortfolioCard = ({
           {title}
         </motion.h3>
 
-        <motion.p
-          variants={{
-            rest: {
-              opacity: 0,
-              y: 15,
-            },
-            hover: {
-              opacity: 1,
-              y: 0,
-            },
-          }}
-          transition={{
-            duration: .35,
-          }}
-          className="text-gray-300 mb-6"
-        >
-          {description}
-        </motion.p>
+        <div className="overflow-hidden mb-6">
+          <motion.p
+            variants={{
+              rest: {
+                y: "120%",
+                opacity: 0,
+                filter: "blur(8px)",
+              },
+              hover: {
+                y: "0%",
+                opacity: 1,
+                filter: "blur(0px)",
+              },
+            }}
+            transition={{
+              duration: 0.85,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="text-gray-300 will-change-transform"
+            style={{ willChange: "transform, filter" }}
+          >
+            {description}
+          </motion.p>
+        </div>
 
         <Link
           to={link}

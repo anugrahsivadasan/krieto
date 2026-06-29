@@ -8,8 +8,9 @@ export const services = [
   {
     title: "ADVERTISING",
     subtitle: "The Frame That Changes Everything.",
+    paragraphheading :"Creative Advertising & Video Production ",
     description:
-      "AI video. Animated ads. Production quality that earns attention in three seconds.",
+      " AI Powered video. Animated content & premium voiceovers. Production-quality advertising built for the platforms where your audience actually watches. ",
     button: "Explore Advertising",
     icon: Megaphone,
     accent: "#8B5CF6",
@@ -21,6 +22,7 @@ export const services = [
   {
     title: "DESIGN",
     subtitle: "Built to Be Chosen. ",
+    paragraphheading :"Brand Identity & Design    ·   Web Development & E-Commerce   ",
     description:
       "Your brand communicates before you do. We make sure it says the right thing.",
     button: "Explore Design",
@@ -34,6 +36,7 @@ export const services = [
   {
     title: "MARKETING",
     subtitle: "Build the Brand They Cannot Forget",
+    paragraphheading :"Digital Marketing & Content Creation ·  Market Presence & Reputation  ·  Growth Intelligence & Analytics ",
     description:
       "Consistent presence across every channel that matters. Built as infrastructure. Measured as investment.",
     button: "Explore Marketing",

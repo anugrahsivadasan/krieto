@@ -3,6 +3,7 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/
 import { Link } from "react-router-dom";
 import logo from "../../assets/footer-logo.png";
 
+
 const Footer = () => {
   return (
     <>
@@ -73,7 +74,7 @@ const Footer = () => {
       w-auto
       object-contain" />
               </Link>
-9
+
               <p className="font-body text-[#6B7280] text-sm leading-relaxed mb-8">
                 Helping businesses scale through data-driven marketing,
                 strategic advertising, and creative design.

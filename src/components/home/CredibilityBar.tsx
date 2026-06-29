@@ -1,3 +1,4 @@
+import "../../styles/marquee.css";
 import {
   Globe,
   RefreshCw,
@@ -117,6 +118,7 @@ const CredibilityBar = () => {
         border-white/10
         py-6
       "
+      aria-label="Services overview marquee"
     >
       {/* Left Fade */}
       <div
@@ -161,7 +163,6 @@ const CredibilityBar = () => {
         >
           {marqueeItems.map((item, index) => {
             const Icon = item.icon;
-
             return (
               <div
                 key={index}

@@ -1,39 +1,44 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
+/* ─── Fonts ───────────────────────────────────────── */
 @import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
 @import "@fontsource/inter/600.css";
 @import "@fontsource/inter/700.css";
 
 @import "@fontsource/space-grotesk/400.css";
+@import "@fontsource/space-grotesk/500.css";
 @import "@fontsource/space-grotesk/700.css";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* ─── Base ────────────────────────────────────────── */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior:smooth;
 }
 
 body {
-  background: #0A0A0A;
-  color: #F9FAFB;
+  background: #0a0a0a;
+  color: #f9fafb;
+  font-family: "Inter", sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* ─── Selection ───────────────────────────────────── */
 ::selection {
-  background: #00B4D8;
+  background: #00b4d8;
   color: white;
 }
 
-.container-custom {
-  max-width: 1280px;
-  margin-inline: auto;
-  padding-inline: 1.5rem;
-}
-
-@media (min-width: 1024px) {
-  .container-custom {
-    padding-inline: 2rem;
+/* ─── Reduced Motion ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -12,9 +12,9 @@ const FeaturedWork = () => {
 
       <div className="absolute inset-0">
 
-        <div className="absolute left-0 top-40 h-[450px] w-[450px] rounded-full bg-primary/10 blur-[150px]" />
+        <div className="absolute left-20 top-40 h-[450px] w-[450px] rounded-full bg-primary/15 blur-[150px]" />
 
-        <div className="absolute right-0 bottom-0 h-[500px] w-[500px] rounded-full bg-secondary/10 blur-[180px]" />
+        <div className="absolute right-0 bottom-0 h-[500px] w-[500px] rounded-full bg-secondary/15 blur-[180px]" />
 
       </div>
 

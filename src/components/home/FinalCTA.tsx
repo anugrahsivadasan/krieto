@@ -82,7 +82,7 @@ const FinalCTA = () => {
 
           {/* Trust line */}
           <p className="font-body text-sm text-white/50 mt-6">
-            No contracts. No hidden fees. Results guaranteed.
+            Custom Quotes. No hidden fees. Results guaranteed.
           </p>
         </motion.div>
       </div>

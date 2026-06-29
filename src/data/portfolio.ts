@@ -28,7 +28,7 @@ export const portfolio = [
     description:
       "SEO, social media and content strategy for a growing healthcare brand.",
     image:
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=1200&q=80",
+      "https://media.licdn.com/dms/image/v2/D5612AQGFIjosfozDRQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1728044645267?e=2147483647&v=beta&t=p7cpBJU5JkL2XWOom8DErt5unryX39G2g4eZ1508HwE",
     link: "/portfolio/healthcare",
   },
 ];
