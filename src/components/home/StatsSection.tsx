@@ -266,7 +266,7 @@ const StatsSection = () => {
                   text-sm
                   "
                 >
-                  {stat.description}
+                  {/* {stat.description} */}
                 </p>
 
               </div>
