@@ -5,41 +5,15 @@ import logo from "../../assets/Krieto-logo-white.png";
 
 const serviceColumns = [
   {
-    category: "Marketing",
-    href: "/services/marketing",
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-        />
-      </svg>
-    ),
-    items: [
-      {
-        label: "Digital Marketing",
-        desc: "SEO, content, and growth strategy.",
-        href: "/services/marketing",
-      },
-      {
-        label: "Social Media",
-        desc: "Organic presence that compounds.",
-        href: "/services/marketing",
-      },
-      {
-        label: "Email & CRM",
-        desc: "Sequences that convert and retain.",
-        href: "/services/marketing",
-      },
-    ],
-  },
-  {
     category: "Advertising",
     href: "/services/advertising",
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -50,27 +24,23 @@ const serviceColumns = [
     ),
     items: [
       {
-        label: "Paid Search (PPC)",
-        desc: "Google & Bing ads that pay back.",
-        href: "/services/advertising",
-      },
-      {
-        label: "Paid Social",
-        desc: "Meta, TikTok, LinkedIn campaigns.",
-        href: "/services/advertising",
-      },
-      {
-        label: "Programmatic",
-        desc: "Precision display at scale.",
+        label: "Creative Advertising & Video Production",
+        desc: "AI-powered video, animated ads & premium production.",
         href: "/services/advertising",
       },
     ],
   },
+
   {
     category: "Design",
     href: "/services/design",
     icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -81,19 +51,51 @@ const serviceColumns = [
     ),
     items: [
       {
-        label: "Brand Identity",
-        desc: "Logos, systems, and visual language.",
+        label: "Brand Identity & Design",
+        desc: "Visual identity, branding & creative systems.",
         href: "/services/design",
       },
       {
-        label: "Web & UI Design",
-        desc: "Interfaces built to convert.",
+        label: "Web Development & E-Commerce",
+        desc: "High-performance websites built to convert.",
         href: "/services/design",
       },
+    ],
+  },
+
+  {
+    category: "Marketing",
+    href: "/services/marketing",
+    icon: (
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+        />
+      </svg>
+    ),
+    items: [
       {
-        label: "Content Creation",
-        desc: "Visuals and copy that command attention.",
-        href: "/services/design",
+        label: "Digital Marketing & Content Creation",
+        desc: "SEO, campaigns, content & audience growth.",
+        href: "/services/marketing",
+      },
+      {
+        label: "Market Presence & Reputation",
+        desc: "Build trust through consistent brand visibility.",
+        href: "/services/marketing",
+      },
+      {
+        label: "Growth Intelligence & Analytics",
+        desc: "Performance insights that drive better decisions.",
+        href: "/services/marketing",
       },
     ],
   },
