@@ -3,114 +3,70 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Star } from "lucide-react";
 import Aurora from "../global/Aurora";
+
+const EASE: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, delay, ease: EASE },
+});
+
 const Hero = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () =>
-      window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <section
       className="
-      relative
-      min-h-screen
-      overflow-hidden
-      bg-[#0A0A0A]
-      flex
-      items-center
+        relative min-h-screen overflow-hidden
+        bg-[#0A0A0A] flex items-center
       "
     >
-{/* Aurora Background */}
+      {/* ─── Aurora Background ──────────────────────────── */}
+      <div className="absolute inset-0 pointer-events-none">
+        <Aurora
+          colorStops={["#03045E", "#0077B6", "#00B4D8"]}
+          blend={0.35}
+          amplitude={0.8}
+          speed={0.2}
+        />
+      </div>
 
-<div className="absolute inset-0">
-  <Aurora
-    colorStops={[
-      "#03045E",
-      "#0077B6",
-      "#00B4D8",
-    ]}
-    blend={0.35}
-    amplitude={0.8}
-    speed={0.2}
-  />
-</div>
-<div className="absolute inset-0 bg-black/35" />
-   
+      {/* Dark overlay for legibility */}
+      <div className="absolute inset-0 bg-black/40 pointer-events-none" />
 
-      {/* NOISE */}
+      {/* ─── Content ────────────────────────────────────── */}
+      <div className="relative z-10 w-full pt-[72px]">
+        {/* pt-[72px] offsets the fixed navbar */}
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-[120px] lg:py-[160px]">
+          <div className="max-w-3xl">
 
-      {/* <div
-        className="
-        absolute
-        inset-0
-        opacity-[0.04]
-        pointer-events-none
-        bg-[radial-gradient(circle,rgba(255,255,255,0.12)_1px,transparent_1px)]
-        bg-[size:20px_20px]
-        "
-      /> */}
-
-      {/* CONTENT */}
-
-      <div className="relative z-10 w-full">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-          <div className="max-w-4xl">
             {/* EYEBROW */}
-
             <motion.p
-              initial={{
-                opacity: 0,
-                y: 20,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.6,
-              }}
+              {...fadeUp(0)}
               className="
-              uppercase
-              tracking-[0.15em]
-              text-[13px]
-              font-semibold
-              text-[#00B4D8]
-              mb-6
+                font-body uppercase tracking-[0.15em]
+                text-[13px] font-semibold
+                text-[#00B4D8] mb-6
               "
             >
               Texas-Based. Globally Trusted.
             </motion.p>
 
             {/* HEADLINE */}
-
             <motion.h1
-              initial={{
-                opacity: 0,
-                y: 40,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.8,
-              }}
+              {...fadeUp(0.1)}
               className="
-              font-heading
-              font-extrabold
-              text-white
-              leading-[0.95]
-              tracking-[-0.04em]
-              mb-8
-              text-[clamp(3.5rem,8vw,5.5rem)]
+                font-heading font-extrabold text-white
+                leading-[0.93] tracking-[-0.04em]
+                text-[clamp(3rem,7vw,5.5rem)]
+                mb-8
               "
             >
               We Build Brands
@@ -120,94 +76,53 @@ const Hero = () => {
               Attention.
             </motion.h1>
 
-            {/* SUBHEADLINE */}
-
+            {/* SUB-HEADLINE */}
             <motion.p
-              initial={{
-                opacity: 0,
-                y: 30,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.9,
-                delay: 0.15,
-              }}
+              {...fadeUp(0.2)}
               className="
-              text-[#9CA3AF]
-              text-lg
-              md:text-xl
-              leading-relaxed
-              max-w-2xl
-              mb-12
+                font-body text-[#9CA3AF]
+                text-lg md:text-xl
+                leading-relaxed
+                max-w-xl mb-10
               "
             >
-              Full-service advertising,
-              marketing, and design for
-              businesses that refuse to
-              blend in.
+              Full-service advertising, marketing, and design
+              for businesses that refuse to blend in.
             </motion.p>
 
-            {/* CTA */}
-
+            {/* CTA BUTTONS */}
             <motion.div
-              initial={{
-                opacity: 0,
-                y: 20,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                delay: 0.25,
-              }}
-              className="
-              flex
-              flex-col
-              sm:flex-row
-              gap-4
-              mb-10
-              "
+              {...fadeUp(0.3)}
+              className="flex flex-col sm:flex-row gap-4 mb-10"
             >
+              {/* Primary CTA */}
               <Link
                 to="/contact"
                 className="
-                inline-flex
-                items-center
-                justify-center
-                px-8
-                py-4
-                rounded-full
-                bg-[#00B4D8]
-                text-black
-                font-semibold
-                hover:scale-105
-                transition-all
-                duration-300
+                  inline-flex items-center justify-center
+                  px-8 py-4 rounded-full
+                  bg-[#00B4D8] text-white
+                  text-sm font-semibold uppercase tracking-widest
+                  hover:bg-[#0077B6]
+                  transition-all duration-300
+                  hover:shadow-[0_0_32px_rgba(0,180,216,0.4)]
+                  hover:scale-[1.02]
                 "
               >
                 Get Your Free Audit
               </Link>
 
+              {/* Secondary CTA */}
               <Link
                 to="/portfolio"
                 className="
-                inline-flex
-                items-center
-                justify-center
-                px-8
-                py-4
-                rounded-full
-                border
-                border-white/15
-                text-white
-                hover:border-[#00B4D8]
-                hover:text-[#00B4D8]
-                transition-all
-                duration-300
+                  inline-flex items-center justify-center
+                  px-8 py-4 rounded-full
+                  border border-white/20
+                  text-white text-sm font-semibold uppercase tracking-widest
+                  hover:border-[#00B4D8] hover:text-[#00B4D8]
+                  transition-all duration-300
+                  hover:scale-[1.02]
                 "
               >
                 See Our Work
@@ -215,75 +130,48 @@ const Hero = () => {
             </motion.div>
 
             {/* SOCIAL PROOF */}
-
             <motion.div
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              transition={{
-                delay: 0.4,
-              }}
-              className="
-              flex
-              flex-col
-              sm:flex-row
-              sm:items-center
-              gap-4
-              "
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="flex flex-col sm:flex-row sm:items-center gap-3"
             >
               <div className="flex gap-1">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    size={18}
-                    className="
-                    fill-[#00B4D8]
-                    text-[#00B4D8]
-                    "
+                    size={16}
+                    className="fill-[#00B4D8] text-[#00B4D8]"
                   />
                 ))}
               </div>
-
-              <p className="text-[#9CA3AF]">
-                Trusted by businesses across
-                Texas and beyond
+              <p className="font-body text-sm text-[#9CA3AF]">
+                Trusted by businesses across Texas and beyond
               </p>
             </motion.div>
           </div>
         </div>
       </div>
 
-      {/* SCROLL INDICATOR */}
-
+      {/* ─── Scroll Indicator ───────────────────────────── */}
       <AnimatePresence>
         {!scrolled && (
           <motion.div
-            initial={{
-              opacity: 0,
-            }}
+            initial={{ opacity: 0 }}
             animate={{
-              opacity: 1,
-              y: [0, 10, 0],
+              opacity: [0, 1, 1],
+              y: [0, 8, 0],
             }}
-            exit={{
-              opacity: 0,
-            }}
+            exit={{ opacity: 0 }}
             transition={{
-              y: {
-                repeat: Infinity,
-                duration: 1.8,
-              },
+              opacity: { delay: 1.2, duration: 0.6 },
+              y: { repeat: Infinity, duration: 1.8, ease: "easeInOut" },
             }}
             className="
-            absolute
-            bottom-8
-            left-1/2
-            -translate-x-1/2
-            text-white/70
+              absolute bottom-8 left-1/2 -translate-x-1/2
+              text-white/50 pointer-events-none
             "
+            aria-hidden="true"
           >
             <ChevronDown size={28} />
           </motion.div>

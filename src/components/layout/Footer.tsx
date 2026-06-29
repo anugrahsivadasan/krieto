@@ -1,318 +1,150 @@
-import {
-  ArrowRight,
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
-
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaXTwitter,
-} from "react-icons/fa6";
-
+import { ArrowRight, Mail, Phone, MapPin } from "lucide-react";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import logo from "../../assets/Krieto-logo-white.png";
 
 const Footer = () => {
   return (
     <>
-      {/* CTA SECTION */}
-
-      <section className="relative overflow-hidden">
+      {/* ─────────────────────────────────────────────────────
+          FINAL CTA BAND — pre-footer conversion block
+          This is separate from the standalone FinalCTA section.
+          ───────────────────────────────────────────────────── */}
+      <section className="bg-[#0A0A0A] py-[72px] lg:py-[120px]">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-8">
           <div
             className="
-            relative
-            rounded-[32px]
-            bg-gradient-to-r
-            from-primary
-            to-secondary
-            p-8
-            md:p-12
-            lg:p-16
+              relative overflow-hidden
+              rounded-3xl
+              bg-gradient-to-r from-[#00B4D8] to-[#0077B6]
+              px-8 py-16 md:px-16 md:py-20
             "
           >
-            <div
-              className="
-              flex
-              flex-col
-              lg:flex-row
-              items-center
-              justify-between
-              gap-8
-              "
-            >
-              <div>
-                <h2
-                  className="
-                  text-3xl
-                  md:text-5xl
-                  font-bold
-                  text-white
-                  mb-4
-                  "
-                >
+            {/* Subtle radial glow */}
+            <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.3),transparent_60%)]" />
+
+            <div className="relative flex flex-col lg:flex-row items-center justify-between gap-8">
+              <div className="text-center lg:text-left max-w-2xl">
+                <h2 className="font-heading text-3xl md:text-5xl font-bold text-white leading-tight mb-4">
                   Ready to Grow Your Business?
                 </h2>
-
-                <p
-                  className="
-                  text-white/80
-                  max-w-2xl
-                  "
-                >
-                  Let's discuss your goals and
-                  build a marketing strategy that
-                  drives measurable results.
+                <p className="font-body text-white/80 text-lg leading-relaxed">
+                  Let's discuss your goals and build a marketing strategy
+                  that drives measurable results.
                 </p>
               </div>
 
               <Link
                 to="/contact"
                 className="
-                flex
-                items-center
-                gap-2
-                bg-white
-                text-black
-                px-8
-                py-4
-                rounded-full
-                font-semibold
-                transition
-                hover:scale-105
+                  flex-shrink-0
+                  flex items-center gap-2
+                  bg-white text-[#0A0A0A]
+                  px-8 py-4
+                  rounded-full
+                  font-semibold text-sm uppercase tracking-widest
+                  transition-all duration-300
+                  hover:scale-[1.03]
+                  hover:shadow-[0_8px_32px_rgba(0,0,0,0.25)]
                 "
               >
                 Get Your Free Audit
-                <ArrowRight size={18} />
+                <ArrowRight size={16} />
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* ─────────────────────────────────────────────────────
+          FOOTER
+          ───────────────────────────────────────────────────── */}
+      <footer className="bg-[#050505] border-t border-white/[0.06]">
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-[80px]">
 
-      <footer
-        className="
-        bg-[#050505]
-        border-t
-        border-white/10
-        mt-24
-        "
-      >
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-20">
-          <div
-            className="
-            grid
-            grid-cols-1
-            md:grid-cols-2
-            lg:grid-cols-4
-            gap-12
-            "
-          >
-            {/* COLUMN 1 */}
+          {/* Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
+            {/* Column 1 — Brand */}
             <div>
-              {/* ADD YOUR LOGO HERE */}
-
-              <div className="mb-6">
-                <h3 className="text-3xl font-bold">
-                  Krieto
-                </h3>
-              </div>
-
-              <p
-                className="
-                text-gray-400
-                leading-relaxed
-                "
-              >
-                Helping businesses scale through
-                data-driven marketing, strategic
-                advertising, and creative design.
-              </p>
-
-              {/* SOCIALS */}
-
-              <div className="flex gap-4 mt-8">
-                <SocialIcon>
-                  <FaFacebookF />
-                </SocialIcon>
-
-                <SocialIcon>
-                  <FaInstagram />
-                </SocialIcon>
-
-                <SocialIcon>
-                  <FaLinkedinIn />
-                </SocialIcon>
-
-                <SocialIcon>
-                  <FaXTwitter />
-                </SocialIcon>
-              </div>
-            </div>
-
-            {/* COLUMN 2 */}
-
-            <div>
-              <h4
-                className="
-                text-lg
-                font-semibold
-                mb-6
-                "
-              >
-                Quick Links
-              </h4>
-
-              <FooterLink
-                to="/"
-                text="Home"
-              />
-
-              <FooterLink
-                to="/about"
-                text="About"
-              />
-
-              <FooterLink
-                to="/services"
-                text="Services"
-              />
-
-              <FooterLink
-                to="/portfolio"
-                text="Portfolio"
-              />
-
-              <FooterLink
-                to="/contact"
-                text="Contact"
-              />
-            </div>
-
-            {/* COLUMN 3 */}
-
-            <div>
-              <h4
-                className="
-                text-lg
-                font-semibold
-                mb-6
-                "
-              >
-                Services
-              </h4>
-
-              <FooterLink
-                to="/services/marketing"
-                text="Marketing"
-              />
-
-              <FooterLink
-                to="/services/advertising"
-                text="Advertising"
-              />
-
-              <FooterLink
-                to="/services/design"
-                text="Design"
-              />
-            </div>
-
-            {/* COLUMN 4 */}
-
-            <div>
-              <h4
-                className="
-                text-lg
-                font-semibold
-                mb-6
-                "
-              >
-                Contact
-              </h4>
-
-              <div className="space-y-5">
-                <ContactItem
-                  icon={<Phone size={18} />}
-                  text="+1 (000) 000-0000"
-                />
-
-                <ContactItem
-                  icon={<Mail size={18} />}
-                  text="hello@krieto.com"
-                />
-
-                <ContactItem
-                  icon={<MapPin size={18} />}
-                  text="Texas, United States"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* TRUST BADGES */}
-
-          <div
-            className="
-            mt-16
-            pt-10
-            border-t
-            border-white/10
-            "
-          >
-            <div
-              className="
-              flex
-              flex-wrap
-              gap-4
-              justify-center
-              "
-            >
-              <TrustBadge text="Results Driven" />
-              <TrustBadge text="Transparent Reporting" />
-              <TrustBadge text="Client Focused" />
-              <TrustBadge text="Performance Marketing" />
-            </div>
-          </div>
-
-          {/* COPYRIGHT */}
-
-          <div
-            className="
-            mt-10
-            pt-8
-            border-t
-            border-white/10
-            flex
-            flex-col
-            md:flex-row
-            justify-between
-            items-center
-            gap-4
-            "
-          >
-            <p className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} Krieto
-              Advertising & Marketing.
-            </p>
-
-            <div className="flex gap-6">
-              <Link
-                to="/privacy"
-                className="text-gray-500 hover:text-primary"
-              >
-                Privacy Policy
+              <Link to="/" className="inline-block mb-6">
+                <img src={logo} alt="Krieto" className="h-8 w-auto object-contain" />
               </Link>
 
-              <Link
-                to="/terms"
-                className="text-gray-500 hover:text-primary"
-              >
+              <p className="font-body text-[#6B7280] text-sm leading-relaxed mb-8">
+                Helping businesses scale through data-driven marketing,
+                strategic advertising, and creative design.
+              </p>
+
+              {/* Socials */}
+              <div className="flex gap-3">
+                <SocialIcon href="#" label="Facebook"><FaFacebookF /></SocialIcon>
+                <SocialIcon href="#" label="Instagram"><FaInstagram /></SocialIcon>
+                <SocialIcon href="#" label="LinkedIn"><FaLinkedinIn /></SocialIcon>
+                <SocialIcon href="#" label="X (Twitter)"><FaXTwitter /></SocialIcon>
+              </div>
+            </div>
+
+            {/* Column 2 — Quick Links */}
+            <div>
+              <h4 className="font-heading text-base font-semibold text-white mb-6">
+                Quick Links
+              </h4>
+              <ul className="space-y-4">
+                <li><FooterLink to="/" text="Home" /></li>
+                <li><FooterLink to="/about" text="About" /></li>
+                <li><FooterLink to="/services" text="Services" /></li>
+                <li><FooterLink to="/portfolio" text="Portfolio" /></li>
+                <li><FooterLink to="/contact" text="Contact" /></li>
+              </ul>
+            </div>
+
+            {/* Column 3 — Services */}
+            <div>
+              <h4 className="font-heading text-base font-semibold text-white mb-6">
+                Services
+              </h4>
+              <ul className="space-y-4">
+                <li><FooterLink to="/services/marketing" text="Digital Marketing" /></li>
+                <li><FooterLink to="/services/advertising" text="Paid Advertising" /></li>
+                <li><FooterLink to="/services/design" text="Brand & Design" /></li>
+                <li><FooterLink to="/services" text="Content Creation" /></li>
+                <li><FooterLink to="/services" text="Social Media" /></li>
+              </ul>
+            </div>
+
+            {/* Column 4 — Contact */}
+            <div>
+              <h4 className="font-heading text-base font-semibold text-white mb-6">
+                Contact
+              </h4>
+              <ul className="space-y-4">
+                <li><ContactItem icon={<Phone size={16} />} text="+1 (000) 000-0000" /></li>
+                <li><ContactItem icon={<Mail size={16} />} text="hello@krieto.com" /></li>
+                <li><ContactItem icon={<MapPin size={16} />} text="Texas, United States" /></li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Trust Badges */}
+          <div className="mt-16 pt-8 border-t border-white/[0.06]">
+            <div className="flex flex-wrap gap-3 justify-center">
+              {["Results Driven", "Transparent Reporting", "Client Focused", "Performance Marketing"].map((badge) => (
+                <TrustBadge key={badge} text={badge} />
+              ))}
+            </div>
+          </div>
+
+          {/* Copyright */}
+          <div className="mt-8 pt-8 border-t border-white/[0.06] flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="font-body text-[#6B7280] text-sm">
+              © {new Date().getFullYear()} Krieto Advertising & Marketing. All rights reserved.
+            </p>
+            <div className="flex gap-6">
+              <Link to="/privacy" className="font-body text-sm text-[#6B7280] hover:text-[#00B4D8] transition-colors duration-200">
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="font-body text-sm text-[#6B7280] hover:text-[#00B4D8] transition-colors duration-200">
                 Terms of Service
               </Link>
             </div>
@@ -323,85 +155,57 @@ const Footer = () => {
   );
 };
 
-const FooterLink = ({
-  to,
-  text,
-}: {
-  to: string;
-  text: string;
-}) => (
+// ─── Sub-components ─────────────────────────────────────────────────────────
+
+const FooterLink = ({ to, text }: { to: string; text: string }) => (
   <Link
     to={to}
-    className="
-    block
-    mb-4
-    text-gray-400
-    hover:text-primary
-    transition
-    "
+    className="font-body text-sm text-[#6B7280] hover:text-white transition-colors duration-200"
   >
     {text}
   </Link>
 );
 
-const ContactItem = ({
-  icon,
-  text,
-}: {
-  icon: React.ReactNode;
-  text: string;
-}) => (
-  <div className="flex gap-3 text-gray-400">
-    <span className="text-primary">
-      {icon}
-    </span>
-    {text}
+const ContactItem = ({ icon, text }: { icon: React.ReactNode; text: string }) => (
+  <div className="flex items-start gap-3 text-[#6B7280]">
+    <span className="text-[#00B4D8] mt-0.5 flex-shrink-0">{icon}</span>
+    <span className="font-body text-sm leading-relaxed">{text}</span>
   </div>
 );
 
 const SocialIcon = ({
   children,
+  href,
+  label,
 }: {
   children: React.ReactNode;
+  href: string;
+  label: string;
 }) => (
-  <button
+  <a
+    href={href}
+    aria-label={label}
     className="
-    w-11
-    h-11
-    rounded-full
-    bg-white/5
-    border
-    border-white/10
-    flex
-    items-center
-    justify-center
-    text-white
-    hover:bg-primary
-    hover:border-primary
-    transition
+      w-10 h-10 rounded-full
+      bg-white/[0.05] border border-white/10
+      flex items-center justify-center
+      text-[#6B7280] text-sm
+      hover:bg-[#00B4D8] hover:border-[#00B4D8] hover:text-white
+      transition-all duration-300
     "
   >
     {children}
-  </button>
+  </a>
 );
 
-const TrustBadge = ({
-  text,
-}: {
-  text: string;
-}) => (
-  <div
-    className="
-    px-5
-    py-3
+const TrustBadge = ({ text }: { text: string }) => (
+  <div className="
+    px-4 py-2
     rounded-full
-    border
-    border-white/10
+    border border-white/10
     bg-white/[0.03]
-    text-sm
-    text-gray-300
-    "
-  >
+    font-body text-xs text-[#6B7280] tracking-wide
+  ">
     {text}
   </div>
 );

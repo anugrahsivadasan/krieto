@@ -1,452 +1,495 @@
-import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
-import logo from "../../assets/Krieto-logo-white.png"
+import { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ArrowRight, X, Menu } from "lucide-react";
+import logo from "../../assets/Krieto-logo-white.png";
 
-import {
-  ChevronDown,
-  Menu,
-  X,
-  Megaphone,
-  Palette,
-  LineChart,
-} from "lucide-react";
-
-const services = [
+// ─── Mega-dropdown data ───────────────────────────────────────────────────────
+const serviceColumns = [
   {
-    title: "Marketing",
-    description: "SEO, Content, Social Media & Strategy",
-    icon: LineChart,
-    path: "/services/marketing",
+    category: "Marketing",
+    href: "/services/marketing",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+          d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+      </svg>
+    ),
+    items: [
+      { label: "Digital Marketing", desc: "SEO, content, and growth strategy.", href: "/services/marketing" },
+      { label: "Social Media", desc: "Organic presence that compounds.", href: "/services/marketing" },
+      { label: "Email & CRM", desc: "Sequences that convert and retain.", href: "/services/marketing" },
+    ],
   },
   {
-    title: "Advertising",
-    description: "Google Ads, Meta Ads & Paid Campaigns",
-    icon: Megaphone,
-    path: "/services/advertising",
+    category: "Advertising",
+    href: "/services/advertising",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+          d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+      </svg>
+    ),
+    items: [
+      { label: "Paid Search (PPC)", desc: "Google & Bing ads that pay back.", href: "/services/advertising" },
+      { label: "Paid Social", desc: "Meta, TikTok, LinkedIn campaigns.", href: "/services/advertising" },
+      { label: "Programmatic", desc: "Precision display at scale.", href: "/services/advertising" },
+    ],
   },
   {
-    title: "Design",
-    description: "Brand Identity & Creative Design",
-    icon: Palette,
-    path: "/services/design",
+    category: "Design",
+    href: "/services/design",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+    ),
+    items: [
+      { label: "Brand Identity", desc: "Logos, systems, and visual language.", href: "/services/design" },
+      { label: "Web & UI Design", desc: "Interfaces built to convert.", href: "/services/design" },
+      { label: "Content Creation", desc: "Visuals and copy that command attention.", href: "/services/design" },
+    ],
   },
 ];
 
-const Navbar = () => {
+const navLinks = [
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services", hasMega: true },
+  { label: "Portfolio", href: "/portfolio" },
+  { label: "Contact", href: "/contact" },
+];
+
+// ─── Navbar ───────────────────────────────────────────────────────────────────
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [megaOpen, setMegaOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const location = useLocation();
+  const megaRef = useRef<HTMLDivElement>(null);
+  const megaTriggerRef = useRef<HTMLButtonElement>(null);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Scroll listener — transparent → solid at 80px
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 80);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () =>
-      window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 80);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Close mega on route change
+  useEffect(() => {
+    setMegaOpen(false);
+    setMobileOpen(false);
+  }, [location.pathname]);
+
+  // Close mega on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (
+        megaRef.current &&
+        !megaRef.current.contains(e.target as Node) &&
+        megaTriggerRef.current &&
+        !megaTriggerRef.current.contains(e.target as Node)
+      ) {
+        setMegaOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
+  const isActive = (href: string) =>
+    href === "/"
+      ? location.pathname === "/"
+      : location.pathname.startsWith(href);
+
+  // Hover intent helpers — delayed close so cursor can travel to panel
+  const handleServicesEnter = () => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    setMegaOpen(true);
+  };
+  const handleServicesLeave = () => {
+    closeTimerRef.current = setTimeout(() => setMegaOpen(false), 120);
+  };
+  const handlePanelEnter = () => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+  };
+  const handlePanelLeave = () => {
+    closeTimerRef.current = setTimeout(() => setMegaOpen(false), 120);
+  };
 
   return (
     <>
+      {/* ── Nav bar ────────────────────────────────────────────────────────── */}
       <header
         className={`
-          fixed
-          top-0
-          left-0
-          w-full
-          z-50
-          transition-all
-          duration-300
-          ${
-            scrolled
-              ? "bg-[#0D1B2A]/95 backdrop-blur-xl shadow-lg"
-              : "bg-transparent backdrop-blur-md"
+          fixed top-0 left-0 right-0 z-50 h-[72px]
+          transition-all duration-300 ease-in-out
+          ${scrolled
+            ? "bg-[#0D1B2A]/95 backdrop-blur-[12px] shadow-[0_1px_0_rgba(255,255,255,0.06)]"
+            : "bg-transparent backdrop-blur-[12px]"
           }
         `}
       >
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-8">
-          <div className="h-[72px] flex items-center justify-between">
-            {/* LOGO */}
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-8 h-full flex items-center justify-between gap-8">
 
-            <Link to="/">
-              {/* Add logo manually here */}
- <img
-    src={logo}
-    alt="Krieto Logo"
-    className="
-      h-20
-      md:h-24
-      lg:h-36
-      w-auto
-      object-contain
-    "
-  />
-            </Link>
+          {/* ── Logo ─────────────────────────────────────────────────────── */}
+          <Link to="/" className="flex-shrink-0 flex items-center" aria-label="Krieto home">
+            <img
+              src={logo}
+              alt="Krieto"
+              className="h-60 w-auto object-contain"
+              style={{ maxWidth: "190px" }}
+            />
+          </Link>
 
-            {/* DESKTOP NAV */}
-
-            <nav className="hidden lg:flex items-center gap-10">
-              <NavItem to="/about" label="About" />
-
-              {/* SERVICES */}
-
-              <div
-                className="relative"
-                onMouseEnter={() =>
-                  setServicesOpen(true)
-                }
-                onMouseLeave={() =>
-                  setServicesOpen(false)
-                }
-              >
-                <button
-                  className="
-                  flex
-                  items-center
-                  gap-2
-                  text-sm
-                  font-medium
-                  text-white
-                  hover:text-primary
-                  transition
-                  "
+          {/* ── Desktop center nav ───────────────────────────────────────── */}
+          <nav className="hidden lg:flex items-center gap-1" aria-label="Primary navigation">
+            {navLinks.map((link) =>
+              link.hasMega ? (
+                /* Services trigger */
+                <div key={link.label} className="relative">
+                  <button
+                    ref={megaTriggerRef}
+                    onMouseEnter={handleServicesEnter}
+                    onMouseLeave={handleServicesLeave}
+                    onClick={() => setMegaOpen((o) => !o)}
+                    aria-expanded={megaOpen}
+                    aria-haspopup="true"
+                    className={`
+                      relative flex items-center gap-1.5
+                      font-['Inter'] text-sm font-medium
+                      px-4 py-2 rounded-lg
+                      transition-colors duration-200
+                      ${isActive(link.href)
+                        ? "text-[#00B4D8]"
+                        : "text-[#F9FAFB]/70 hover:text-[#F9FAFB]"
+                      }
+                    `}
+                  >
+                    {link.label}
+                    {/* Chevron */}
+                    <svg
+                      className={`w-3.5 h-3.5 transition-transform duration-200 ${megaOpen ? "rotate-180" : ""}`}
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                    {/* Active dot */}
+                    {isActive(link.href) && (
+                      <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#00B4D8]" />
+                    )}
+                  </button>
+                </div>
+              ) : (
+                /* Regular link */
+                <Link
+                  key={link.label}
+                  to={link.href}
+                  className={`
+                    relative
+                    font-['Inter'] text-sm font-medium
+                    px-4 py-2 rounded-lg
+                    transition-colors duration-200
+                    ${isActive(link.href)
+                      ? "text-[#00B4D8]"
+                      : "text-[#F9FAFB]/70 hover:text-[#F9FAFB]"
+                    }
+                  `}
                 >
-                  Services
-                  <ChevronDown size={16} />
-                </button>
+                  {link.label}
+                  {isActive(link.href) && (
+                    <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#00B4D8]" />
+                  )}
+                </Link>
+              )
+            )}
+          </nav>
 
-                <AnimatePresence>
-                  {servicesOpen && (
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        y: 20,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                      }}
-                      exit={{
-                        opacity: 0,
-                        y: 20,
-                      }}
-                      transition={{
-                        duration: 0.25,
-                      }}
+          {/* ── Desktop CTA ──────────────────────────────────────────────── */}
+          <div className="hidden lg:flex items-center">
+            <Link
+              to="/contact"
+              className="
+                inline-flex items-center gap-2
+                bg-[#00B4D8] hover:bg-[#0077B6]
+                text-white font-['Inter'] font-semibold text-sm
+                px-6 py-2.5 rounded-full
+                transition-all duration-200
+                hover:shadow-[0_0_24px_rgba(0,180,216,0.35)]
+                hover:-translate-y-px active:translate-y-0
+              "
+            >
+              Get Your Free Audit
+              <ArrowRight size={15} />
+            </Link>
+          </div>
+
+          {/* ── Mobile hamburger ─────────────────────────────────────────── */}
+          <button
+            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg text-[#F9FAFB]/70 hover:text-[#F9FAFB] hover:bg-white/[0.06] transition-colors duration-200"
+            onClick={() => setMobileOpen((o) => !o)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+
+        {/* ── Mega-dropdown panel ────────────────────────────────────────── */}
+        <div
+          ref={megaRef}
+          onMouseEnter={handlePanelEnter}
+          onMouseLeave={handlePanelLeave}
+          className={`
+            absolute top-full left-0 right-0
+            overflow-hidden
+            transition-all duration-[250ms] ease-out
+            ${megaOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"}
+          `}
+          aria-hidden={!megaOpen}
+        >
+          <div className="bg-[#0D1B2A]/90 backdrop-blur-[12px] border-b border-white/[0.06] shadow-[0_24px_48px_rgba(0,0,0,0.5)]">
+            <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-8">
+             <div className="grid grid-cols-3 gap-8">
+  {serviceColumns.map((col, index) => (
+    <div
+      key={col.category}
+      className={`
+        relative
+        ${
+          index !== serviceColumns.length - 1
+            ? "after:absolute after:right-[-16px] after:top-1/2 after:-translate-y-1/2 after:h-[70%] after:w-px after:bg-[#00B4D8]/20"
+            : ""
+        }
+      `}
+    >
+                    {/* Column header */}
+                    <div className="flex items-center gap-2.5 mb-5">
+                      <div className="w-8 h-8 rounded-lg bg-[#00B4D8]/10 border border-[#00B4D8]/20 flex items-center justify-center text-[#00B4D8]">
+                        {col.icon}
+                      </div>
+                      <span className="font-['JetBrains_Mono'] text-[#00B4D8] text-xs tracking-[0.2em] uppercase">
+                        {col.category}
+                      </span>
+                    </div>
+
+                    {/* Items */}
+                    <ul className="space-y-1">
+                      {col.items.map((item) => (
+                        <li key={item.label}>
+                          <Link
+                            to={item.href}
+                            onClick={() => setMegaOpen(false)}
+                            className="
+                              group flex flex-col gap-0.5
+                              px-3 py-3 rounded-xl
+                              hover:bg-white/[0.04]
+                              transition-colors duration-150
+                            "
+                          >
+                            <span className="font-['Inter'] text-sm font-medium text-[#F9FAFB] group-hover:text-[#00B4D8] transition-colors duration-150">
+                              {item.label}
+                            </span>
+                            <span className="font-['Inter'] text-xs text-[#6B7280] leading-relaxed">
+                              {item.desc}
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Column CTA */}
+                    <Link
+                      to={col.href}
+                      onClick={() => setMegaOpen(false)}
                       className="
-                      absolute
-                      top-10
-                      left-1/2
-                      -translate-x-1/2
-                      w-[900px]
-                      rounded-3xl
-                      border
-                      border-white/10
-                      bg-[#0D1B2A]
-                      backdrop-blur-xl
-                      shadow-2xl
-                      p-8
+                        inline-flex items-center gap-1.5 mt-4 px-3
+                        font-['Inter'] text-xs font-semibold text-[#00B4D8]
+                        hover:gap-2.5 transition-all duration-200
                       "
                     >
-                      <div className="grid grid-cols-3 gap-6">
-                        {services.map(
-                          (service) => {
-                            const Icon =
-                              service.icon;
-
-                            return (
-                              <Link
-                                key={
-                                  service.title
-                                }
-                                to={
-                                  service.path
-                                }
-                                className="
-                                group
-                                rounded-2xl
-                                border
-                                border-white/5
-                                bg-white/[0.03]
-                                p-6
-                                transition-all
-                                duration-300
-                                hover:border-primary/40
-                                hover:shadow-[0_0_30px_rgba(0,180,216,0.15)]
-                                "
-                              >
-                                <Icon
-                                  size={30}
-                                  className="
-                                  text-primary
-                                  mb-4
-                                  "
-                                />
-
-                                <h3
-                                  className="
-                                  font-heading
-                                  text-lg
-                                  font-semibold
-                                  mb-2
-                                  "
-                                >
-                                  {
-                                    service.title
-                                  }
-                                </h3>
-
-                                <p
-                                  className="
-                                  text-sm
-                                  text-gray-400
-                                  "
-                                >
-                                  {
-                                    service.description
-                                  }
-                                </p>
-                              </Link>
-                            );
-                          }
-                        )}
-                      </div>
-
-                      <div
-                        className="
-                        mt-8
-                        border-t
-                        border-white/10
-                        pt-5
-                        text-center
-                        "
-                      >
-                        <Link
-                          to="/services"
-                          className="
-                          text-primary
-                          font-medium
-                          hover:underline
-                          "
-                        >
-                          View All Services →
-                        </Link>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      View all {col.category}
+                      <ArrowRight size={12} />
+                    </Link>
+                  </div>
+                ))}
               </div>
 
-              <NavItem
-                to="/portfolio"
-                label="Portfolio"
-              />
-
-              <NavItem
-                to="/contact"
-                label="Contact"
-              />
-            </nav>
-
-            {/* CTA */}
-
-            <div className="hidden lg:block">
-              <Link
-                to="/contact"
-                className="
-                bg-primary
-                px-7
-                py-3
-                rounded-full
-                font-semibold
-                text-white
-                hover:bg-secondary
-                transition-all
-                duration-300
-                hover:shadow-[0_0_30px_rgba(0,180,216,0.4)]
-                "
-              >
-                Get Your Free Audit
-              </Link>
+              {/* Bottom strip */}
+              <div className="mt-8 pt-6 border-t border-white/[0.06] flex items-center justify-between">
+                <p className="font-['Inter'] text-xs text-[#6B7280]">
+                  Not sure where to start?{" "}
+                  <Link
+                    to="/contact"
+                    onClick={() => setMegaOpen(false)}
+                    className="text-[#00B4D8] hover:underline"
+                  >
+                    Let's talk.
+                  </Link>
+                </p>
+                <Link
+                  to="/services"
+                  onClick={() => setMegaOpen(false)}
+                  className="
+                    inline-flex items-center gap-2
+                    font-['Inter'] text-xs font-semibold
+                    text-[#F9FAFB]/60 hover:text-[#F9FAFB]
+                    transition-colors duration-200
+                  "
+                >
+                  All Services
+                  <ArrowRight size={12} />
+                </Link>
+              </div>
             </div>
-
-            {/* MOBILE */}
-
-            <button
-              onClick={() =>
-                setMobileOpen(true)
-              }
-              className="lg:hidden"
-            >
-              <Menu size={28} />
-            </button>
           </div>
         </div>
       </header>
 
-      {/* MOBILE MENU */}
+      {/* ── Mobile menu overlay ─────────────────────────────────────────────── */}
+      <div
+        className={`
+          fixed inset-0 z-40 lg:hidden
+          transition-opacity duration-300
+          ${mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
+        `}
+      >
+        {/* Backdrop */}
+        <div
+          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          onClick={() => setMobileOpen(false)}
+        />
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="
-            fixed
-            inset-0
-            z-[60]
-            bg-[#0A0A0A]
-            "
-          >
-            <div className="p-6 flex justify-end">
-              <button
-                onClick={() =>
-                  setMobileOpen(false)
-                }
-              >
-                <X size={32} />
-              </button>
-            </div>
+        {/* Drawer */}
+        <div
+          className={`
+            absolute top-0 right-0 bottom-0 w-[300px]
+            bg-[#0D1B2A] border-l border-white/[0.06]
+            flex flex-col
+            transition-transform duration-300 ease-out
+            ${mobileOpen ? "translate-x-0" : "translate-x-full"}
+          `}
+        >
+          {/* Drawer header */}
+          <div className="flex items-center justify-between px-6 h-[72px] border-b border-white/[0.06] flex-shrink-0">
+            <img src={logo} alt="Krieto" className="h-8 w-auto object-contain" style={{ maxWidth: "120px" }} />
+            <button
+              onClick={() => setMobileOpen(false)}
+              className="w-9 h-9 rounded-lg flex items-center justify-center text-[#6B7280] hover:text-[#F9FAFB] hover:bg-white/[0.06] transition-colors duration-200"
+              aria-label="Close menu"
+            >
+              <X size={18} />
+            </button>
+          </div>
 
-            <div
+          {/* Drawer links */}
+          <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-1" aria-label="Mobile navigation">
+            {navLinks.map((link) =>
+              link.hasMega ? (
+                <div key={link.label}>
+                  {/* Services accordion trigger */}
+                  <button
+                    onClick={() => setMobileServicesOpen((o) => !o)}
+                    className={`
+                      w-full flex items-center justify-between
+                      px-4 py-3 rounded-xl text-left
+                      font-['Inter'] text-sm font-medium
+                      transition-colors duration-200
+                      ${isActive(link.href)
+                        ? "text-[#00B4D8] bg-[#00B4D8]/[0.06]"
+                        : "text-[#F9FAFB]/80 hover:text-[#F9FAFB] hover:bg-white/[0.04]"
+                      }
+                    `}
+                  >
+                    {link.label}
+                    <svg
+                      className={`w-4 h-4 transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`}
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  {/* Services accordion body */}
+                  <div
+                    className={`
+                      overflow-hidden transition-all duration-250
+                      ${mobileServicesOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
+                    `}
+                  >
+                    <div className="ml-4 mt-1 space-y-1 border-l border-white/[0.06] pl-4">
+                      {serviceColumns.map((col) => (
+                        <div key={col.category} className="pt-2">
+                          <p className="font-['JetBrains_Mono'] text-[#00B4D8] text-[10px] tracking-[0.2em] uppercase px-2 mb-1">
+                            {col.category}
+                          </p>
+                          {col.items.map((item) => (
+                            <Link
+                              key={item.label}
+                              to={item.href}
+                              onClick={() => setMobileOpen(false)}
+                              className="block px-2 py-2 font-['Inter'] text-sm text-[#6B7280] hover:text-[#F9FAFB] transition-colors duration-150 rounded-lg hover:bg-white/[0.03]"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={link.label}
+                  to={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`
+                    block px-4 py-3 rounded-xl
+                    font-['Inter'] text-sm font-medium
+                    transition-colors duration-200
+                    ${isActive(link.href)
+                      ? "text-[#00B4D8] bg-[#00B4D8]/[0.06]"
+                      : "text-[#F9FAFB]/80 hover:text-[#F9FAFB] hover:bg-white/[0.04]"
+                    }
+                  `}
+                >
+                  {link.label}
+                </Link>
+              )
+            )}
+          </nav>
+
+          {/* Drawer CTA */}
+          <div className="px-4 pb-8 flex-shrink-0 border-t border-white/[0.06] pt-6">
+            <Link
+              to="/contact"
+              onClick={() => setMobileOpen(false)}
               className="
-              flex
-              flex-col
-              items-center
-              justify-center
-              gap-8
-              h-[80vh]
+                flex items-center justify-center gap-2 w-full
+                bg-[#00B4D8] hover:bg-[#0077B6]
+                text-white font-['Inter'] font-semibold text-sm
+                px-6 py-3.5 rounded-full
+                transition-all duration-200
+                hover:shadow-[0_0_24px_rgba(0,180,216,0.3)]
               "
             >
-              <MobileLink
-                to="/about"
-                text="About"
-                close={() =>
-                  setMobileOpen(false)
-                }
-              />
+              Get Your Free Audit
+              <ArrowRight size={15} />
+            </Link>
+          </div>
+        </div>
+      </div>
 
-              <MobileLink
-                to="/services"
-                text="Services"
-                close={() =>
-                  setMobileOpen(false)
-                }
-              />
-
-              <MobileLink
-                to="/portfolio"
-                text="Portfolio"
-                close={() =>
-                  setMobileOpen(false)
-                }
-              />
-
-              <MobileLink
-                to="/contact"
-                text="Contact"
-                close={() =>
-                  setMobileOpen(false)
-                }
-              />
-
-              <Link
-                to="/contact"
-                className="
-                mt-10
-                bg-primary
-                px-8
-                py-4
-                rounded-full
-                font-semibold
-                "
-              >
-                Get Your Free Audit
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Spacer so page content starts below fixed nav */}
+      <div className="h-[72px]" aria-hidden="true" />
     </>
   );
-};
-
-function NavItem({
-  to,
-  label,
-}: {
-  to: string;
-  label: string;
-}) {
-  return (
-    <NavLink
-      to={to}
-      className={({ isActive }) =>
-        `
-        relative
-        text-sm
-        font-medium
-        transition
-        hover:text-primary
-        ${
-          isActive
-            ? "text-primary"
-            : "text-white"
-        }
-      `
-      }
-    >
-      {({ isActive }) => (
-        <>
-          {label}
-
-          {isActive && (
-            <motion.div
-              layoutId="nav-indicator"
-              className="
-              absolute
-              left-0
-              right-0
-              -bottom-2
-              h-[2px]
-              bg-primary
-              "
-            />
-          )}
-        </>
-      )}
-    </NavLink>
-  );
 }
-
-function MobileLink({
-  to,
-  text,
-  close,
-}: {
-  to: string;
-  text: string;
-  close: () => void;
-}) {
-  return (
-    <Link
-      to={to}
-      onClick={close}
-      className="
-      text-4xl
-      font-heading
-      font-semibold
-      hover:text-primary
-      transition
-      "
-    >
-      {text}
-    </Link>
-  );
-}
-
-export default Navbar;

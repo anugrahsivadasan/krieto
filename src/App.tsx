@@ -1,25 +1,25 @@
-import Navbar from "./components/layout/Navbar"
-import Footer from "./components/layout/Footer"
-import Home from "./pages/Home"
-// import CursorGlow from "./components/global/CursorGlow"
-import ScrollProgress from "./components/global/ScrollProgress"
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import ScrollProgress from "./components/global/ScrollProgress";
 
 function App() {
-
   return (
     <>
-    {/* <CursorGlow /> */}
-  <ScrollProgress />
-    <Navbar />
-    <div className="pt-[]">
-  <Home />
-</div>
-
-    <Footer />
+      <ScrollProgress />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
- 
+export default App;
+
 
