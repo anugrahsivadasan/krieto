@@ -1,7 +1,8 @@
 import { ArrowRight, Mail, Phone, MapPin } from "lucide-react";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import logo from "../../assets/Krieto-logo-white.png";
+import logo from "../../assets/footer-logo.png";
+
 
 const Footer = () => {
   return (
@@ -10,7 +11,7 @@ const Footer = () => {
           FINAL CTA BAND — pre-footer conversion block
           This is separate from the standalone FinalCTA section.
           ───────────────────────────────────────────────────── */}
-      <section className="bg-[#0A0A0A] py-[72px] lg:py-[120px]">
+      {/* <section className="bg-[#0A0A0A] py-[72px] lg:py-[120px]">
         <div className="max-w-[1280px] mx-auto px-6 lg:px-8">
           <div
             className="
@@ -20,7 +21,6 @@ const Footer = () => {
               px-8 py-16 md:px-16 md:py-20
             "
           >
-            {/* Subtle radial glow */}
             <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.3),transparent_60%)]" />
 
             <div className="relative flex flex-col lg:flex-row items-center justify-between gap-8">
@@ -54,7 +54,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ─────────────────────────────────────────────────────
           FOOTER
@@ -68,7 +68,11 @@ const Footer = () => {
             {/* Column 1 — Brand */}
             <div>
               <Link to="/" className="inline-block mb-6">
-                <img src={logo} alt="Krieto" className="h-8 w-auto object-contain" />
+                <img src={logo} alt="Krieto" className="  h-10
+      md:h-14
+      lg:h-16
+      w-auto
+      object-contain" />
               </Link>
 
               <p className="font-body text-[#6B7280] text-sm leading-relaxed mb-8">
@@ -119,8 +123,8 @@ const Footer = () => {
                 Contact
               </h4>
               <ul className="space-y-4">
-                <li><ContactItem icon={<Phone size={16} />} text="+1 (000) 000-0000" /></li>
-                <li><ContactItem icon={<Mail size={16} />} text="hello@krieto.com" /></li>
+                <li><ContactItem icon={<Phone size={16} />} text="+1 (737) 363-4769" /></li>
+                <li><ContactItem icon={<Mail size={16} />} text=" contact@krieto.com" /></li>
                 <li><ContactItem icon={<MapPin size={16} />} text="Texas, United States" /></li>
               </ul>
             </div>

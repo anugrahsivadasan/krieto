@@ -7,8 +7,8 @@ import { Container } from "../global/Section";
 const testimonials = [
   {
     quote:
-      "Krieto completely transformed how we show up online. Within three months, our leads doubled and our brand finally felt premium. They don't just run campaigns — they think like partners.",
-    author: "Sarah Mitchell",
+"Three agencies before Krieto. The difference is they build systems, not campaigns. Results are still running six months after the engagement ended."  , 
+  author: "Sarah Mitchell",
     role: "CEO",
     company: "Pinnacle Hospitality",
     avatar:
@@ -18,8 +18,8 @@ const testimonials = [
   },
   {
     quote:
-      "The team at Krieto brought a level of strategic thinking I'd never experienced from a marketing agency. Every decision was backed by data, and every creative piece was intentional. Outstanding results.",
-    author: "Marcus Rodriguez",
+"Working with Krieto felt different from day one. They talked about our business in terms of revenue, not impressions. We grew 140% in the first quarter." ,  
+  author: "Marcus Rodriguez",
     role: "Founder",
     company: "Velocity Commerce",
     avatar:
@@ -221,11 +221,7 @@ export default function Testimonials() {
               Client Stories
             </p>
             <h2 className="font-['Space_Grotesk'] font-bold text-[#F9FAFB] text-4xl md:text-5xl tracking-tight leading-tight">
-              What Our
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4D8] to-[#90E0EF]">
-                Clients Say
-              </span>
+             Do not take our word for it. Hear it yourself from our clients. 
             </h2>
           </motion.div>
 
@@ -279,13 +275,30 @@ export default function Testimonials() {
         <div className="hidden md:grid grid-cols-2 gap-6 items-stretch">
           <AnimatePresence mode="popLayout" custom={direction}>
             {visibleCards.map(({ key, index }) => (
-              <motion.div
-                key={key}
-                layout
-                custom={direction}
-                initial={(dir) => cardSlideIn(dir)}
-                animate={{ x: 0, opacity: 1, scale: 1 }}
-                exit={(dir) => cardSlideOut(dir)}
+             <motion.div
+  key={key}
+  layout
+  custom={direction}
+  variants={{
+    enter: (dir: number) => ({
+      x: dir > 0 ? 120 : -120,
+      opacity: 0,
+      scale: 0.96,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+    },
+    exit: (dir: number) => ({
+      x: dir > 0 ? -120 : 120,
+      opacity: 0,
+      scale: 0.96,
+    }),
+  }}
+  initial="enter"
+  animate="center"
+  exit="exit"
                 transition={{
                   layout: spring,
                   opacity: { duration: 0.3 },

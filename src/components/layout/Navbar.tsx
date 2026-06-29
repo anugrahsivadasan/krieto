@@ -1,23 +1,38 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ArrowRight, X, Menu } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import logo from "../../assets/Krieto-logo-white.png";
 
-// ─── Mega-dropdown data ───────────────────────────────────────────────────────
 const serviceColumns = [
   {
     category: "Marketing",
     href: "/services/marketing",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-          d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+        />
       </svg>
     ),
     items: [
-      { label: "Digital Marketing", desc: "SEO, content, and growth strategy.", href: "/services/marketing" },
-      { label: "Social Media", desc: "Organic presence that compounds.", href: "/services/marketing" },
-      { label: "Email & CRM", desc: "Sequences that convert and retain.", href: "/services/marketing" },
+      {
+        label: "Digital Marketing",
+        desc: "SEO, content, and growth strategy.",
+        href: "/services/marketing",
+      },
+      {
+        label: "Social Media",
+        desc: "Organic presence that compounds.",
+        href: "/services/marketing",
+      },
+      {
+        label: "Email & CRM",
+        desc: "Sequences that convert and retain.",
+        href: "/services/marketing",
+      },
     ],
   },
   {
@@ -25,14 +40,30 @@ const serviceColumns = [
     href: "/services/advertising",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-          d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"
+        />
       </svg>
     ),
     items: [
-      { label: "Paid Search (PPC)", desc: "Google & Bing ads that pay back.", href: "/services/advertising" },
-      { label: "Paid Social", desc: "Meta, TikTok, LinkedIn campaigns.", href: "/services/advertising" },
-      { label: "Programmatic", desc: "Precision display at scale.", href: "/services/advertising" },
+      {
+        label: "Paid Search (PPC)",
+        desc: "Google & Bing ads that pay back.",
+        href: "/services/advertising",
+      },
+      {
+        label: "Paid Social",
+        desc: "Meta, TikTok, LinkedIn campaigns.",
+        href: "/services/advertising",
+      },
+      {
+        label: "Programmatic",
+        desc: "Precision display at scale.",
+        href: "/services/advertising",
+      },
     ],
   },
   {
@@ -40,14 +71,30 @@ const serviceColumns = [
     href: "/services/design",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+        />
       </svg>
     ),
     items: [
-      { label: "Brand Identity", desc: "Logos, systems, and visual language.", href: "/services/design" },
-      { label: "Web & UI Design", desc: "Interfaces built to convert.", href: "/services/design" },
-      { label: "Content Creation", desc: "Visuals and copy that command attention.", href: "/services/design" },
+      {
+        label: "Brand Identity",
+        desc: "Logos, systems, and visual language.",
+        href: "/services/design",
+      },
+      {
+        label: "Web & UI Design",
+        desc: "Interfaces built to convert.",
+        href: "/services/design",
+      },
+      {
+        label: "Content Creation",
+        desc: "Visuals and copy that command attention.",
+        href: "/services/design",
+      },
     ],
   },
 ];
@@ -59,31 +106,28 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-// ─── Navbar ───────────────────────────────────────────────────────────────────
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+
   const location = useLocation();
   const megaRef = useRef<HTMLDivElement>(null);
   const megaTriggerRef = useRef<HTMLButtonElement>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Scroll listener — transparent → solid at 80px
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mega on route change
   useEffect(() => {
     setMegaOpen(false);
     setMobileOpen(false);
   }, [location.pathname]);
 
-  // Close mega on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (
@@ -99,48 +143,45 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [mobileOpen]);
 
   const isActive = (href: string) =>
-    href === "/"
-      ? location.pathname === "/"
-      : location.pathname.startsWith(href);
+    href === "/" ? location.pathname === "/" : location.pathname.startsWith(href);
 
-  // Hover intent helpers — delayed close so cursor can travel to panel
   const handleServicesEnter = () => {
     if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
     setMegaOpen(true);
   };
+
   const handleServicesLeave = () => {
     closeTimerRef.current = setTimeout(() => setMegaOpen(false), 120);
   };
+
   const handlePanelEnter = () => {
     if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
   };
+
   const handlePanelLeave = () => {
     closeTimerRef.current = setTimeout(() => setMegaOpen(false), 120);
   };
 
   return (
     <>
-      {/* ── Nav bar ────────────────────────────────────────────────────────── */}
       <header
         className={`
           fixed top-0 left-0 right-0 z-50 h-[72px]
           transition-all duration-300 ease-in-out
           ${scrolled
             ? "bg-[#0D1B2A]/95 backdrop-blur-[12px] shadow-[0_1px_0_rgba(255,255,255,0.06)]"
-            : "bg-transparent backdrop-blur-[12px]"
-          }
+            : "bg-transparent backdrop-blur-[12px]"}
         `}
       >
         <div className="max-w-[1280px] mx-auto px-6 lg:px-8 h-full flex items-center justify-between gap-8">
-
-          {/* ── Logo ─────────────────────────────────────────────────────── */}
           <Link to="/" className="flex-shrink-0 flex items-center" aria-label="Krieto home">
             <img
               src={logo}
@@ -150,11 +191,9 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* ── Desktop center nav ───────────────────────────────────────── */}
           <nav className="hidden lg:flex items-center gap-1" aria-label="Primary navigation">
             {navLinks.map((link) =>
               link.hasMega ? (
-                /* Services trigger */
                 <div key={link.label} className="relative">
                   <button
                     ref={megaTriggerRef}
@@ -170,26 +209,26 @@ export default function Navbar() {
                       transition-colors duration-200
                       ${isActive(link.href)
                         ? "text-[#00B4D8]"
-                        : "text-[#F9FAFB]/70 hover:text-[#F9FAFB]"
-                      }
+                        : "text-[#F9FAFB]/70 hover:text-[#F9FAFB]"}
                     `}
                   >
                     {link.label}
-                    {/* Chevron */}
                     <svg
-                      className={`w-3.5 h-3.5 transition-transform duration-200 ${megaOpen ? "rotate-180" : ""}`}
-                      fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                      className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                        megaOpen ? "rotate-180" : ""
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
-                    {/* Active dot */}
                     {isActive(link.href) && (
                       <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#00B4D8]" />
                     )}
                   </button>
                 </div>
               ) : (
-                /* Regular link */
                 <Link
                   key={link.label}
                   to={link.href}
@@ -200,8 +239,7 @@ export default function Navbar() {
                     transition-colors duration-200
                     ${isActive(link.href)
                       ? "text-[#00B4D8]"
-                      : "text-[#F9FAFB]/70 hover:text-[#F9FAFB]"
-                    }
+                      : "text-[#F9FAFB]/70 hover:text-[#F9FAFB]"}
                   `}
                 >
                   {link.label}
@@ -213,7 +251,6 @@ export default function Navbar() {
             )}
           </nav>
 
-          {/* ── Desktop CTA ──────────────────────────────────────────────── */}
           <div className="hidden lg:flex items-center">
             <Link
               to="/contact"
@@ -232,7 +269,6 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* ── Mobile hamburger ─────────────────────────────────────────── */}
           <button
             className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg text-[#F9FAFB]/70 hover:text-[#F9FAFB] hover:bg-white/[0.06] transition-colors duration-200"
             onClick={() => setMobileOpen((o) => !o)}
@@ -243,7 +279,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* ── Mega-dropdown panel ────────────────────────────────────────── */}
         <div
           ref={megaRef}
           onMouseEnter={handlePanelEnter}
@@ -258,20 +293,19 @@ export default function Navbar() {
         >
           <div className="bg-[#0D1B2A]/90 backdrop-blur-[12px] border-b border-white/[0.06] shadow-[0_24px_48px_rgba(0,0,0,0.5)]">
             <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-8">
-             <div className="grid grid-cols-3 gap-8">
-  {serviceColumns.map((col, index) => (
-    <div
-      key={col.category}
-      className={`
-        relative
-        ${
-          index !== serviceColumns.length - 1
-            ? "after:absolute after:right-[-16px] after:top-1/2 after:-translate-y-1/2 after:h-[70%] after:w-px after:bg-[#00B4D8]/20"
-            : ""
-        }
-      `}
-    >
-                    {/* Column header */}
+              <div className="grid grid-cols-3 gap-8">
+                {serviceColumns.map((col, index) => (
+                  <div
+                    key={col.category}
+                    className={`
+                      relative
+                      ${
+                        index !== serviceColumns.length - 1
+                          ? "after:absolute after:right-[-16px] after:top-1/2 after:-translate-y-1/2 after:h-[70%] after:w-px after:bg-[#00B4D8]/20"
+                          : ""
+                      }
+                    `}
+                  >
                     <div className="flex items-center gap-2.5 mb-5">
                       <div className="w-8 h-8 rounded-lg bg-[#00B4D8]/10 border border-[#00B4D8]/20 flex items-center justify-center text-[#00B4D8]">
                         {col.icon}
@@ -281,7 +315,6 @@ export default function Navbar() {
                       </span>
                     </div>
 
-                    {/* Items */}
                     <ul className="space-y-1">
                       {col.items.map((item) => (
                         <li key={item.label}>
@@ -298,15 +331,12 @@ export default function Navbar() {
                             <span className="font-['Inter'] text-sm font-medium text-[#F9FAFB] group-hover:text-[#00B4D8] transition-colors duration-150">
                               {item.label}
                             </span>
-                            <span className="font-['Inter'] text-xs text-[#6B7280] leading-relaxed">
-                              {item.desc}
-                            </span>
+                            <span className="font-['Inter'] text-xs text-[#6B7280] leading-relaxed">{item.desc}</span>
                           </Link>
                         </li>
                       ))}
                     </ul>
 
-                    {/* Column CTA */}
                     <Link
                       to={col.href}
                       onClick={() => setMegaOpen(false)}
@@ -323,15 +353,10 @@ export default function Navbar() {
                 ))}
               </div>
 
-              {/* Bottom strip */}
               <div className="mt-8 pt-6 border-t border-white/[0.06] flex items-center justify-between">
                 <p className="font-['Inter'] text-xs text-[#6B7280]">
                   Not sure where to start?{" "}
-                  <Link
-                    to="/contact"
-                    onClick={() => setMegaOpen(false)}
-                    className="text-[#00B4D8] hover:underline"
-                  >
+                  <Link to="/contact" onClick={() => setMegaOpen(false)} className="text-[#00B4D8] hover:underline">
                     Let's talk.
                   </Link>
                 </p>
@@ -352,23 +377,9 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-      </header>
 
-      {/* ── Mobile menu overlay ─────────────────────────────────────────────── */}
-      <div
-        className={`
-          fixed inset-0 z-40 lg:hidden
-          transition-opacity duration-300
-          ${mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
-        `}
-      >
-        {/* Backdrop */}
-        <div
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-          onClick={() => setMobileOpen(false)}
-        />
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm hidden" />
 
-        {/* Drawer */}
         <div
           className={`
             absolute top-0 right-0 bottom-0 w-[300px]
@@ -376,9 +387,9 @@ export default function Navbar() {
             flex flex-col
             transition-transform duration-300 ease-out
             ${mobileOpen ? "translate-x-0" : "translate-x-full"}
+            lg:hidden
           `}
         >
-          {/* Drawer header */}
           <div className="flex items-center justify-between px-6 h-[72px] border-b border-white/[0.06] flex-shrink-0">
             <img src={logo} alt="Krieto" className="h-8 w-auto object-contain" style={{ maxWidth: "120px" }} />
             <button
@@ -390,12 +401,10 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Drawer links */}
           <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-1" aria-label="Mobile navigation">
             {navLinks.map((link) =>
               link.hasMega ? (
                 <div key={link.label}>
-                  {/* Services accordion trigger */}
                   <button
                     onClick={() => setMobileServicesOpen((o) => !o)}
                     className={`
@@ -405,20 +414,20 @@ export default function Navbar() {
                       transition-colors duration-200
                       ${isActive(link.href)
                         ? "text-[#00B4D8] bg-[#00B4D8]/[0.06]"
-                        : "text-[#F9FAFB]/80 hover:text-[#F9FAFB] hover:bg-white/[0.04]"
-                      }
+                        : "text-[#F9FAFB]/80 hover:text-[#F9FAFB] hover:bg-white/[0.04]"}
                     `}
                   >
                     {link.label}
                     <svg
                       className={`w-4 h-4 transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`}
-                      fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
 
-                  {/* Services accordion body */}
                   <div
                     className={`
                       overflow-hidden transition-all duration-250
@@ -457,8 +466,7 @@ export default function Navbar() {
                     transition-colors duration-200
                     ${isActive(link.href)
                       ? "text-[#00B4D8] bg-[#00B4D8]/[0.06]"
-                      : "text-[#F9FAFB]/80 hover:text-[#F9FAFB] hover:bg-white/[0.04]"
-                    }
+                      : "text-[#F9FAFB]/80 hover:text-[#F9FAFB] hover:bg-white/[0.04]"}
                   `}
                 >
                   {link.label}
@@ -467,7 +475,6 @@ export default function Navbar() {
             )}
           </nav>
 
-          {/* Drawer CTA */}
           <div className="px-4 pb-8 flex-shrink-0 border-t border-white/[0.06] pt-6">
             <Link
               to="/contact"
@@ -486,10 +493,10 @@ export default function Navbar() {
             </Link>
           </div>
         </div>
-      </div>
 
-      {/* Spacer so page content starts below fixed nav */}
-      <div className="h-[72px]" aria-hidden="true" />
+        <div className="h-[72px]" aria-hidden="true" />
+      </header>
     </>
   );
 }
+

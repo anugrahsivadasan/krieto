@@ -27,12 +27,12 @@ const FinalCTA = () => {
           transition={{ duration: 0.7, ease: EASE }}
         >
           {/* Eyebrow */}
-          <p className="
+          {/* <p className="
             font-body uppercase tracking-[0.15em]
             text-white/70 text-[13px] font-semibold mb-6
           ">
             Free Strategy Session
-          </p>
+          </p> */}
 
           {/* Headline */}
           <h2 className="
@@ -41,17 +41,19 @@ const FinalCTA = () => {
             leading-[1.02] tracking-[-0.03em]
             max-w-3xl mx-auto mb-6
           ">
-            Ready to Build Something Remarkable?
+           Your next client is already looking for you. 
           </h2>
 
           {/* Subtext */}
-          <p className="
-            font-body text-white/80 text-lg md:text-xl
-            max-w-xl mx-auto leading-relaxed mb-10
-          ">
-            Start with a free 30-minute strategy session.
-            No pressure, no commitment — just real ideas for your growth.
-          </p>
+         <p
+  className="
+    font-body text-white/80 text-lg md:text-xl
+    max-w-xl mx-auto leading-relaxed mb-10
+  "
+>
+  Tell us about your business, your goals, and your challenges.
+  We'll review your enquiry and get back to you with the right next steps.
+</p>
 
           {/* CTA Button */}
           <motion.div
@@ -73,14 +75,14 @@ const FinalCTA = () => {
                 transition-shadow duration-300
               "
             >
-              Get Your Free Audit
+              Ready to have a Conversation 
               <ArrowRight size={16} />
             </Link>
           </motion.div>
 
           {/* Trust line */}
           <p className="font-body text-sm text-white/50 mt-6">
-            No contracts. No hidden fees. Results guaranteed.
+            Custom Quotes. No hidden fees. Results guaranteed.
           </p>
         </motion.div>
       </div>

@@ -1,163 +1,154 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Container } from "../global/Section";
-
-const EASE: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
-
-const projects = [
-  {
-    title: "Brand Overhaul",
-    category: "Brand & Design",
-    description:
-      "Complete visual identity rebrand for a Texas-based hospitality group, from logo to digital presence.",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop",
-    tag: "Brand Identity",
-    href: "/portfolio",
-  },
-  {
-    title: "Performance Campaign",
-    category: "Paid Advertising",
-    description:
-      "Multi-channel Google and Meta campaign achieving 4.2× ROAS for a regional retail brand.",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format&fit=crop",
-    tag: "Advertising",
-    href: "/portfolio",
-  },
-  {
-    title: "Digital Growth Strategy",
-    category: "Digital Marketing",
-    description:
-      "SEO, content, and social strategy that grew organic traffic by 280% in six months.",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&auto=format&fit=crop",
-    tag: "Marketing",
-    href: "/portfolio",
-  },
-];
-
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 40 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.6, delay, ease: EASE },
-});
+import { ArrowRight } from "lucide-react";
+import PortfolioCard from "./PortfolioCard";
+import { portfolio } from "../../data/portfolio";
 
 const FeaturedWork = () => {
   return (
-    <section className="relative bg-[#0D1B2A] py-[120px]" id="work">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <section className="relative overflow-hidden bg-[#0A0A0A] py-32">
 
-      <Container>
-        {/* ─── Heading ──────────────────────────────────── */}
-        <motion.div {...fadeUp(0)} className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div>
-            <p className="
-              font-body uppercase tracking-[0.15em]
-              text-[#00B4D8] text-[13px] font-semibold mb-4
-            ">
-              Featured Work
-            </p>
-            <h2 className="
-              font-heading font-extrabold text-white
-              text-[clamp(2rem,4.5vw,3.5rem)]
-              leading-[1.05] tracking-[-0.02em]
-            ">
-              Results We're
-              <br />
-              Proud Of
-            </h2>
+      {/* Background Glow */}
+
+      <div className="absolute inset-0">
+
+        <div className="absolute left-20 top-40 h-[450px] w-[450px] rounded-full bg-primary/15 blur-[150px]" />
+
+        <div className="absolute right-0 bottom-0 h-[500px] w-[500px] rounded-full bg-secondary/15 blur-[180px]" />
+
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-[1500px] px-6 lg:px-10">
+
+        {/* Heading */}
+
+        <motion.div
+          initial={{
+            opacity:0,
+            y:40,
+          }}
+          whileInView={{
+            opacity:1,
+            y:0,
+          }}
+          viewport={{
+            once:true,
+          }}
+          transition={{
+            duration:.7,
+          }}
+          className="mb-20 text-center"
+        >
+
+          <p className="mb-4 uppercase tracking-[0.2em] text-primary">
+            FEATURED WORK
+          </p>
+
+          <h2 className="mb-6 text-5xl font-heading font-bold lg:text-6xl">
+            The Work Speaks First. 
+          </h2>
+
+          <p className="mx-auto max-w-2xl text-lg text-gray-400">
+            Results are not just a promise here. They are a portfolio entry. 
+
+          </p>
+
+        </motion.div>
+
+        {/* Grid */}
+
+        <div className="grid gap-8 lg:grid-cols-[1.8fr_1fr]">
+
+          <motion.div
+            initial={{
+              opacity:0,
+              x:-40,
+            }}
+            whileInView={{
+              opacity:1,
+              x:0,
+            }}
+            viewport={{
+              once:true,
+            }}
+          >
+            <PortfolioCard
+              {...portfolio[0]}
+              large
+            />
+          </motion.div>
+
+          <div className="grid gap-8">
+
+            {portfolio.slice(1).map((item,index)=>(
+              <motion.div
+                key={item.id}
+                initial={{
+                  opacity:0,
+                  x:40,
+                }}
+                whileInView={{
+                  opacity:1,
+                  x:0,
+                }}
+                viewport={{
+                  once:true,
+                }}
+                transition={{
+                  delay:index*.2,
+                }}
+              >
+                <PortfolioCard {...item}/>
+              </motion.div>
+            ))}
+
           </div>
+
+        </div>
+
+        {/* Button */}
+
+        <motion.div
+          initial={{
+            opacity:0,
+            y:30,
+          }}
+          whileInView={{
+            opacity:1,
+            y:0,
+          }}
+          viewport={{
+            once:true,
+          }}
+          className="mt-20 text-center"
+        >
 
           <Link
             to="/portfolio"
             className="
-              flex-shrink-0
-              inline-flex items-center gap-2
-              text-sm font-semibold text-[#00B4D8]
-              hover:gap-3 transition-all duration-300
-            "
+            inline-flex
+            items-center
+            gap-3
+            rounded-full
+            border
+            border-white/10
+            px-8
+            py-4
+            font-semibold
+            transition-all
+            duration-300
+            hover:border-primary
+            hover:bg-primary/10
+          "
           >
-            View All Work
-            <ArrowUpRight size={16} />
+            See All Work
+
+            <ArrowRight size={18}/>
           </Link>
+
         </motion.div>
 
-        {/* ─── Cards ────────────────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              {...fadeUp(index * 0.1)}
-            >
-              <Link
-                to={project.href}
-                className="group relative flex flex-col rounded-2xl overflow-hidden bg-[#1E1E1E] border border-white/[0.06] h-full transition-all duration-500 hover:shadow-[0_12px_40px_rgba(0,180,216,0.15)]"
-              >
-                {/* Image */}
-                <div className="relative overflow-hidden aspect-[4/3]">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                    loading="lazy"
-                  />
-
-                  {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1E1E1E] via-transparent to-transparent opacity-60" />
-
-                  {/* Category tag */}
-                  <div className="
-                    absolute top-4 left-4
-                    px-3 py-1.5
-                    rounded-full
-                    bg-[#00B4D8]/90 backdrop-blur-sm
-                    font-body text-xs font-semibold text-white
-                    uppercase tracking-wide
-                  ">
-                    {project.tag}
-                  </div>
-
-                  {/* Ghost CTA — reveals on hover */}
-                  <div className="
-                    absolute inset-0 flex items-center justify-center
-                    opacity-0 group-hover:opacity-100
-                    transition-opacity duration-400
-                  ">
-                    <span className="
-                      flex items-center gap-2
-                      border border-white/80 text-white
-                      px-6 py-3 rounded-full
-                      font-body text-sm font-semibold
-                      backdrop-blur-sm bg-black/20
-                    ">
-                      View Project
-                      <ArrowUpRight size={14} />
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="flex flex-col flex-1 p-6">
-                  <p className="font-body text-[13px] text-[#6B7280] uppercase tracking-wide mb-2">
-                    {project.category}
-                  </p>
-                  <h3 className="font-heading text-xl font-bold text-white mb-3">
-                    {project.title}
-                  </h3>
-                  <p className="font-body text-sm text-[#9CA3AF] leading-relaxed">
-                    {project.description}
-                  </p>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </Container>
-
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      </div>
     </section>
   );
 };

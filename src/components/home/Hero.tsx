@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+
 import Aurora from "../global/Aurora";
 
 const EASE: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
@@ -38,14 +40,26 @@ const Hero = () => {
         />
       </div>
 
-      {/* Dark overlay for legibility */}
-      <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+<div className="absolute inset-0">
+  <Aurora
+    colorStops={[
+      "#03045E",
+      "#0077B6",
+      "#00B4D8",
+    ]}
+    blend={0.35}
+    amplitude={0.8}
+    speed={0.8}
+  />
+</div>
+<div className="absolute inset-0 bg-black/35" />
+   
 
       {/* ─── Content ────────────────────────────────────── */}
       <div className="relative z-10 w-full pt-[72px]">
         {/* pt-[72px] offsets the fixed navbar */}
         <div className="max-w-[1280px] mx-auto px-6 lg:px-8 py-[120px] lg:py-[160px]">
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
 
             {/* EYEBROW */}
             <motion.p
@@ -56,38 +70,97 @@ const Hero = () => {
                 text-[#00B4D8] mb-6
               "
             >
-              Texas-Based. Globally Trusted.
+              ADVERTISING  ·  DESIGN  ·  MARKETING 
             </motion.p>
 
             {/* HEADLINE */}
-            <motion.h1
-              {...fadeUp(0.1)}
-              className="
-                font-heading font-extrabold text-white
-                leading-[0.93] tracking-[-0.04em]
-                text-[clamp(3rem,7vw,5.5rem)]
-                mb-8
-              "
-            >
-              We Build Brands
-              <br />
-              That Command
-              <br />
-              Attention.
-            </motion.h1>
+            <h1
+  className="
+    font-heading font-extrabold
+    leading-[0.93]
+    tracking-[-0.04em]
+    text-[clamp(3rem,7vw,5.5rem)]
+    mb-8
+  "
+>
+  <div className="overflow-hidden leading-[0.93]">
+    <motion.span
+      initial={{ y: 120 }}
+      animate={{ y: 0 }}
+      transition={{
+        duration: 1.1,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="block text-white"
+    >
+      Your Growth.
+    </motion.span>
+  </div>
+
+  <div className="overflow-hidden leading-[0.93]">
+    <motion.span 
+      initial={{ y: 120 }}
+      animate={{ y: 0 }}
+      transition={{
+        duration: 1.1,
+        delay: 0.08,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="
+        block
+        bg-gradient-to-r
+        from-cyan-400
+        via-sky-300
+        to-cyan-500
+        bg-clip-text
+        text-transparent
+        pb-2
+      "
+    >
+      Engineered.
+    </motion.span>
+  </div>
+</h1>
 
             {/* SUB-HEADLINE */}
             <motion.p
               {...fadeUp(0.2)}
               className="
-                font-body text-[#9CA3AF]
-                text-lg md:text-xl
-                leading-relaxed
-                max-w-xl mb-10
+              text-[#9CA3AF]
+              text-xl
+              md:text-4xl
+              leading-relaxed
+              max-w-4xl
+              mb-12
               "
             >
-              Full-service advertising, marketing, and design
-              for businesses that refuse to blend in.
+            We Build Brands That Command Attention. 
+            </motion.p>
+            <motion.p
+              initial={{
+                opacity: 0,
+                y: 30,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.9,
+                delay: 0.15,
+              }}
+              className="
+              text-[#9CA3AF]
+              text-lg
+              md:text-xl
+              leading-relaxed
+              max-w-2xl
+              mb-12
+              "
+            >
+              We are the growth system your business has been missing. Design 
+that gets you chosen. Advertising that gets you seen. Marketing that keeps you relevant. 
+              
             </motion.p>
 
             {/* CTA BUTTONS */}
@@ -109,7 +182,9 @@ const Hero = () => {
                   hover:scale-[1.02]
                 "
               >
-                Get Your Free Audit
+                Start a conversation
+                            <ArrowRight size={18}/>
+
               </Link>
 
               {/* Secondary CTA */}
@@ -145,8 +220,9 @@ const Hero = () => {
                   />
                 ))}
               </div>
-              <p className="font-body text-sm text-[#9CA3AF]">
-                Trusted by businesses across Texas and beyond
+
+              <p className="text-[#9CA3AF]">
+Trusted by ambitious businesses, Globally .Building the brands their markets remember. 
               </p>
             </motion.div>
           </div>
