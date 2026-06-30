@@ -54,26 +54,26 @@ const ServicesOverview = () => {
                     delay: index * 0.15,
                   }}
                 >
-                  <Link
-                    to={service.link}
-                    className={`
-                      group
-                      relative
-                      flex
-                      h-full
-                      flex-col
-                      overflow-hidden
-                      rounded-[32px]
-                      border
-                      border-white/10
-                      bg-[#111827]
-                      p-10
-                      transition-all
-                      duration-500
-                      hover:-translate-y-3
-                      ${service.border}
-                    `}
-                  >
+                <Link
+  to={service.link}
+  className={`
+    group
+    relative
+    flex
+    h-full
+    flex-col
+    overflow-hidden
+    rounded-[32px]
+    border
+    border-white/10
+    bg-[#111827]
+    p-10
+    transition-all
+    duration-500
+    hover:-translate-y-3
+    ${service.border}
+  `}
+>
                     <div
                       className={`absolute inset-0 bg-gradient-to-br ${service.bg} opacity-0 transition duration-500 group-hover:opacity-30`}
                     />
@@ -85,37 +85,46 @@ const ServicesOverview = () => {
                       <Icon size={30} style={{ color: service.accent }} />
                     </div>
 
-                    <div className="relative z-10 flex flex-1 flex-col">
-                      <p
-                        className="text-sm font-bold tracking-[0.25em]"
-                        style={{ color: service.accent }}
-                      >
-                        {service.title}
-                      </p>
+                   <div className="relative z-10 flex flex-1 flex-col">
 
-                      <h3 className="mt-5 text-3xl font-bold leading-tight text-white">
-                        {service.subtitle}
-                      </h3>
+  <p
+    className="text-sm font-bold tracking-[0.25em]"
+    style={{ color: service.accent }}
+  >
+    {service.title}
+  </p>
 
-                      <p className="mt-6 flex-1 leading-8 text-slate-400">
-                        {service.paragraphheading}
-                      </p>
+  <h3 className="mt-5 text-3xl font-bold leading-tight text-white">
+    {service.subtitle}
+  </h3>
 
-                      <p className=" flex-1 leading-8 text-slate-400">
-                        {service.description}
-                      </p>
+  {/* Text content */}
+  <div className="mt-6 flex-1">
 
-                      <div
-                        className="mt-10 inline-flex items-center gap-3 font-semibold transition-all group-hover:gap-5"
-                        style={{ color: service.accent }}
-                      >
-                        {service.button}
-                        <ArrowRight
-                          size={18}
-                          className="transition-transform duration-300 group-hover:translate-x-2"
-                        />
-                      </div>
-                    </div>
+    <p className="font-semibold leading-7 text-white">
+      {service.paragraphheading}
+    </p>
+
+    <p className="mt-4 leading-8 text-slate-400">
+      {service.description}
+    </p>
+
+  </div>
+
+  {/* Button stays at bottom */}
+  <div
+    className="mt-10 inline-flex items-center gap-3 font-semibold transition-all group-hover:gap-5"
+    style={{ color: service.accent }}
+  >
+    {service.button}
+
+    <ArrowRight
+      size={18}
+      className="transition-transform duration-300 group-hover:translate-x-2"
+    />
+  </div>
+
+</div>
                   </Link>
                 </motion.div>
               );

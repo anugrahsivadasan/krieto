@@ -21,11 +21,16 @@ const stats = [
     title: "Accountability on every brief ",
     // description: "Committed to delivering quality every time.",
   },
+  // {
+  //   end:3,
+  //   title: "Pillars. Zero gaps. ",
+  //   description: "Serving clients globally.",
+  // },
   {
-    end:3,
-    title: "Pillars. Zero gaps. ",
-    // description: "Serving clients globally.",
-  },
+  icon: true,
+  title: "Growth is Shared",
+  // description: "Growing together with every client we partner with.",
+},
 ];
 
 const EASE: [number, number, number, number] = [
@@ -212,19 +217,36 @@ const StatsSection = () => {
 
               <div className="relative z-10">
 
-               <h3
-  className="
-    font-heading
-    font-bold
-    text-[clamp(3rem,6vw,4.5rem)]
-    leading-none
-    text-cyan-400
-  "
->
-  {stat.end}
-  {stat.suffix}
-</h3>
-
+    {stat.icon ? (
+  <div
+    className="
+      group
+              relative
+              overflow-hidden
+              rounded-[28px]
+              border
+              border-white/10
+              bg-white/[0.04]
+              backdrop-blur-2xl
+              p-8
+              transition-all
+              duration-500
+              hover:border-cyan-400/40
+    "
+  >
+    <Infinity
+      className="text-cyan-400"
+      size={98}
+      strokeWidth={2.3}
+    />
+  </div>
+) : (
+  <Counter
+    end={stat.end!}
+    suffix={stat.suffix}
+    label=""
+  />
+)}
                 <h4
                   className="
                   mt-6
@@ -244,7 +266,7 @@ const StatsSection = () => {
                   text-sm
                   "
                 >
-                  {stat.description}
+                  {/* {stat.description} */}
                 </p>
 
               </div>
