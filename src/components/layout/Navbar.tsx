@@ -174,7 +174,7 @@ export default function Navbar() {
     <>
       <header
         className={`
-          fixed top-0 left-0 right-0 z-50 h-[72px]
+          fixed top-0 left-0 right-0 z-50 h-[80px]
           transition-all duration-300 ease-in-out
           ${scrolled
             ? "bg-[#0D1B2A]/95 backdrop-blur-[12px] shadow-[0_1px_0_rgba(255,255,255,0.06)]"
@@ -182,14 +182,21 @@ export default function Navbar() {
         `}
       >
         <div className="max-w-[1280px] mx-auto px-6 lg:px-8 h-full flex items-center justify-between gap-8">
-          <Link to="/" className="flex-shrink-0 flex items-center" aria-label="Krieto home">
-            <img
-              src={logo}
-              alt="Krieto"
-              className="h-60 w-auto object-contain"
-              style={{ maxWidth: "190px" }}
-            />
-          </Link>
+         <Link
+  to="/"
+  className="flex-shrink-0 flex items-center overflow-visible"
+  aria-label="Krieto home"
+>
+  <img
+    src={logo}
+    alt="Krieto"
+    className="w-auto object-contain scale-105 origin-left"
+    style={{
+      height: "112px",
+      maxWidth: "220px",
+    }}
+  />
+</Link>
 
           <nav className="hidden lg:flex items-center gap-1" aria-label="Primary navigation">
             {navLinks.map((link) =>

@@ -7,6 +7,7 @@ import UnderConstruction from "./pages/UnderConstruction";
 
 import ScrollProgress from "./components/global/ScrollProgress";
 import FloatingWhatsApp from "./components/global/FloatingWhatsApp";
+import AboutPage from "./pages/About";
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
@@ -30,7 +31,7 @@ function App() {
 
           <Route
             path="/about"
-            element={<UnderConstruction />}
+            element={<AboutPage />}
           />
 
           <Route
