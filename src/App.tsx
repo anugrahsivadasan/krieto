@@ -7,6 +7,9 @@ import UnderConstruction from "./pages/UnderConstruction";
 
 import ScrollProgress from "./components/global/ScrollProgress";
 import FloatingWhatsApp from "./components/global/FloatingWhatsApp";
+import Contact from "./pages/Contact";
+import { ToastContainer } from "react-toastify";
+
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
@@ -45,7 +48,7 @@ function App() {
 
           <Route
             path="/contact"
-            element={<UnderConstruction />}
+            element={<Contact/>}
           />
 
           <Route
@@ -63,6 +66,8 @@ function App() {
       <Footer />
 
       <FloatingWhatsApp />
+            <ToastContainer />
+
     </>
   );
 }

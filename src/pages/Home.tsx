@@ -6,13 +6,15 @@ import StatsSection from "../components/home/StatsSection";
 import FeaturedWork from "../components/home/FeaturedWork";
 import FinalCTA from "../components/home/FinalCTA";
 import Testimonials from "../components/home/Testimonials";
+import ServicesShowcase from "@/components/home/ServicesShowcase";
 
 const Home = () => {
   return (
     <main>
       <Hero />
       <CredibilityBar />
-      <ServicesOverview />
+      {/* <ServicesOverview /> */}
+      <ServicesShowcase />
       <ProcessSection />
       <StatsSection />
       <FeaturedWork />

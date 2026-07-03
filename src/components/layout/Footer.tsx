@@ -1,5 +1,5 @@
 import { ArrowRight, Mail, Phone, MapPin } from "lucide-react";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaX } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import logo from "../../assets/footer-logo.png";
 
@@ -82,10 +82,10 @@ const Footer = () => {
 
               {/* Socials */}
               <div className="flex gap-3">
-                <SocialIcon href="#" label="Facebook"><FaFacebookF /></SocialIcon>
-                <SocialIcon href="#" label="Instagram"><FaInstagram /></SocialIcon>
-                <SocialIcon href="#" label="LinkedIn"><FaLinkedinIn /></SocialIcon>
-                <SocialIcon href="#" label="X (Twitter)"><FaXTwitter /></SocialIcon>
+                <SocialIcon href="https://www.facebook.com/profile.php?id=61591558468476" label="Facebook"><FaFacebookF /></SocialIcon>
+                <SocialIcon href="https://www.instagram.com/krieto.co" label="Instagram"><FaInstagram /></SocialIcon>
+                <SocialIcon href="https://linkedin.com/company/krieto" label="LinkedIn"><FaLinkedinIn /></SocialIcon>
+                <SocialIcon href="https://x.com/Krieto_co" label="X (Twitter)"><FaX /></SocialIcon>
               </div>
             </div>
 

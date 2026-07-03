@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowUpRight  } from "lucide-react";
 import { Container } from "../global/Section";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -70,7 +70,7 @@ function TestimonialCard({ t }: { t: (typeof testimonials)[0] }) {
         </svg>
 
         {/* 5 stars */}
-        <div className="flex gap-1">
+        {/* <div className="flex gap-1">
           {[...Array(5)].map((_, i) => (
             <svg
               key={i}
@@ -82,7 +82,7 @@ function TestimonialCard({ t }: { t: (typeof testimonials)[0] }) {
               <path d="M8 1.3l1.5 3 3.3.5-2.4 2.3.6 3.3L8 8.9l-3 1.5.6-3.3L3.2 4.8l3.3-.5L8 1.3z" />
             </svg>
           ))}
-        </div>
+        </div> */}
       </div>
 
       {/* Quote text */}
@@ -112,14 +112,14 @@ function TestimonialCard({ t }: { t: (typeof testimonials)[0] }) {
           </div>
         </div>
 
-        <div className="flex-shrink-0 text-right">
+        {/* <div className="flex-shrink-0 text-right">
           <p className="font-['Space_Grotesk'] font-bold text-[#00B4D8] text-base leading-none">
             {t.metric}
           </p>
           <p className="font-['JetBrains_Mono'] text-[10px] text-[#6B7280] tracking-widest uppercase mt-1">
             {t.period}
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -137,39 +137,35 @@ export default function Testimonials() {
   const [visibleCards, setVisibleCards] = useState([
     { key: `card-0`, index: 0 },
     { key: `card-1`, index: 1 },
+      { key: "card-2", index: 2 },
+
   ]);
 
-  const goTo = useCallback(
-    (index: number, dir: 1 | -1) => {
-      const normalizedIndex = (index + total) % total;
-      if (normalizedIndex === current) return;
+ const goTo = useCallback(
+  (index: number, dir: 1 | -1) => {
+    const normalized = (index + total) % total;
 
-      setDirection(dir);
+    setDirection(dir);
 
-      // Build new visible cards so the persistent card keeps its key
-      const prevLeft = current;
-      const prevRight = (current + 1) % total;
+    setVisibleCards([
+      {
+        key: `card-${normalized}`,
+        index: normalized,
+      },
+      {
+        key: `card-${(normalized + 1) % total}`,
+        index: (normalized + 1) % total,
+      },
+      {
+        key: `card-${(normalized + 2) % total}`,
+        index: (normalized + 2) % total,
+      },
+    ]);
 
-      let newCards: { key: string; index: number }[];
-      if (dir === 1) {
-        // Forward: right card becomes left, new card enters right
-        newCards = [
-          { key: `card-${prevRight}`, index: prevRight },
-          { key: `card-${(normalizedIndex + 1) % total}`, index: (normalizedIndex + 1) % total },
-        ];
-      } else {
-        // Backward: left card becomes right, new card enters left
-        newCards = [
-          { key: `card-${(normalizedIndex - 1 + total) % total}`, index: (normalizedIndex - 1 + total) % total },
-          { key: `card-${prevLeft}`, index: prevLeft },
-        ];
-      }
-
-      setVisibleCards(newCards);
-      setCurrent(normalizedIndex);
-    },
-    [current, total]
-  );
+    setCurrent(normalized);
+  },
+  [total]
+);
 
   const next = useCallback(() => goTo(current + 1, 1), [current, goTo]);
   const prev = useCallback(() => goTo(current - 1, -1), [current, goTo]);
@@ -211,19 +207,45 @@ export default function Testimonials() {
       <Container>
         {/* ── Header ──────────────────────────────────────────────────── */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
-            <p className="font-['JetBrains_Mono'] text-[#00B4D8] text-xs tracking-[0.25em] uppercase mb-3">
-              Client Stories
-            </p>
-            <h2 className="font-['Space_Grotesk'] font-bold text-[#F9FAFB] text-4xl md:text-5xl tracking-tight leading-tight">
-             Do not take our word for it. Hear it yourself from our clients. 
-            </h2>
-          </motion.div>
+        <motion.div
+  initial={{ opacity: 0, y: 24 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: "-60px" }}
+  transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+  className="flex items-center gap-6"
+>
+  {/* Arrow */}
+  <div
+    className="
+      flex-shrink-0
+      mt-2
+      text-[#00B4D8] 
+      justify-center
+      
+    "
+  >
+    <ArrowUpRight
+      size={92}
+      strokeWidth={1.7}
+      className="-rotate-75"
+    />
+  </div>
+
+  {/* Heading */}
+  <div>
+    <p className="font-['JetBrains_Mono'] text-[#00B4D8] text-xs tracking-[0.25em] uppercase mb-3">
+      Client Stories
+    </p>
+
+    <h2 className="font-['Space_Grotesk'] font-bold text-[#F9FAFB] text-4xl md:text-5xl tracking-tight leading-tight">
+      Do not take our word for it.
+      <br />
+      <span className="text-[#00B4D8]">
+        Hear it yourself from our clients.
+      </span>
+    </h2>
+  </div>
+</motion.div>
 
           {/* Arrow controls */}
           <motion.div
@@ -272,44 +294,50 @@ export default function Testimonials() {
         </div>
 
         {/* ── Desktop: 2-column layout with real layout animation ──────── */}
-        <div className="hidden md:grid grid-cols-2 gap-6 items-stretch">
+        <div className="hidden md:grid grid-cols-3 gap-6 items-stretch">
           <AnimatePresence mode="popLayout" custom={direction}>
-            {visibleCards.map(({ key, index }) => (
-             <motion.div
-  key={key}
-  layout
-  custom={direction}
-  variants={{
-    enter: (dir: number) => ({
-      x: dir > 0 ? 120 : -120,
-      opacity: 0,
-      scale: 0.96,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-    },
-    exit: (dir: number) => ({
-      x: dir > 0 ? -120 : 120,
-      opacity: 0,
-      scale: 0.96,
-    }),
-  }}
-  initial="enter"
-  animate="center"
-  exit="exit"
-                transition={{
-                  layout: spring,
-                  opacity: { duration: 0.3 },
-                  x: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-                  scale: { duration: 0.4, ease: "easeOut" },
-                }}
-                className="min-h-[320px]"
-              >
-                <TestimonialCard t={testimonials[index]} />
-              </motion.div>
-            ))}
+           {visibleCards.map(({ key, index }, i) => (
+  <motion.div
+    key={key}
+    layout
+    custom={direction}
+    variants={{
+      enter: (dir: number) => ({
+        x: dir > 0 ? 120 : -120,
+        opacity: 0,
+        scale: 0.96,
+      }),
+      center: {
+        x: 0,
+        opacity: 1,
+        scale: 1,
+      },
+      exit: (dir: number) => ({
+        x: dir > 0 ? -120 : 120,
+        opacity: 0,
+        scale: 0.96,
+      }),
+    }}
+    initial="enter"
+    animate="center"
+    exit="exit"
+    transition={{
+      layout: spring,
+      opacity: { duration: 0.35 },
+      x: {
+        duration: 0.55,
+        ease: [0.22, 1, 0.36, 1],
+      },
+      scale: {
+        duration: 0.4,
+      },
+      delay: i * 0.05,
+    }}
+    className="min-h-[320px]"
+  >
+    <TestimonialCard t={testimonials[index]} />
+  </motion.div>
+))}
           </AnimatePresence>
         </div>
 
@@ -350,7 +378,7 @@ export default function Testimonials() {
           </div>
 
           {/* Progress bar */}
-          <div className="h-px bg-white/[0.06] rounded-full overflow-hidden">
+          {/* <div className="h-px bg-white/[0.06] rounded-full overflow-hidden">
             <AnimatePresence mode="wait">
               {!isPaused && (
                 <motion.div
@@ -363,7 +391,7 @@ export default function Testimonials() {
                 />
               )}
             </AnimatePresence>
-          </div>
+          </div> */}
         </div>
       </Container>
     </section>
