@@ -8,6 +8,8 @@ import UnderConstruction from "./pages/UnderConstruction";
 import ScrollProgress from "./components/global/ScrollProgress";
 import FloatingWhatsApp from "./components/global/FloatingWhatsApp";
 import AboutPage from "./pages/About";
+import ServicesPage from "./pages/Services";
+import Services from "./pages/Services";
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
@@ -36,7 +38,7 @@ function App() {
 
           <Route
             path="/services"
-            element={<UnderConstruction />}
+            element={<ServicesPage />}
           />
 
           <Route
@@ -51,13 +53,10 @@ function App() {
 
           <Route
             path="/services/marketing"
-            element={<UnderConstruction />}
+            element={<Services/>}
           />
 
-          <Route
-            path="/services/advertising"
-            element={<UnderConstruction />}
-          />
+          
         </Routes>
       </Suspense>
 

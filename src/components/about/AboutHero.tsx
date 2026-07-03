@@ -10,21 +10,12 @@ const fadeUp = (delay = 0) => ({
 
 const AboutHero = () => {
   return (
-    <section className="relative flex items-center justify-center min-h-[90vh] overflow-hidden bg-[#0A0A0A]">
-
-      {/* Mesh Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(0,180,216,0.12),transparent)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_80%_80%,rgba(0,119,182,0.07),transparent)]" />
-        <div
-          className="absolute inset-0 opacity-[0.025]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
-            backgroundRepeat: "repeat",
-            backgroundSize: "128px",
-          }}
-        />
-      </div>
+    <section
+      id="about-hero"
+      className="relative flex items-center justify-center min-h-[90vh] overflow-hidden bg-[#0A0A0A]"
+      style={{ scrollMarginTop: "96px" }}
+    >
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(0,180,216,0.12),transparent_42%),radial-gradient(ellipse_at_20%_80%,rgba(144,224,239,0.08),transparent_40%)]" />
 
       {/* Top Border */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00B4D8]/30 to-transparent" />

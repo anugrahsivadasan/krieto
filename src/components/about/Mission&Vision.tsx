@@ -1,186 +1,199 @@
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import missionImage from "../../assets/missionvissionbg.png";
 
-// ─── Scroll Reveal Hook ───────────────────────────────────────────────────────
-function useScrollReveal() {
-  const ref = useRef<HTMLDivElement>(null);
+// NOTE: this file pins via GSAP ScrollTrigger, not CSS `position: sticky`.
+// If this package isn't already in package.json: npm install gsap
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+gsap.registerPlugin(ScrollTrigger);
 
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+const EASE = [0.22, 1, 0.36, 1] as const;
 
-    if (prefersReduced) return;
+const valuesWords = ["Precision", "Boldness", "Integrity", "Results"];
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("revealed");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 },
-    );
-
-    const children = el.querySelectorAll(".reveal-child");
-
-    children.forEach((child) => observer.observe(child));
-
-    if (el.classList.contains("reveal-child")) {
-      observer.observe(el);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  return ref;
-}
+// Scroll thresholds (as a fraction of the pin's scroll progress 0 → 1)
+const MISSION_IN = 0.1;
+const VISION_IN = 0.42;
+const VALUES_IN = 0.74;
+const RELEASE = 0.97;
 
 const MissionVision = () => {
-  const ref = useScrollReveal();
+  const sectionRef = useRef<HTMLElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
-  const cards = [
-    {
-      eyebrow: "Mission",
-      icon: (
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.5}
-            d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
-      heading: "Our Mission",
-      body: "To deliver premium advertising and marketing that generates real, measurable revenue for our clients — not vanity metrics.",
-    },
-    {
-      eyebrow: "Vision",
-      icon: (
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.5}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.5}
-            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-          />
-        </svg>
-      ),
-      heading: "Our Vision",
-      body: "To be the most trusted advertising partner for ambitious businesses — from Texas to every continent on the map.",
-    },
-    {
-      eyebrow: "Values",
-      icon: (
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.5}
-            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-          />
-        </svg>
-      ),
-      heading: "Our Values",
-      pills: ["Precision", "Boldness", "Integrity", "Results"],
-    },
-  ];
+  useLayoutEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (reducedMotion || !sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top top",
+        // Total scroll distance the section stays pinned for, as a
+        // percentage of the viewport height. GSAP inserts a spacer of this
+        // height automatically — no need to hand-size the section in vh.
+        end: "+=260%",
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        // GSAP auto-detects transformed ancestors (a common Framer Motion
+        // side effect) and switches from real `position: fixed` to a
+        // transform-based pin when needed, so this stays reliable even
+        // inside animated page wrappers.
+        onUpdate: (self) => setScrollProgress(self.progress),
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
+
+  const showMission = reducedMotion || scrollProgress >= MISSION_IN;
+  const showVision = reducedMotion || scrollProgress >= VISION_IN;
+  const showValues = reducedMotion || scrollProgress >= VALUES_IN;
+  const shouldPin = reducedMotion ? false : scrollProgress < RELEASE;
+
+  const currentStage = showValues ? "values" : showVision ? "vision" : showMission ? "mission" : null;
+
+  const transition = { duration: reducedMotion ? 0.01 : 1.35, ease: EASE };
+  const transitionSlow = { duration: reducedMotion ? 0.01 : 1.5, ease: EASE };
 
   return (
-    <section className="relative bg-[#0D1B2A] py-[120px] overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00B4D8]/15 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00B4D8]/15 to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_100%,rgba(0,180,216,0.05),transparent)] pointer-events-none" />
+    <section
+      ref={sectionRef}
+      className="relative h-screen overflow-hidden bg-[#0A0A0A]"
+    >
+      {/* Background — atmosphere only, never the focal point */}
+      <div className="absolute inset-0">
+        <img
+          src={missionImage}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover opacity-[2.1] saturate-[2.75] "
+          style={{
+            transform: reducedMotion ? undefined : `translateY(${scrollProgress * -30}px) scale(1.08)`,
+          }}
+        />
+        {/* Solid dark overlay */}
+        <div className="absolute inset-0 bg-[#0A0A0A]/80" />
+        {/* Subtle blue lighting, center only */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,180,216,0.07),transparent_50%)]" />
+        {/* Heavy vignette — corners fade fully to black */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.95)_70%)]" />
+        <div className="absolute inset-0" style={{ boxShadow: "inset 0 0 160px 40px rgba(0,0,0,0.96)" }} />
+        
+      
+      </div>
 
-      <div
-        ref={ref}
-        className="relative z-10 max-w-[1280px] mx-auto px-6 md:px-12"
-      >
-        <div className="text-center mb-16">
-          <p
-            className="reveal-child font-['JetBrains_Mono'] text-[#00B4D8] text-xs tracking-[0.25em] uppercase mb-4"
-            style={{ transitionDelay: "0ms" }}
-          >
-            What Drives Us
-          </p>
-
-          <h2
-            className="reveal-child font-['Space_Grotesk'] font-bold text-[#F9FAFB] text-4xl md:text-5xl tracking-tight"
-            style={{ transitionDelay: "80ms" }}
-          >
-            Mission · Vision · Values
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {cards.map((card, i) => (
-            <div
-              key={card.eyebrow}
-              className="reveal-child group relative bg-[#1E1E1E] border border-white/[0.06] rounded-2xl p-8 hover:border-[#00B4D8]/30 hover:shadow-[0_0_40px_rgba(0,180,216,0.07)] transition-all duration-300 hover:-translate-y-1"
-              style={{ transitionDelay: `${160 + i * 100}ms` }}
-            >
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#00B4D8]/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-              <div className="relative z-10">
-                <div className="w-12 h-12 rounded-xl bg-[#00B4D8]/10 border border-[#00B4D8]/20 flex items-center justify-center text-[#00B4D8] mb-6 group-hover:bg-[#00B4D8]/15 transition-colors duration-300">
-                  {card.icon}
-                </div>
-
-                <p className="font-['JetBrains_Mono'] text-[#00B4D8] text-xs tracking-[0.2em] uppercase mb-2">
-                  {card.eyebrow}
-                </p>
-
-                <h3 className="font-['Space_Grotesk'] font-semibold text-[#F9FAFB] text-xl mb-4">
-                  {card.heading}
-                </h3>
-
-                {"body" in card && (
-                  <p className="font-['Inter'] text-[#6B7280] text-sm leading-relaxed">
-                    {card.body}
-                  </p>
-                )}
-
-                {card.pills?.length ? (
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {card.pills.map((pill) => (
-                      <span
-                        key={pill}
-                        className="font-['Inter'] text-xs text-[#90E0EF] bg-[#00B4D8]/10 border border-[#00B4D8]/20 px-3 py-1 rounded-full"
-                      >
-                        {pill}
-                      </span>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
+      <div className={`relative flex h-full items-center ${shouldPin ? "pointer-events-auto" : "pointer-events-none"}`}>
+        <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-16 px-6 py-24 md:px-12 lg:flex-row lg:items-center lg:gap-12 lg:px-16">
+          {/* Left — pinned visual anchor, never moves */}
+          <div className="relative flex min-h-[360px] w-full items-center lg:w-[30%] lg:min-h-[560px] lg:-translate-x-4">
+            <div className="flex origin-center -rotate-90 flex-col items-start gap-2 opacity-[0.48] sm:gap-3 lg:absolute lg:left-[-6.5rem] lg:top-1/2 lg:-translate-y-1/2">
+              <p className="font-['Space_Grotesk'] text-[clamp(3rem,9vw,7rem)] font-semibold uppercase leading-[0.8] tracking-[-0.06em] text-[#00B4D8]">
+                What
+              </p>
+              <p className="font-['Space_Grotesk'] text-[clamp(3rem,9vw,7rem)] font-semibold uppercase leading-[0.8] tracking-[-0.06em] text-white">
+                Drive Us
+              </p>
             </div>
-          ))}
+          </div>
+
+          {/* Right — one editorial canvas, asymmetrical composition */}
+          <div className="relative w-full flex-1 md:h-[560px] lg:h-[600px]">
+            {/* MISSION — top-left */}
+            <motion.div
+              className="relative mb-28 md:absolute md:top-[12%] md:left-2 md:mb-0 w-full md:w-[58%] lg:w-[50%]"
+              initial={false}
+              animate={{
+                opacity: showMission ? 1 : 0,
+                y: showMission ? 0 : 120,
+                letterSpacing: showMission ? "0.01em" : "0.1em",
+              }}
+              transition={transition}
+            >
+              <div
+                className="pointer-events-none absolute -left-16 -top-16 h-56 w-56 rounded-full bg-[#00B4D8]/10 blur-[70px] transition-opacity duration-1000"
+                style={{ opacity: currentStage === "mission" ? 1 : 0 }}
+              />
+              
+              <h3 className="font-['Space_Grotesk'] text-[clamp(1.75rem,3.2vw,2.6rem)] font-semibold uppercase leading-[0.9] tracking-[-0.03em] text-white">
+                Mission
+              </h3>
+              <p className="mt-6 max-w-[460px] font-['Inter'] text-[1rem] leading-[1.8] text-[#F9FAFB]/75 sm:text-[1.05rem]">
+                To deliver premium advertising and marketing that generates real, measurable revenue for our clients — not vanity metrics.
+              </p>
+            </motion.div>
+
+            {/* VISION — mid-right */}
+            <motion.div
+              className="relative mb-28 md:absolute md:top-[45%] md:left-[60%] md:right-0 md:mb-0 w-full md:w-[60%] lg:w-[52%]"
+              initial={false}
+              animate={{
+                opacity: showVision ? 1 : 0,
+                y: showVision ? 0 : 120,
+                letterSpacing: showVision ? "0.01em" : "0.1em",
+              }}
+              transition={transition}
+            >
+              <div
+                className="pointer-events-none absolute -right-16 -top-10 h-56 w-56 rounded-full bg-[#00B4D8]/10 blur-[70px] transition-opacity duration-1000"
+                style={{ opacity: currentStage === "vision" ? 1 : 0 }}
+              />
+             
+              <h3 className="font-['Space_Grotesk'] text-[clamp(1.75rem,3.2vw,2.6rem)] font-semibold uppercase leading-[0.9] tracking-[-0.03em] text-white">
+                Vision
+              </h3>
+              <p className="mt-6 max-w-[460px] font-['Inter'] text-[1rem] leading-[1.8] text-[#F9FAFB]/75 sm:text-[1.05rem]">
+                To be the most trusted advertising partner for ambitious businesses — from Texas to every continent on the map.
+              </p>
+            </motion.div>
+
+            {/* VALUES — bottom-left, beneath both */}
+            <motion.div
+              className="relative md:absolute md:bottom-0 md:left-[3%] w-full md:w-[64%] lg:w-[56%]"
+              initial={false}
+              animate={{
+                opacity: showValues ? 1 : 0,
+                y: showValues ? 0 : 120,
+              }}
+              transition={transitionSlow}
+            >
+              <div
+                className="pointer-events-none absolute -left-10 -bottom-20 h-64 w-64 rounded-full bg-[#00B4D8]/12 blur-[80px] transition-opacity duration-1000"
+                style={{ opacity: currentStage === "values" ? 1 : 0 }}
+              />
+             
+              <h3 className="font-['Space_Grotesk'] text-[clamp(1.75rem,3.2vw,2.6rem)] font-semibold uppercase leading-[0.9] tracking-[-0.03em] text-white">
+                Values
+              </h3>
+              <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
+                {valuesWords.map((word, index) => (
+                  <motion.span
+                    key={word}
+                    className="font-['Space_Grotesk'] text-[1rem] sm:text-[1.05rem] uppercase tracking-[0.15em] text-white/90"
+                    initial={false}
+                    animate={{
+                      opacity: showValues ? 1 : 0,
+                      y: showValues ? 0 : 24,
+                    }}
+                    transition={{
+                      duration: reducedMotion ? 0.01 : 0.9,
+                      ease: EASE,
+                      delay: reducedMotion ? 0 : showValues ? index * 0.12 : 0,
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

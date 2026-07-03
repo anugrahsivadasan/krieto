@@ -55,3 +55,42 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+@keyframes prismFloat {
+  0% {
+    transform: translate3d(-3%, -2%, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, 2%, 0) rotate(1.2deg) scale(1.03);
+  }
+  100% {
+    transform: translate3d(-1%, 2.5%, 0) rotate(-0.8deg) scale(1.01);
+  }
+}
+
+@keyframes prismSweep {
+  0% {
+    transform: translateX(-20%) skewX(-18deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(120%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+.prism-lines {
+  background:
+    linear-gradient(120deg, transparent 0%, rgba(0, 180, 216, 0.12) 18%, transparent 32%, rgba(255, 255, 255, 0.06) 48%, transparent 62%, rgba(0, 180, 216, 0.16) 78%, transparent 100%),
+    linear-gradient(60deg, transparent 0%, rgba(144, 224, 239, 0.16) 10%, transparent 24%, rgba(255, 255, 255, 0.06) 48%, transparent 64%, rgba(0, 180, 216, 0.14) 100%);
+  background-size: 180% 180%, 220% 220%;
+  animation: prismFloat 16s ease-in-out infinite alternate;
+  mix-blend-mode: screen;
+}
+
+.prism-sweep {
+  animation: prismSweep 9s linear infinite;
+}
