@@ -108,18 +108,14 @@ const marqueeItems = [
 
 const CredibilityBar = () => {
   return (
-    <section
-      className="
-        relative
-        w-full
-        overflow-hidden
-        bg-[#111827]
-        border-y
-        border-white/10
-        py-6
-      "
-      aria-label="Services overview marquee"
-    >
+  <section
+  className="
+    relative
+    w-full
+    overflow-hidden
+    py-7
+  "
+>
       {/* Left Fade */}
       <div
         className="
@@ -127,7 +123,7 @@ const CredibilityBar = () => {
           left-0
           top-0
           h-full
-          w-24
+          w-40
           bg-gradient-to-r
           from-[#111827]
           to-transparent
@@ -143,7 +139,7 @@ const CredibilityBar = () => {
           right-0
           top-0
           h-full
-          w-24
+          w-40
           bg-gradient-to-l
           from-[#111827]
           to-transparent
@@ -157,56 +153,58 @@ const CredibilityBar = () => {
           className="
             flex
             w-max
-            animate-[marquee_120s_linear_infinite]
+animate-[marquee_80s_linear_infinite]
             hover:[animation-play-state:paused]
           "
         >
-          {marqueeItems.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={index}
-                className="
-                  flex
-                  items-center
-                  shrink-0
-                  px-10
-                  py-2
-                  border-r
-                  border-white/10
-                  group
-                  transition-all
-                  duration-300
-                "
-              >
-                <Icon
-                  size={18}
-                  className="
-                    mr-3
-                    text-[#00B4D8]
-                    transition-transform
-                    duration-300
-                    group-hover:scale-110
-                  "
-                />
+         {marqueeItems.map((item, index) => {
+  const Icon = item.icon;
 
-                <span
-                  className="
-                    text-sm
-                    md:text-base
-                    font-medium
-                    tracking-wide
-                    text-white/90
-                    group-hover:text-[#00B4D8]
-                    transition-colors
-                    whitespace-nowrap
-                  "
-                >
-                  {item.title}
-                </span>
-              </div>
-            );
-          })}
+  return (
+    <div
+      key={index}
+      className="
+        flex
+        items-center
+        gap-3
+        shrink-0
+        px-8
+        py-2
+        group
+        transition-all
+        duration-300
+      "
+    >
+      <Icon
+        size={16}
+        strokeWidth={2}
+        className="
+          text-white/55
+          transition-all
+          duration-300
+          group-hover:text-white
+          group-hover:scale-105
+        "
+      />
+
+      <span
+        className="
+          text-[14px]
+          md:text-[15px]
+          font-medium
+          tracking-[0.02em]
+          text-white/55
+          whitespace-nowrap
+          transition-all
+          duration-300
+          group-hover:text-white
+        "
+      >
+        {item.title}
+      </span>
+    </div>
+  );
+})}
         </div>
       </div>
 

@@ -1,171 +1,265 @@
 import { motion } from "framer-motion";
 import { processSteps } from "../../data/process";
+import ScrollStack, { ScrollStackItem } from "../animations/ScrollStack";
 
 const ProcessSection = () => {
   return (
-    <section className="bg-[#0A0A0A] py-32 overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16">
-
+    <section className="bg-[#0A0A0A] py-20 lg:py-32 overflow-hidden">
+      <div className="w-full mx-auto px-5 sm:px-8 lg:px-16">
         {/* Heading */}
-
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: .6 }}
-          className="text-center mb-24"
+          transition={{ duration: 0.6 }}
+          className="text-center"
         >
           <p className="uppercase tracking-[0.15em] text-[#00B4D8] text-sm font-semibold mb-4">
             OUR PROCESS
           </p>
 
-          <h2 className="font-heading font-bold text-white text-[clamp(2.5rem,5vw,4rem)]">
+          <h2 className="font-heading font-bold text-white text-4xl sm:text-5xl lg:text-[clamp(2.5rem,5vw,4rem)]">
             How We Work
           </h2>
 
-          <p className="text-[#9CA3AF] mt-5 max-w-2xl mx-auto text-lg">
+          <p className="text-[#9CA3AF] mt-5 max-w-2xl mx-auto text-base sm:text-lg">
             A proven process designed to deliver measurable growth.
           </p>
         </motion.div>
 
-        {/* Timeline */}
+        {/* ---------------- MOBILE + TABLET ---------------- */}
 
-        <div className="relative">
+        <div className="mt-16 space-y-8 lg:hidden">
+          {processSteps.map((step) => {
+            const Icon = step.icon;
 
-          {/* Desktop dashed line */}
-
-         {/* First Row Connector */}
-<div
-  className="
-  hidden
-  lg:block
-  absolute
-  top-16
-  left-[16%]
-  right-[16%]
-  border-t-2
-  border-dashed
-  border-[#00B4D8]/20
-  "
-/>
-
-{/* Second Row Connector */}
-<div
-  className="
-  hidden
-  lg:block
-  absolute
-  top-[30.5rem]
-  left-[16%]
-  right-[16%]
-  border-t-2
-  border-dashed
-  border-[#00B4D8]/20
-  "
-/>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-
-            {processSteps.map((step, index) => {
-
-              const Icon = step.icon;
-
-              return (
-
-                <motion.div
-                  key={step.number}
-                  initial={{
-                    opacity: 0,
-                    x: window.innerWidth > 1024 ? -40 : 0,
-                    y: 30,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    x: 0,
-                    y: 0,
-                  }}
-                  viewport={{ once: true }}
-                  transition={{
-                    delay: index * .15,
-                    duration: .7,
-                  }}
-                  className="
-                  relative
-                  rounded-3xl
-                  bg-[#1A1A1A]
-                  border
-                  border-white/5
-                  p-10
-                  transition-all
-                  duration-500
-                  hover:border-[#00B4D8]
-                  hover:shadow-[0_0_0_1.5px_#00B4D8,0_30px_60px_rgba(0,180,216,.15)]
-                  hover:-translate-y-2
-                  "
+            return (
+              <div
+                key={step.number}
+                className="rounded-3xl border overflow-hidden"
+                style={{
+                  background: step.bg,
+                  borderColor: `${step.accent}40`,
+                }}
+              >
+                {/* Number */}
+                <div
+                  className="flex justify-between items-center px-6 pt-6"
+                  style={{ color: step.accent }}
                 >
-
-                  {/* Large Number */}
-
-                  <span
-                    className="
-                    absolute
-                    top-5
-                    right-8
-                    text-[110px]
-                    font-extrabold
-                    text-[#00B4D8]
-                    opacity-[0.08]
-                    leading-none
-                    pointer-events-none
-                    "
-                  >
-                    {step.number}
+                  <span className="uppercase tracking-[0.25em] text-xs font-semibold">
+                    Step {step.number}
                   </span>
 
-                  {/* Icon */}
+                  <span className="text-6xl font-black opacity-20">
+                    {step.number}
+                  </span>
+                </div>
 
-                  <div
-                    className="
-                    relative
-                    z-10
-                    w-16
-                    h-16
-                    rounded-2xl
-                    bg-[#00B4D8]/10
-                    flex
-                    items-center
-                    justify-center
-                    mb-8
-                    "
+                {/* Content */}
+
+                <div className="px-6 pb-6">
+                  <h3
+                    className="text-3xl sm:text-4xl font-black mt-4"
+                    style={{ color: step.text }}
                   >
-                    <Icon
-                      size={30}
-                      className="text-[#00B4D8]"
-                    />
-                  </div>
-
-                  {/* Title */}
-
-                  <h3 className="relative z-10 text-2xl font-bold text-white mb-5">
                     {step.title}
                   </h3>
 
-                  {/* Description */}
-
-                  <p className="relative z-10 text-[#9CA3AF] leading-8">
+                  <p
+                    className="mt-5 leading-8 text-base"
+                    style={{
+                      color: `${step.text}CC`,
+                    }}
+                  >
                     {step.description}
                   </p>
 
-                </motion.div>
+                  <div className="flex items-center gap-4 mt-8">
+                    <div
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                      style={{
+                        background: `${step.accent}20`,
+                      }}
+                    >
+                      <Icon
+                        size={26}
+                        style={{
+                          color: step.accent,
+                        }}
+                      />
+                    </div>
 
-              );
-
-            })}
-
-          </div>
-
+                    <span
+                      className="uppercase tracking-[0.25em] text-sm font-medium"
+                      style={{
+                        color: step.accent,
+                      }}
+                    >
+                      KRIETO PROCESS
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
+        {/* ---------------- DESKTOP ---------------- */}
+
+        <div className="hidden lg:block mt-12">
+          <ScrollStack
+            className="min-h-[1800px]"
+            useWindowScroll
+            itemDistance={120}
+            itemScale={0.05}
+            itemStackDistance={40}
+            baseScale={0.88}
+            rotationAmount={0.2}
+            blurAmount={2}
+          >
+            {processSteps.map((step) => {
+              const Icon = step.icon;
+
+              return (
+                <ScrollStackItem
+                  key={step.number}
+                  itemClassName="
+                    border
+                    rounded-[32px]
+                    overflow-hidden
+h-[500px]
+  xl:h-[500px]                    w-full
+                  "
+                  style={{
+                    background: step.bg,
+                    borderColor: `${step.gradient}`,
+                  }}
+                >
+                  <div
+                    className="flex h-full"
+                    style={{
+                      background: step.bg,
+                      color: step.text,
+                    }}
+                  >
+                    {/* Left */}
+
+                    <div className="flex-1 p-14 flex flex-col justify-between">
+                      <div>
+                        <span
+                          className="text-sm tracking-[0.3em] uppercase font-semibold"
+                          style={{ color: step.accent }}
+                        >
+                          Step {step.number}
+                        </span>
+
+                        <h2
+                          className="mt-6 text-6xl font-black"
+                          style={{ color: step.text }}
+                        >
+                          {step.title}
+                        </h2>
+
+                        <p
+                          className="mt-8 max-w-xl text-lg leading-9"
+                          style={{
+                            color: `${step.accent}`,
+                          }}
+                        >
+                          {step.description}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-5">
+                        <div
+                          className="w-16 h-16 rounded-2xl flex items-center justify-center"
+                          style={{
+                            background: `${step.accent}20`,
+                          }}
+                        >
+                          <Icon
+                            size={30}
+                            style={{
+                              color: step.accent,
+                            }}
+                          />
+                        </div>
+
+                        <div
+                          className="uppercase tracking-[0.3em]"
+                          style={{
+                            color: step.accent,
+                          }}
+                        >
+                          KRIETO PROCESS
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right */}
+
+                   <div
+  className="relative w-[40%] overflow-hidden flex items-center justify-center"
+>
+  {/* Background Gradient */}
+  {/* <div
+    className="absolute inset-0"
+    style={{
+      background: `
+        radial-gradient(circle at 30% 30%, ${step.gradient}25 0%, transparent 45%),
+        radial-gradient(circle at 80% 80%, ${step.gradient}18 0%, transparent 50%),
+        linear-gradient(135deg, ${step.gradient}10 0%, transparent 70%)
+      `,
+    }}
+  /> */}
+
+  {/* Large Blur Blob */}
+  {/* <div
+    className="absolute w-80 h-80 rounded-full blur-[90px]"
+    style={{
+      background: step.gradient,
+      opacity: 0.18,
+    }}
+  /> */}
+
+  {/* Small Floating Blob */}
+  {/* <div
+    className="absolute top-10 right-10 w-24 h-24 rounded-full blur-2xl"
+    style={{
+      background: step.glow,
+      opacity: 0.4,
+    }}
+  /> */}
+
+  {/* Number */}
+ <div className="absolute inset-0 overflow-hidden rounded-[inherit]">
+  <img
+    src={step.image}
+    alt={step.title}
+    className="absolute inset-0 w-full h-full object-cover object-center"
+  />
+
+  {/* Dark overlay */}
+
+  {/* Cyan glow overlay */}
+  {/* <div
+    className="absolute inset-0"
+    style={{
+      background: `
+        radial-gradient(circle at 30% 30%, ${step.gradient}40 0%, transparent 55%),
+        linear-gradient(to top, rgba(10,10,10,.85), rgba(10,10,10,.2))
+      `,
+    }}
+  /> */}
+</div>
+</div>
+                  </div>
+                </ScrollStackItem>
+              );
+            })}
+          </ScrollStack>
+        </div>
       </div>
     </section>
   );

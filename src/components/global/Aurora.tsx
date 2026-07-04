@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
 
 const VERT = `#version 300 es
@@ -121,31 +121,65 @@ export default function Aurora(props: AuroraProps) {
   propsRef.current = props;
 
   const ctnDom = useRef<HTMLDivElement>(null);
+  const [isWebGLReady, setIsWebGLReady] = useState(true);
 
   useEffect(() => {
     const ctn = ctnDom.current;
     if (!ctn) return;
 
-    const renderer = new Renderer({
+    const width = ctn.offsetWidth;
+    const height = ctn.offsetHeight;
+
+    if (!width || !height) {
+      setIsWebGLReady(false);
+      return;
+    }
+
+    const canvas = document.createElement('canvas');
+    const webglContext = canvas.getContext('webgl2', {
       alpha: true,
-      premultipliedAlpha: true,
-      antialias: true
+      antialias: true,
+      premultipliedAlpha: true
+    }) || canvas.getContext('webgl', {
+      alpha: true,
+      antialias: true,
+      premultipliedAlpha: true
     });
+
+    if (!webglContext) {
+      setIsWebGLReady(false);
+      return;
+    }
+
+    let renderer: Renderer | null = null;
+    let program: Program | undefined;
+    let mesh: Mesh | undefined;
+
+    try {
+      renderer = new Renderer({
+        alpha: true,
+        premultipliedAlpha: true,
+        antialias: true,
+        canvas
+      });
+    } catch {
+      setIsWebGLReady(false);
+      return;
+    }
+
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
     gl.canvas.style.backgroundColor = 'transparent';
 
-    let program: Program | undefined;
-
     function resize() {
-      if (!ctn) return;
-      const width = ctn.offsetWidth;
-      const height = ctn.offsetHeight;
-      renderer.setSize(width, height);
+      if (!ctn || !renderer) return;
+      const nextWidth = ctn.offsetWidth;
+      const nextHeight = ctn.offsetHeight;
+      renderer.setSize(nextWidth, nextHeight);
       if (program) {
-        program.uniforms.uResolution.value = [width, height];
+        program.uniforms.uResolution.value = [nextWidth, nextHeight];
       }
     }
     window.addEventListener('resize', resize);
@@ -167,19 +201,19 @@ export default function Aurora(props: AuroraProps) {
         uTime: { value: 0 },
         uAmplitude: { value: amplitude },
         uColorStops: { value: colorStopsArray },
-        uResolution: { value: [ctn.offsetWidth, ctn.offsetHeight] },
+        uResolution: { value: [width, height] },
         uBlend: { value: blend }
       }
     });
 
-    const mesh = new Mesh(gl, { geometry, program });
+    mesh = new Mesh(gl, { geometry, program });
     ctn.appendChild(gl.canvas);
 
     let animateId = 0;
     const update = (t: number) => {
       animateId = requestAnimationFrame(update);
       const { time = t * 0.01, speed = 1.0 } = propsRef.current;
-      if (program) {
+      if (program && renderer && mesh) {
         program.uniforms.uTime.value = time * speed * 0.1;
         program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0;
         program.uniforms.uBlend.value = propsRef.current.blend ?? blend;
@@ -194,6 +228,7 @@ export default function Aurora(props: AuroraProps) {
     animateId = requestAnimationFrame(update);
 
     resize();
+    setIsWebGLReady(true);
 
     return () => {
       cancelAnimationFrame(animateId);
@@ -203,7 +238,18 @@ export default function Aurora(props: AuroraProps) {
       }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, [amplitude]);
+  }, [amplitude, blend, colorStops]);
 
-  return <div ref={ctnDom} className="w-full h-full" />;
+  return (
+    <div ref={ctnDom} className="relative h-full w-full">
+      {!isWebGLReady && (
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(circle at 20% 20%, rgba(82, 39, 255, 0.16), transparent 38%), radial-gradient(circle at 80% 10%, rgba(124, 255, 103, 0.15), transparent 28%), linear-gradient(135deg, rgba(10, 10, 10, 0.9), rgba(5, 5, 5, 0.6))'
+          }}
+        />
+      )}
+    </div>
+  );
 }

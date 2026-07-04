@@ -15,26 +15,19 @@ export default function RevealHeading({
   delay = 0,
 }: RevealHeadingProps) {
   return (
-    <div className="overflow-hidden pb-[0.25em]">
-      <motion.span
-        initial={{ y: "110%" }}
+    <div className="overflow-hidden">
+      <motion.div
+        initial={{ y: "100%" }}
         whileInView={{ y: 0 }}
-        viewport={{
-          once: true,
-          amount: 0.3,
-        }}
+        viewport={{ once: true, amount: 0.4 }}
         transition={{
           duration: 1,
           delay,
           ease,
         }}
-        className="inline-block w-full"
-        style={{ display: "block" }}
       >
-        <h2 className={className}>
-          {children}
-        </h2>
-      </motion.span>
+        <h2 className={className}>{children}</h2>
+      </motion.div>
     </div>
   );
 }
