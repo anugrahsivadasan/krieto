@@ -3,6 +3,7 @@ import {
   motion,
   useMotionValueEvent,
   useScroll,
+  type Variants,
 } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useRef, useState } from "react";
@@ -33,8 +34,8 @@ import { services } from "../../data/services";
  * ------------------------------------------------------------------
  */
 
-const arcVariants = {
-  enter: (direction) => ({
+const arcVariants: Variants = {
+  enter: (direction: number) => ({
     opacity: 0,
     scale: 0.6,
     x: direction > 0 ? 220 : -220,
@@ -47,29 +48,29 @@ const arcVariants = {
     x: 0,
     y: 0,
     rotate: 0,
-    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as const },
   },
-  exit: (direction) => ({
+  exit: (direction: number) => ({
     opacity: 0,
     scale: 0.6,
     x: direction > 0 ? -220 : 220,
     y: -60,
     rotate: direction > 0 ? -110 : 110,
-    transition: { duration: 0.55, ease: [0.4, 0, 1, 1] },
+    transition: { duration: 0.55, ease: [0.4, 0, 1, 1] as const },
   }),
 };
 
-const textVariants = {
+const textVariants: Variants = {
   enter: { opacity: 0, x: 60 },
   center: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
   },
   exit: {
     opacity: 0,
     x: -60,
-    transition: { duration: 0.4, ease: [0.4, 0, 1, 1] },
+    transition: { duration: 0.4, ease: [0.4, 0, 1, 1] as const },
   },
 };
 
@@ -77,15 +78,15 @@ const ServicesShowcase = () => {
   const sectionRef = useRef(null);
 
   // Desktop: driven by scroll position.
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [direction, setDirection] = useState<number>(1);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
+  useMotionValueEvent(scrollYProgress, "change", (v: number) => {
     const raw = v * services.length;
     const next = Math.min(services.length - 1, Math.max(0, Math.floor(raw)));
     if (next !== activeIndex) {
@@ -94,7 +95,7 @@ const ServicesShowcase = () => {
     }
   });
 
-  const goTo = (index) => {
+  const goTo = (index: number) => {
     if (!sectionRef.current) return;
     const el = sectionRef.current;
     const top = el.offsetTop;
