@@ -48,7 +48,7 @@ const arcVariants: Variants = {
     x: 0,
     y: 0,
     rotate: 0,
-    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { duration: 0.9, ease: "easeOut" },
   },
   exit: (direction: number) => ({
     opacity: 0,
@@ -56,7 +56,7 @@ const arcVariants: Variants = {
     x: direction > 0 ? -220 : 220,
     y: -60,
     rotate: direction > 0 ? -110 : 110,
-    transition: { duration: 0.55, ease: [0.4, 0, 1, 1] as const },
+    transition: { duration: 0.55, ease: "easeInOut" },
   }),
 };
 
@@ -65,17 +65,17 @@ const textVariants: Variants = {
   center: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { duration: 0.55, ease: "easeOut" },
   },
   exit: {
     opacity: 0,
     x: -60,
-    transition: { duration: 0.4, ease: [0.4, 0, 1, 1] as const },
+    transition: { duration: 0.4, ease: "easeInOut" },
   },
 };
 
 const ServicesShowcase = () => {
-  const sectionRef = useRef(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
 
   // Desktop: driven by scroll position.
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -129,8 +129,8 @@ const ServicesShowcase = () => {
             Built to move together.
           </h2>
           <p className="mt-4 max-w-sm text-sm leading-7 text-slate-400 sm:text-base">
-            Three disciplines. One integrated system. Every output connected
-            to your growth.
+            Three disciplines. One integrated system. Every output connected to
+            your growth.
           </p>
         </div>
 

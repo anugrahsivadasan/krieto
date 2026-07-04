@@ -13,8 +13,8 @@ const Home = () => {
     <main>
       <Hero />
       <CredibilityBar />
-      {/* <ServicesOverview /> */}
-      <ServicesShowcase />
+      <ServicesOverview />
+      {/* <ServicesShowcase /> */}
       <ProcessSection />
       <FeaturedWork />
       <StatsSection />
