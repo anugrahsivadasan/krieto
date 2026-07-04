@@ -1,18 +1,35 @@
-import { Suspense, lazy } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Suspense, lazy, useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 
-import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
+import Navbar from "./components/layout/Navbar";
 import UnderConstruction from "./pages/UnderConstruction";
 
-import ScrollProgress from "./components/global/ScrollProgress";
-import FloatingWhatsApp from "./components/global/FloatingWhatsApp";
-import Contact from "./pages/Contact";
 import { ToastContainer } from "react-toastify";
+import FloatingWhatsApp from "./components/global/FloatingWhatsApp";
+import ScrollProgress from "./components/global/ScrollProgress";
+import { scrollToTop } from "./lib/lenis";
+import Contact from "./pages/Contact";
 
+import AboutPage from "./pages/About";
+import { default as Services, default as ServicesPage } from "./pages/Services";
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
+
+function ScrollReset() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      scrollToTop("auto");
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [location.pathname]);
+
+  return null;
+}
 
 function App() {
   return (
@@ -20,6 +37,7 @@ function App() {
       <ScrollProgress />
 
       <Navbar />
+      <ScrollReset />
 
       <Suspense
         fallback={
@@ -31,43 +49,24 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
 
-          <Route
-            path="/about"
-            element={<UnderConstruction />}
-          />
+          <Route path="/about" element={<AboutPage />} />
 
-          <Route
-            path="/services"
-            element={<UnderConstruction />}
-          />
+          <Route path="/services" element={<ServicesPage />} />
 
-          <Route
-            path="/portfolio"
-            element={<UnderConstruction />}
-          />
+          <Route path="/portfolio" element={<UnderConstruction />} />
 
-          <Route
-            path="/contact"
-            element={<Contact/>}
-          />
+          <Route path="/contact" element={<Contact />} />
 
-          <Route
-            path="/services/marketing"
-            element={<UnderConstruction />}
-          />
-
-          <Route
-            path="/services/advertising"
-            element={<UnderConstruction />}
-          />
+          <Route path="/services/marketing" element={<UnderConstruction />} />
+          <Route path="/services/design" element={<UnderConstruction />} />
+          <Route path="/services/advertising" element={<UnderConstruction />} />
         </Routes>
       </Suspense>
 
       <Footer />
 
       <FloatingWhatsApp />
-            <ToastContainer />
-
+      <ToastContainer />
     </>
   );
 }

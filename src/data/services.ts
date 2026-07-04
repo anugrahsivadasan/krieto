@@ -1,6 +1,6 @@
 import { Megaphone, Palette, TrendingUp } from "lucide-react";
 import adv from "../assets/advr.png";
-import mar from "../assets/adv.png";
+import mar from "../assets/markk.png";
 import design from "../assets/des.png";
 
 // Each entry drives one "frame" of the scroll-pinned showcase.
@@ -35,9 +35,9 @@ export const services = [
     button: "Explore Design",
     icon: Palette,
     image: design, // <-- Added
-    accent: "#FBBF24",
+    accent: "#F4CD45",
     accentSoft: "rgba(251,191,36,0.35)",
-    blobFrom: "#FBBF24",
+    blobFrom: "#F4CD45",
     blobTo: "#78350F",
     link: "/services/design",
   },
@@ -53,9 +53,9 @@ export const services = [
   button: "Explore Marketing",
   image: mar,
 
-accent: "#0D9488",
+accent: "#137E7E",
 accentSoft: "rgba(13,148,136,0.35)",
-blobFrom: "#14B8A6",
+blobFrom: "#137E7E",
 blobTo: "#042F2E",             // Dark teal
 
   link: "/services/marketing",
