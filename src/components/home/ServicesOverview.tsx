@@ -91,7 +91,10 @@ const ServicesShowcase = () => {
       {/* ============================================================
           MOBILE / TABLET (below lg)
       ============================================================ */}
-      <section className="relative block w-full overflow-hidden bg-[#0A0A0A] px-5 py-16 sm:px-8 lg:hidden">
+      <section
+        className="relative block w-full overflow-hidden px-5 py-16 sm:px-8 lg:hidden"
+        style={{ background: services[0].sectionBackground }}
+      >
         <div
           aria-hidden
           className="pointer-events-none absolute -left-24 top-0 h-[420px] w-[420px] rounded-full opacity-30 blur-[140px]"
@@ -99,13 +102,19 @@ const ServicesShowcase = () => {
         />
 
         <div className="relative flex flex-col items-center text-center">
-          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-400">
+          <p
+            className="mt-4 text-xs font-semibold uppercase tracking-[0.3em]"
+            style={{ color: services[0].accent }}
+          >
             OUR SERVICES
           </p>
           <h2 className="font-heading text-4xl font-black leading-tight text-white sm:text-5xl">
             Built to move together.
           </h2>
-          <p className="mt-4 max-w-sm text-sm leading-7 text-slate-400 sm:text-base">
+          <p
+            className="mt-4 max-w-sm text-sm leading-7 sm:text-base"
+            style={{ color: services[0].textSecondary }}
+          >
             Three disciplines. One integrated system. Every output connected to
             your growth.
           </p>
@@ -131,7 +140,10 @@ const ServicesShowcase = () => {
                 />
 
                 <div className="relative z-10">
-                  <span className="text-xs tracking-[0.3em] text-white/60">
+                  <span
+                    className="text-xs tracking-[0.3em]"
+                    style={{ color: service.textPrimary }}
+                  >
                     {service.number}
                   </span>
                   <h3 className="mt-3 font-heading text-3xl font-black leading-none text-white">
@@ -159,7 +171,10 @@ const ServicesShowcase = () => {
                   {service.paragraphheading}
                 </h3>
 
-                <p className="mt-4 text-sm leading-7 text-slate-400 sm:text-base">
+                <p
+                  className="mt-4 text-sm leading-7 sm:text-base"
+                  style={{ color: service.textSecondary }}
+                >
                   {service.description}
                 </p>
 
@@ -181,7 +196,10 @@ const ServicesShowcase = () => {
                       >
                         {stat.value}
                       </h4>
-                      <p className="mt-2 text-[10px] uppercase tracking-[0.25em] text-white/50">
+                      <p
+                        className="mt-2 text-[10px] uppercase tracking-[0.25em]"
+                        style={{ color: service.textSecondary }}
+                      >
                         {stat.label}
                       </p>
                     </div>
@@ -201,7 +219,10 @@ const ServicesShowcase = () => {
         className="relative hidden w-full lg:block"
         style={{ height: `${services.length * 100}vh` }}
       >
-        <div className="sticky top-0 flex h-screen flex-col overflow-hidden bg-[#0A0A0A]">
+        <div
+          className="sticky top-0 flex h-screen flex-col overflow-hidden"
+          style={{ background: active.sectionBackground }}
+        >
           <motion.div
             aria-hidden
             className="pointer-events-none absolute -left-40 top-10 h-[700px] w-[700px] rounded-full opacity-30 blur-[180px]"
@@ -228,15 +249,24 @@ const ServicesShowcase = () => {
               transition={{ duration: 0.6 }}
               className="flex shrink-0 flex-col items-center justify-center px-4 pb-6 pt-12 text-center lg:pb-4 lg:pt-10 xl:pb-10 xl:pt-24"
             >
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-400 lg:mb-2 lg:text-sm lg:tracking-[0.35em]">
+              <p
+                className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] lg:mb-2 lg:text-sm lg:tracking-[0.35em]"
+                style={{ color: active.accent }}
+              >
                 OUR SERVICES
               </p>
 
-              <h2 className="font-heading text-[clamp(2.6rem,4.5vw,5.4rem)] font-black leading-none text-white">
+              <h2
+                className="font-heading text-[clamp(2.6rem,4.5vw,5.4rem)] font-black leading-none"
+                style={{ color: active.textPrimary }}
+              >
                 Built to move together.
               </h2>
 
-              <p className="mt-4 max-w-2xl text-base leading-8 text-slate-400 lg:mt-5 lg:text-lg">
+              <p
+                className="mt-4 max-w-2xl text-base leading-8 lg:mt-5 lg:text-lg"
+                style={{ color: active.textSecondary }}
+              >
                 Three disciplines. One integrated system. Every output connected
                 to your growth.
               </p>
@@ -361,11 +391,17 @@ const ServicesShowcase = () => {
                     exit="exit"
                     className="w-full max-w-xl text-center lg:text-left xl:max-w-2xl"
                   >
-                    <h3 className="mt-6 font-heading text-[clamp(1.8rem,2.4vw,3.3rem)] font-black leading-[1.05] text-white lg:mt-8">
+                    <h3
+                      className="mt-6 font-heading text-[clamp(1.8rem,2.4vw,3.3rem)] font-black leading-[1.05] lg:mt-8"
+                      style={{ color: active.textPrimary }}
+                    >
                       {active.paragraphheading}
                     </h3>
 
-                    <p className="mt-5 text-base leading-8 text-slate-400 lg:mt-8 lg:text-xl lg:leading-9">
+                    <p
+                      className="mt-5 text-base leading-8 lg:mt-8 lg:text-xl lg:leading-9"
+                      style={{ color: active.textSecondary }}
+                    >
                       {active.description}
                     </p>
 
@@ -390,7 +426,10 @@ const ServicesShowcase = () => {
                           >
                             {stat.value}
                           </h4>
-                          <p className="mt-2 text-[10px] uppercase tracking-[0.25em] text-white/50 lg:mt-3 lg:text-xs lg:tracking-[0.3em]">
+                          <p
+                            className="mt-2 text-[10px] uppercase tracking-[0.25em] lg:mt-3 lg:text-xs lg:tracking-[0.3em]"
+                            style={{ color: active.textSecondary }}
+                          >
                             {stat.label}
                           </p>
                         </div>

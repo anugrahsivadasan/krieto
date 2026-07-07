@@ -234,8 +234,8 @@ export default function Navbar() {
     alt="Krieto"
     className="w-auto object-contain scale-105 origin-left"
     style={{
-      height: "112px",
-      maxWidth: "220px",
+      height: "212px",
+      maxWidth: "320px",
     }}
   />
 </Link>

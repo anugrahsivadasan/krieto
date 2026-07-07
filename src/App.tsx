@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
 import Footer from "./components/layout/Footer";
@@ -7,14 +7,13 @@ import UnderConstruction from "./pages/UnderConstruction";
 
 import { ToastContainer } from "react-toastify";
 import FloatingWhatsApp from "./components/global/FloatingWhatsApp";
+import Preloader from "./components/global/Preloader";
 import ScrollProgress from "./components/global/ScrollProgress";
 import { scrollToTop } from "./lib/lenis";
-import Contact from "./pages/Contact";
-
 import AboutPage from "./pages/About";
-import { default as Services, default as ServicesPage } from "./pages/Services";
+import Contact from "./pages/Contact";
+import { default as ServicesPage } from "./pages/Services";
 
-// Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
 
 function ScrollReset() {
@@ -32,6 +31,20 @@ function ScrollReset() {
 }
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2200); // Adjust duration if needed
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <Preloader />;
+  }
+
   return (
     <>
       <ScrollProgress />
@@ -39,22 +52,12 @@ function App() {
       <Navbar />
       <ScrollReset />
 
-      <Suspense
-        fallback={
-          <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
-            <div className="h-12 w-12 rounded-full border-2 border-cyan-400/30 border-t-cyan-400 animate-spin" />
-          </div>
-        }
-      >
+      <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A]" />}>
         <Routes>
           <Route path="/" element={<Home />} />
-
           <Route path="/about" element={<AboutPage />} />
-
           <Route path="/services" element={<ServicesPage />} />
-
           <Route path="/portfolio" element={<UnderConstruction />} />
-
           <Route path="/contact" element={<Contact />} />
 
           <Route path="/services/marketing" element={<UnderConstruction />} />
