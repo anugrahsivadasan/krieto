@@ -52,9 +52,9 @@ const StatsSection = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
               >
-                <h2 className="font-heading font-black text-slate-900 tracking-tight leading-tight text-4xl lg:text-[40px]">
+                <h2 className="font-heading font-black text-slate-900 tracking-tight text-4xl lg:text-[40px]">
                   Results That
-                  <span className="block mt-2 text-white">
+                  <span className="block  text-white">
                     Speak For Themselves
                   </span>
                 </h2>

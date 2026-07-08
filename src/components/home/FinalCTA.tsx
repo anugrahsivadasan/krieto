@@ -39,7 +39,7 @@ const FinalCTA = () => {
             font-heading font-extrabold text-white
             text-[clamp(2.5rem,5vw,4.5rem)]
             leading-[1.02] tracking-[-0.03em]
-            max-w-3xl mx-auto mb-6
+            max-w-4xl mx-auto mb-6
           ">
            Your next client is already looking for you. 
           </h2>
@@ -48,7 +48,7 @@ const FinalCTA = () => {
          <p
   className="
     font-body text-white/80 text-lg md:text-xl
-    max-w-xl mx-auto leading-relaxed mb-10
+    max-w-2xl mx-auto leading-relaxed mb-10
   "
 >
   Tell us about your business, your goals, and your challenges.
@@ -75,7 +75,7 @@ const FinalCTA = () => {
                 transition-shadow duration-300
               "
             >
-              Ready to have a Conversation 
+              Start a Conversation 
               <ArrowRight size={16} />
             </Link>
           </motion.div>

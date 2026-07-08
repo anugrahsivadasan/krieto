@@ -1,5 +1,5 @@
 import { ArrowRight, Mail, Phone, MapPin } from "lucide-react";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaX } from "react-icons/fa6";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaX, FaTiktok } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import logo from "../../assets/footer-logo.png";
 
@@ -76,16 +76,17 @@ const Footer = () => {
               </Link>
 
               <p className="font-body text-[#6B7280] text-sm leading-relaxed mb-8">
-                Helping businesses scale through data-driven marketing,
-                strategic advertising, and creative design.
+                Helping businesses scale through advertising, creative design, and marketing.
+                 
               </p>
 
               {/* Socials */}
               <div className="flex gap-3">
-                <SocialIcon href="https://www.facebook.com/profile.php?id=61591558468476" label="Facebook"><FaFacebookF /></SocialIcon>
                 <SocialIcon href="https://www.instagram.com/krieto.co" label="Instagram"><FaInstagram /></SocialIcon>
+                <SocialIcon href="https://www.facebook.com/profile.php?id=61591558468476" label="Facebook"><FaFacebookF /></SocialIcon>
                 <SocialIcon href="https://linkedin.com/company/krieto" label="LinkedIn"><FaLinkedinIn /></SocialIcon>
                 <SocialIcon href="https://x.com/Krieto_co" label="X (Twitter)"><FaX /></SocialIcon>
+                <SocialIcon href="https://www.tiktok.com/@krieto.co" label="TikTok"><FaTiktok /></SocialIcon>
               </div>
             </div>
 
@@ -109,11 +110,14 @@ const Footer = () => {
                 Services
               </h4>
               <ul className="space-y-4">
+                <li><FooterLink to="/services/advertising" text="Creative Video Ads" /></li>
+                <li><FooterLink to="/services/design" text="Brand Identity" /></li>
+                <li><FooterLink to="/services/design" text="Brand Visibility" /></li>
                 <li><FooterLink to="/services/marketing" text="Digital Marketing" /></li>
-                <li><FooterLink to="/services/advertising" text="Paid Advertising" /></li>
-                <li><FooterLink to="/services/design" text="Brand & Design" /></li>
-                <li><FooterLink to="/services" text="Content Creation" /></li>
-                <li><FooterLink to="/services" text="Social Media" /></li>
+                <li><FooterLink to="/services/marketing" text="Brand Reputation
+" /></li>
+                <li><FooterLink to="/services/marketing" text="Growth Intelligence" /></li>
+                
               </ul>
             </div>
 
@@ -124,7 +128,7 @@ const Footer = () => {
               </h4>
               <ul className="space-y-4">
                 <li><ContactItem icon={<Phone size={16} />} text="+1 (737) 363-4769" /></li>
-                <li><ContactItem icon={<Mail size={16} />} text=" contact@krieto.com" /></li>
+                <li><ContactItem icon={<Mail size={16} />} text=" contact@krieto.co" /></li>
                 <li><ContactItem icon={<MapPin size={16} />} text="Texas, United States" /></li>
               </ul>
             </div>
@@ -142,7 +146,7 @@ const Footer = () => {
           {/* Copyright */}
           <div className="mt-8 pt-8 border-t border-white/[0.06] flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="font-body text-[#6B7280] text-sm">
-              © {new Date().getFullYear()} Krieto Advertising & Marketing. All rights reserved.
+              © {new Date().getFullYear()} Krieto LLC. All rights reserved.
             </p>
             <div className="flex gap-6">
               <Link to="/privacy" className="font-body text-sm text-[#6B7280] hover:text-[#00B4D8] transition-colors duration-200">
