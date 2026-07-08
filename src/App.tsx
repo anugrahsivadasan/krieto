@@ -42,7 +42,7 @@ function App() {
   }, []);
 
   if (loading) {
-    return <Preloader />;
+    return <Preloader onComplete={() => setLoading(false)} />;
   }
 
   return (
