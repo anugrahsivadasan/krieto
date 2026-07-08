@@ -1,12 +1,12 @@
+import { useRef, useState } from "react";
 import {
-  AnimatePresence,
   motion,
-  useMotionValueEvent,
+  AnimatePresence,
   useScroll,
+  useMotionValueEvent,
   type Variants,
 } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import { useRef, useState } from "react";
+import { ArrowRight, Mouse } from "lucide-react";
 import { Link } from "react-router-dom";
 import { services } from "../../data/services";
 
@@ -91,10 +91,7 @@ const ServicesShowcase = () => {
       {/* ============================================================
           MOBILE / TABLET (below lg)
       ============================================================ */}
-      <section
-        className="relative block w-full overflow-hidden px-5 py-16 sm:px-8 lg:hidden"
-        style={{ background: services[0].sectionBackground }}
-      >
+      <section className="relative block w-full overflow-hidden bg-[#0A0A0A] px-5 py-16 sm:px-8 lg:hidden">
         <div
           aria-hidden
           className="pointer-events-none absolute -left-24 top-0 h-[420px] w-[420px] rounded-full opacity-30 blur-[140px]"
@@ -102,21 +99,15 @@ const ServicesShowcase = () => {
         />
 
         <div className="relative flex flex-col items-center text-center">
-          <p
-            className="mt-4 text-xs font-semibold uppercase tracking-[0.3em]"
-            style={{ color: services[0].accent }}
-          >
+          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-400">
             OUR SERVICES
           </p>
           <h2 className="font-heading text-4xl font-black leading-tight text-white sm:text-5xl">
             Built to move together.
           </h2>
-          <p
-            className="mt-4 max-w-sm text-sm leading-7 sm:text-base"
-            style={{ color: services[0].textSecondary }}
-          >
-            Three disciplines. One integrated system. Every output connected to
-            your growth.
+          <p className="mt-4 max-w-sm text-sm leading-7 text-slate-400 sm:text-base">
+            Three disciplines. One integrated system. Every output connected
+            to your growth.
           </p>
         </div>
 
@@ -140,10 +131,7 @@ const ServicesShowcase = () => {
                 />
 
                 <div className="relative z-10">
-                  <span
-                    className="text-xs tracking-[0.3em]"
-                    style={{ color: service.textPrimary }}
-                  >
+                  <span className="text-xs tracking-[0.3em] text-white/60">
                     {service.number}
                   </span>
                   <h3 className="mt-3 font-heading text-3xl font-black leading-none text-white">
@@ -171,10 +159,7 @@ const ServicesShowcase = () => {
                   {service.paragraphheading}
                 </h3>
 
-                <p
-                  className="mt-4 text-sm leading-7 sm:text-base"
-                  style={{ color: service.textSecondary }}
-                >
+                <p className="mt-4 text-sm leading-7 text-slate-400 sm:text-base">
                   {service.description}
                 </p>
 
@@ -196,10 +181,7 @@ const ServicesShowcase = () => {
                       >
                         {stat.value}
                       </h4>
-                      <p
-                        className="mt-2 text-[10px] uppercase tracking-[0.25em]"
-                        style={{ color: service.textSecondary }}
-                      >
+                      <p className="mt-2 text-[10px] uppercase tracking-[0.25em] text-white/50">
                         {stat.label}
                       </p>
                     </div>
@@ -216,13 +198,10 @@ const ServicesShowcase = () => {
       ============================================================ */}
       <section
         ref={sectionRef}
-        className="relative hidden w-full lg:block"
+        className="relative left-1/2 hidden w-screen -translate-x-1/2 lg:block"
         style={{ height: `${services.length * 100}vh` }}
       >
-        <div
-          className="sticky top-0 flex h-screen flex-col overflow-hidden"
-          style={{ background: active.sectionBackground }}
-        >
+        <div className="sticky top-0 flex h-screen flex-col overflow-hidden bg-[#0A0A0A]">
           <motion.div
             aria-hidden
             className="pointer-events-none absolute -left-40 top-10 h-[700px] w-[700px] rounded-full opacity-30 blur-[180px]"
@@ -249,46 +228,37 @@ const ServicesShowcase = () => {
               transition={{ duration: 0.6 }}
               className="flex shrink-0 flex-col items-center justify-center px-4 pb-6 pt-12 text-center lg:pb-4 lg:pt-10 xl:pb-10 xl:pt-24"
             >
-              <p
-                className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] lg:mb-2 lg:text-sm lg:tracking-[0.35em]"
-                style={{ color: active.accent }}
-              >
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-400 lg:mb-2 lg:text-sm lg:tracking-[0.35em]">
                 OUR SERVICES
               </p>
 
-              <h2
-                className="font-heading text-[clamp(2.6rem,4.5vw,5.4rem)] font-black leading-none"
-                style={{ color: active.textPrimary }}
-              >
+              <h2 className="font-heading text-[clamp(2.6rem,4.5vw,5.4rem)] font-black leading-none text-white">
                 Built to move together.
               </h2>
 
-              <p
-                className="mt-4 max-w-2xl text-base leading-8 lg:mt-5 lg:text-lg"
-                style={{ color: active.textSecondary }}
-              >
-                Three disciplines. One integrated system. Every output connected
-                to your growth.
+              <p className="mt-4 max-w-2xl text-base leading-8 text-slate-400 lg:mt-5 lg:text-lg">
+                Three disciplines. One integrated system. Every output
+                connected to your growth.
               </p>
             </motion.div>
 
             <div
               className="
                 mx-auto grid w-full min-h-0 max-w-[1400px] flex-1
-                grid-cols-1 items-center gap-8 py-4
-                lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-10
-                xl:grid-cols-[480px_1fr] xl:gap-14
-                2xl:grid-cols-[560px_1fr] 2xl:gap-20
+                grid-cols-1 items-center gap-12 py-4
+                lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)] lg:gap-10
+                xl:grid-cols-[520px_1fr] xl:gap-16
+                2xl:grid-cols-[600px_1fr] 2xl:gap-20
               "
             >
-              <div className="flex w-full items-center justify-center lg:justify-end">
-                <div className="w-full max-w-[420px] sm:max-w-[460px] lg:max-w-[500px] xl:max-w-[560px]">
+              <div className="relative mx-auto flex w-full max-w-[440px] items-center justify-center lg:max-w-none lg:justify-end">
+                <div className="relative w-full max-w-[420px] lg:max-w-none">
                   <motion.div
                     animate={{
                       background: `linear-gradient(145deg, ${active.blobFrom} 0%, ${active.blobTo} 100%)`,
                     }}
                     transition={{ duration: 0.8 }}
-                    className="relative mx-auto flex aspect-square w-full max-w-[420px] flex-col justify-between overflow-hidden p-7 shadow-[0_40px_80px_rgba(0,0,0,0.35)] sm:p-8 lg:max-w-[500px] lg:p-10 xl:max-w-[560px] xl:p-14"
+                    className="relative flex aspect-square w-full flex-col justify-between overflow-hidden p-8 shadow-[0_40px_80px_rgba(0,0,0,0.35)] lg:p-10 xl:p-14"
                     style={{
                       borderRadius: "8% 52% 46% 58% / 14% 28% 68% 54%",
                     }}
@@ -316,7 +286,7 @@ const ServicesShowcase = () => {
                           {active.number}
                         </span>
 
-                        <h2 className="mt-4 font-heading text-[clamp(1.8rem,2.5vw,3.2rem)] font-black leading-none text-white lg:mt-5">
+                        <h2 className="mt-4 font-heading text-[clamp(2.2rem,3.2vw,4rem)] font-black leading-none text-white lg:mt-5">
                           {active.title.charAt(0) +
                             active.title.slice(1).toLowerCase()}
                         </h2>
@@ -338,13 +308,13 @@ const ServicesShowcase = () => {
                           initial="enter"
                           animate="center"
                           exit="exit"
-                          className="absolute bottom-0 right-0 w-[72%] max-w-[360px] object-contain drop-shadow-[0_35px_55px_rgba(0,0,0,0.45)] sm:w-[76%] sm:max-w-[400px] lg:w-[78%] lg:max-w-[420px] xl:w-[80%] xl:max-w-[460px]"
+                          className="absolute bottom-0 right-0 w-[80%] max-w-[460px] object-contain drop-shadow-[0_35px_55px_rgba(0,0,0,0.45)]"
                         />
                       </AnimatePresence>
                     </div>
                   </motion.div>
 
-                  <div className="mt-6 flex flex-wrap justify-center gap-6 sm:gap-8 lg:justify-start lg:gap-10">
+                  <div className="absolute -bottom-12 left-1/2 flex -translate-x-1/2 gap-8 lg:-bottom-14 lg:gap-12">
                     {services.map((service, index) => (
                       <button
                         key={service.id}
@@ -391,17 +361,11 @@ const ServicesShowcase = () => {
                     exit="exit"
                     className="w-full max-w-xl text-center lg:text-left xl:max-w-2xl"
                   >
-                    <h3
-                      className="mt-6 font-heading text-[clamp(1.8rem,2.4vw,3.3rem)] font-black leading-[1.05] lg:mt-8"
-                      style={{ color: active.textPrimary }}
-                    >
+                    <h3 className="mt-6 font-heading text-[clamp(2rem,2.8vw,4.2rem)] font-black leading-[1.05] text-white lg:mt-8">
                       {active.paragraphheading}
                     </h3>
 
-                    <p
-                      className="mt-5 text-base leading-8 lg:mt-8 lg:text-xl lg:leading-9"
-                      style={{ color: active.textSecondary }}
-                    >
+                    <p className="mt-5 text-base leading-8 text-slate-400 lg:mt-8 lg:text-xl lg:leading-9">
                       {active.description}
                     </p>
 
@@ -417,7 +381,7 @@ const ServicesShowcase = () => {
                       />
                     </Link>
 
-                    <div className="mt-10 grid grid-cols-3 gap-4 sm:gap-6 lg:mt-14 lg:gap-8 xl:mt-18 xl:gap-10">
+                    <div className="mt-12 grid grid-cols-3 gap-6 lg:mt-16 lg:gap-8 xl:mt-20 xl:gap-10">
                       {STATS.map((stat) => (
                         <div key={stat.label}>
                           <h4
@@ -426,10 +390,7 @@ const ServicesShowcase = () => {
                           >
                             {stat.value}
                           </h4>
-                          <p
-                            className="mt-2 text-[10px] uppercase tracking-[0.25em] lg:mt-3 lg:text-xs lg:tracking-[0.3em]"
-                            style={{ color: active.textSecondary }}
-                          >
+                          <p className="mt-2 text-[10px] uppercase tracking-[0.25em] text-white/50 lg:mt-3 lg:text-xs lg:tracking-[0.3em]">
                             {stat.label}
                           </p>
                         </div>

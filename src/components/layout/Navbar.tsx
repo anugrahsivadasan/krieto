@@ -347,7 +347,7 @@ export default function Navbar() {
         >
           <div
             className={`mt-3 w-full max-w-[1180px] overflow-hidden rounded-[28px] ${scrolled
-              ? 'bg-white/[0.04] backdrop-blur-md border border-white/[0.06] shadow-[0_40px_90px_rgba(0,0,0,0.45)]'
+              ? 'bg-black/[0.54] backdrop-blur-md border border-white/[0.06] shadow-[0_40px_90px_rgba(0,0,0,0.45)]'
               : 'bg-black border border-white/[0.06] shadow-[0_40px_90px_rgba(0,0,0,0.6)]'
             }`}
           >
