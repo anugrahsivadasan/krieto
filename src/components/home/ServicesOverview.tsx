@@ -52,7 +52,7 @@ const textVariants: Variants = {
 
 const STATS = [
   { label: "Projects", value: "50+" },
-  { label: "Success", value: "98%" },
+  { label: "Success", value: "100%" },
   { label: "Support", value: "24/7" },
 ];
 
@@ -105,10 +105,9 @@ const ServicesShowcase = () => {
           <h2 className="font-heading text-4xl font-black leading-tight text-white sm:text-5xl">
             Built to move together.
           </h2>
-          <p className="mt-4 max-w-sm text-sm leading-7 text-slate-400 sm:text-base">
-            Three disciplines. One integrated system. Every output connected
-            to your growth.
-          </p>
+         <p className="mt-4 max-w-4xl text-sm leading-7 text-slate-400 sm:text-base">
+  Three disciplines. One integrated system. Every output connected to your growth.
+</p>
         </div>
 
         <div className="relative mt-8 flex flex-col gap-20">
@@ -138,7 +137,7 @@ const ServicesShowcase = () => {
                     {service.title.charAt(0) +
                       service.title.slice(1).toLowerCase()}
                   </h3>
-                  <p className="mt-3 max-w-[200px] text-sm leading-6 text-white/80">
+                  <p className="mt-2 max-w-[200px] text-sm leading-6 text-white/80">
                     {service.subtitle}
                   </p>
                 </div>
@@ -236,7 +235,7 @@ const ServicesShowcase = () => {
                 Built to move together.
               </h2>
 
-              <p className="mt-4 max-w-2xl text-base leading-8 text-slate-400 lg:mt-5 lg:text-lg">
+              <p className="mt-4 max-w-3xl text-base leading-8 text-slate-400 lg:mt-5 lg:text-lg">
                 Three disciplines. One integrated system. Every output
                 connected to your growth.
               </p>
@@ -286,12 +285,12 @@ const ServicesShowcase = () => {
                           {active.number}
                         </span>
 
-                        <h2 className="mt-4 font-heading text-[clamp(2.2rem,3.2vw,4rem)] font-black leading-none text-white lg:mt-5">
+                        <h2 className="mt-4 font-heading text-[clamp(2.2rem,3.2vw,4rem)] font-black leading-none text-white lg:mt-2">
                           {active.title.charAt(0) +
                             active.title.slice(1).toLowerCase()}
                         </h2>
 
-                        <p className="mt-4 max-w-xs text-base leading-7 text-white/80 lg:mt-6 lg:text-lg lg:leading-8">
+                        <p className="mt-4 max-w-xs text-base leading-7 text-white/80 lg:mt-0 lg:text-lg lg:leading-8">
                           {active.subtitle}
                         </p>
                       </motion.div>
