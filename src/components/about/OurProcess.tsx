@@ -92,6 +92,11 @@ function ProcessSection() {
   const introRef = useRef<HTMLDivElement>(null);
   const anchorRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Refs for theme-transition targets
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const labelRef = useRef<HTMLParagraphElement>(null);
+  const subtextRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const section = sectionRef.current;
     const pinEl = pinRef.current;
@@ -119,6 +124,128 @@ function ProcessSection() {
       if (img.complete) onImageLoad();
       else img.addEventListener("load", onImageLoad);
     });
+
+    // ── Viewport colour transition (black → white) ──────────────────────
+    // Collect all card elements for bg colour tweening
+    const cardEls = anchorRefs.current
+      .map((a) => a?.querySelector<HTMLElement>(".card"))
+      .filter(Boolean) as HTMLElement[];
+
+    // Collect all card image overlay divs (gradient from-[#0E0E0E])
+    const cardOverlays = anchorRefs.current
+      .map((a) => a?.querySelector<HTMLElement>(".card-overlay-bottom"))
+      .filter(Boolean) as HTMLElement[];
+
+    // Collect icon wrapper divs
+    const iconWrappers = anchorRefs.current
+      .map((a) => a?.querySelector<HTMLElement>(".icon-wrapper"))
+      .filter(Boolean) as HTMLElement[];
+
+    // Number spans
+    const numberSpans = anchorRefs.current
+      .map((a) => a?.querySelector<HTMLElement>(".step-number"))
+      .filter(Boolean) as HTMLElement[];
+
+    // Title h3s
+    const titleEls = anchorRefs.current
+      .map((a) => a?.querySelector<HTMLElement>(".step-title"))
+      .filter(Boolean) as HTMLElement[];
+
+    // Description p's
+    const descEls = anchorRefs.current
+      .map((a) => a?.querySelector<HTMLElement>(".step-desc"))
+      .filter(Boolean) as HTMLElement[];
+
+    if (!prefersReducedMotion) {
+      const themeTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",   // when section top hits 80% from viewport top (entering)
+          end: "top 10%",     // fully in view
+          scrub: 1.2,
+          toggleActions: "play none none reverse",
+        },
+      });
+
+      // Section background: black → white
+      themeTl.fromTo(
+        section,
+        { backgroundColor: "#000000" },
+        { backgroundColor: "#ffffff", ease: "none" },
+        0
+      );
+
+      // Ambient glow: fade out (it's a dark theme element)
+      const glowEl = section.querySelector<HTMLElement>(".ambient-glow");
+      if (glowEl) {
+        themeTl.fromTo(glowEl, { opacity: 1 }, { opacity: 0, ease: "none" }, 0);
+      }
+
+      // Heading: white → near-black
+      if (headingRef.current) {
+        themeTl.fromTo(
+          headingRef.current,
+          { color: "#F9FAFB" },
+          { color: "#111111", ease: "none" },
+          0
+        );
+      }
+
+      // Label: cyan stays but adapts (darken slightly)
+      if (labelRef.current) {
+        themeTl.fromTo(
+          labelRef.current,
+          { color: "#00B4D8" },
+          { color: "#007A94", ease: "none" },
+          0
+        );
+      }
+
+      // Sub-text: muted gray → dark gray
+      if (subtextRef.current) {
+        themeTl.fromTo(
+          subtextRef.current,
+          { color: "#afb3bc" },
+          { color: "#374151", ease: "none" },
+          0
+        );
+      }
+
+      // Cards bg: #0E0E0E → white with a subtle border
+      if (cardEls.length) {
+        themeTl.fromTo(
+          cardEls,
+          { backgroundColor: "#0E0E0E" },
+          { backgroundColor: "#ffffff", ease: "none" },
+          0
+        );
+      }
+
+      // Card title h3: light → dark
+      if (titleEls.length) {
+        themeTl.fromTo(
+          titleEls,
+          { color: "#F9FAFB" },
+          { color: "#111111", ease: "none" },
+          0
+        );
+      }
+
+      // Card description p: gray → darker gray
+      if (descEls.length) {
+        themeTl.fromTo(
+          descEls,
+          { color: "#6B7280" },
+          { color: "#374151", ease: "none" },
+          0
+        );
+      }
+
+      cleanups.push(() => {
+        themeTl.scrollTrigger?.kill();
+        themeTl.kill();
+      });
+    }
 
     // ── MOBILE: normal vertical stack, no pin, no horizontal track ──────
     mm.add("(max-width: 767px)", () => {
@@ -364,10 +491,11 @@ function ProcessSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-black overflow-hidden"
+      className="relative w-full overflow-hidden"
+      style={{ backgroundColor: "#000000" }}
     >
       {/* Subtle ambient glow */}
-      <div className="absolute top-[-30%] right-[-20%] w-[70%] h-[120%] bg-[radial-gradient(ellipse,rgba(0,180,216,0.10),transparent)] pointer-events-none z-0" />
+      <div className="ambient-glow absolute top-[-30%] right-[-20%] w-[70%] h-[120%] bg-[radial-gradient(ellipse,rgba(0,180,216,0.10),transparent)] pointer-events-none z-0" />
 
       {/* Pin wrapper — exactly one viewport tall on desktop/tablet so the
           section can never overflow while pinned. On mobile it's a normal
@@ -388,14 +516,26 @@ function ProcessSection() {
           >
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
-                <p className="font-['JetBrains_Mono'] text-[#00B4D8] text-xs tracking-[0.25em] uppercase mb-2">
+                <p
+                  ref={labelRef}
+                  className="font-['JetBrains_Mono'] text-xs tracking-[0.25em] uppercase mb-2"
+                  style={{ color: "#00B4D8" }}
+                >
                   How We Work
                 </p>
-                <h2 className="font-['Space_Grotesk'] font-bold text-[#F9FAFB] text-4xl md:text-5xl lg:text-6xl tracking-tight leading-tight">
+                <h2
+                  ref={headingRef}
+                  className="font-['Space_Grotesk'] font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight leading-tight"
+                  style={{ color: "#F9FAFB" }}
+                >
                   Six steps. One straight line to revenue.
                 </h2>
               </div>
-              <div className="font-['Inter'] text-sm md:text-base text-[#afb3bc] max-w-sm border-l border-[#00B4D8]/25 pl-4 md:pl-6">
+              <div
+                ref={subtextRef}
+                className="font-['Inter'] text-sm md:text-base max-w-sm border-l border-[#00B4D8]/25 pl-4 md:pl-6"
+                style={{ color: "#afb3bc" }}
+              >
                 No detours, no guesswork — every engagement runs the same
                 disciplined path from first audit to compounding scale.
               </div>
@@ -419,11 +559,11 @@ function ProcessSection() {
             >
               {/* Anchor — owns entrance x / opacity / scale */}
               <div
-                className="card group relative h-[clamp(340px,58vh,440px)] sm:h-[clamp(380px,60vh,500px)] md:h-[clamp(400px,58vh,520px)] lg:h-[clamp(420px,60vh,560px)] xl:h-[clamp(440px,62vh,600px)] 2xl:h-[clamp(460px,64vh,640px)] rounded-3xl bg-[#0E0E0E] cursor-pointer
-                  border border-transparent
-                  [background:linear-gradient(#0E0E0E,#0E0E0E)_padding-box,linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.02))_border-box]
+                className="card group relative h-[clamp(340px,58vh,440px)] sm:h-[clamp(380px,60vh,500px)] md:h-[clamp(400px,58vh,520px)] lg:h-[clamp(420px,60vh,560px)] xl:h-[clamp(440px,62vh,600px)] 2xl:h-[clamp(460px,64vh,640px)] rounded-3xl cursor-pointer
+                  border border-white/10
                   shadow-xl shadow-black/40
                   will-change-transform"
+                style={{ backgroundColor: "#0E0E0E" }}
               >
                 {/* ── Image (~65% height) ─────────────────────────── */}
                 <div className="relative w-full h-[50%] overflow-hidden rounded-t-[32px]">
@@ -435,7 +575,7 @@ function ProcessSection() {
                     className="card-image w-full h-full object-cover will-change-transform"
                     style={{ borderRadius: "32px" }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E0E] via-transparent to-transparent opacity-30 pointer-events-none rounded-t-[32px]" />
+                  <div className="card-overlay-bottom absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30 pointer-events-none rounded-t-[32px]" />
                   <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] via-transparent to-transparent opacity-50 pointer-events-none rounded-t-[32px]" />
                 </div>
 
@@ -443,17 +583,26 @@ function ProcessSection() {
                 <div className="p-6 md:p-7  flex flex-col justify-between h-[40%]">
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className="font-['JetBrains_Mono'] text-[#00B4D8]/60 text-xs tracking-widest">
+                      <span
+                        className="step-number font-['JetBrains_Mono'] text-xs tracking-widest"
+                        style={{ color: "rgba(0,180,216,0.6)" }}
+                      >
                         {step.number}
                       </span>
-                      <div className="w-8 h-8 rounded-lg bg-[#00B4D8]/10 border border-[#00B4D8]/20 flex items-center justify-center text-[#00B4D8]">
+                      <div className="icon-wrapper w-8 h-8 rounded-lg bg-[#00B4D8]/10 border border-[#00B4D8]/20 flex items-center justify-center text-[#00B4D8]">
                         {step.icon}
                       </div>
                     </div>
-                    <h3 className="font-['Space_Grotesk'] text-[#F9FAFB] text-lg font-semibold leading-tight">
+                    <h3
+                      className="step-title font-['Space_Grotesk'] text-lg font-semibold leading-tight"
+                      style={{ color: "#F9FAFB" }}
+                    >
                       {step.title}
                     </h3>
-                    <p className="font-['Inter'] text-[#6B7280] text-sm leading-relaxed mt-1.5 mb-4 line-clamp-2">
+                    <p
+                      className="step-desc font-['Inter'] text-sm leading-relaxed mt-1.5 mb-4 line-clamp-2"
+                      style={{ color: "#6B7280" }}
+                    >
                       {step.description}
                     </p>
                   </div>
