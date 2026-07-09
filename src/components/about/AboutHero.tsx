@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Aurora from "../global/Aurora";
 
 const ease: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
 
@@ -15,6 +16,18 @@ const AboutHero = () => {
       className="relative flex items-center justify-center min-h-[90vh] overflow-hidden bg-[#0A0A0A]"
       style={{ scrollMarginTop: "96px" }}
     >
+       <div className="absolute inset-0 pointer-events-none">
+              <Aurora
+                colorStops={[
+                  "#03045E",
+                  "#0077B6",
+                  "#00B4D8",
+                ]}
+                blend={0.35}
+                amplitude={0.8}
+                speed={0.4}
+              />
+            </div>
       <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(0,180,216,0.12),transparent_42%),radial-gradient(ellipse_at_20%_80%,rgba(144,224,239,0.08),transparent_40%)]" />
 
       {/* Top Border */}
