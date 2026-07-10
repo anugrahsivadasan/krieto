@@ -29,7 +29,7 @@ export const services = [
     number: "02",
     title: "DESIGN",
     subtitle: "Built to Be Chosen.",
-    paragraphheading: "Brand Identity & Design · Web Development & E-Commerce",
+    paragraphheading: "Brand Identity & Design ",
     description:
       "Your brand communicates before you do. We make sure it says the right thing, everywhere it shows up.",
     button: "Explore Design",
@@ -47,9 +47,9 @@ export const services = [
   title: "MARKETING",
   subtitle: "Build the Brand They Cannot Forget.",
   paragraphheading:
-    "Digital Marketing & Content Creation · Market Presence & Reputation · Growth Intelligence & Analytics",
+    "Digital Marketing & Brand Reputation ",
   description:
-    "Consistent presence across every channel that matters. Built as infrastructure. Measured as investment.",
+    "We build marketing infrastructure that compounds: Social media, SEO, email, reputation, analytics-all integrated, all pointed at your growth.",
   button: "Explore Marketing",
   image: mar,
 
