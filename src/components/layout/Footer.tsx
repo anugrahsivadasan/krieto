@@ -110,13 +110,13 @@ const Footer = () => {
                 Services
               </h4>
               <ul className="space-y-4">
-                <li><FooterLink to="/services/advertising" text="Creative Video Ads" /></li>
-                <li><FooterLink to="/services/design" text="Brand Identity" /></li>
+                <li><FooterLink to="/services/advertising" text="Creative Advertising" /></li>
+                <li><FooterLink to="/services/design" text="Platform Advertising" /></li>
                 <li><FooterLink to="/services/design" text="Brand Visibility" /></li>
                 <li><FooterLink to="/services/marketing" text="Digital Marketing" /></li>
-                <li><FooterLink to="/services/marketing" text="Brand Reputation
+                <li><FooterLink to="/services/marketing" text="Brand Visibility
 " /></li>
-                <li><FooterLink to="/services/marketing" text="Growth Intelligence" /></li>
+                <li><FooterLink to="/services/marketing" text="Brand Reputation" /></li>
                 
               </ul>
             </div>

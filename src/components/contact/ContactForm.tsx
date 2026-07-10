@@ -214,11 +214,11 @@ const ContactSection = () => {
                 tabIndex={-1}
               />
 
-              {/* ================= Name + Email ================= */}
+              {/* ================= Contact Details ================= */}
 
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid gap-6 md:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-white mb-3">
+                  <label className="mb-3 block text-sm font-medium text-white">
                     Full Name *
                   </label>
 
@@ -226,25 +226,65 @@ const ContactSection = () => {
                     type="text"
                     name="name"
                     required
-                    className="
-                    w-full
-                    rounded-2xl
-                    border
-                    border-white/50
-                    bg-white/[0.03]
-                    px-5
-                    h-14
-                    text-white
-                    outline-none
-                    transition-all
-                    duration-300
-                    focus:border-[#00B4D8]
-                    "
+                    className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-all duration-300 focus:border-[#00B4D8]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white mb-3">
+                  <label className="mb-3 block text-sm font-medium text-white">
+                    Business Name
+                  </label>
+
+                  <input
+                    type="text"
+                    name="businessName"
+                    className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-all duration-300 focus:border-[#00B4D8]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-2">
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-white">
+                    Industry *
+                  </label>
+
+                  <select
+                    name="industry"
+                    required
+                    defaultValue=""
+                    className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-all duration-300 focus:border-[#00B4D8]"
+                  >
+                    <option
+                      value=""
+                      disabled
+                      className="text-white bg-[#0A0A0A]"
+                    >
+                      Select Industry
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Technology
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Healthcare
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">Retail</option>
+                    <option className="text-white bg-[#0A0A0A]">Finance</option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Real Estate
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Education
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Hospitality
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-white">
                     Email Address *
                   </label>
 
@@ -252,29 +292,14 @@ const ContactSection = () => {
                     type="email"
                     name="email"
                     required
-                    className="
-                    w-full
-                    rounded-2xl
-                    border
-                    border-white/50
-                    bg-white/[0.03]
-                    px-5
-                    h-14
-                    text-white
-                    outline-none
-                    transition-all
-                    duration-300
-                    focus:border-[#00B4D8]
-                    "
+                    className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-all duration-300 focus:border-[#00B4D8]"
                   />
                 </div>
               </div>
 
-              {/* ================= Phone + Enquiry Type ================= */}
-
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid gap-6 md:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-white mb-3">
+                  <label className="mb-3 block text-sm font-medium text-white">
                     Phone Number *
                   </label>
 
@@ -282,63 +307,141 @@ const ContactSection = () => {
                     type="tel"
                     name="phone"
                     required
-                    className="
-                    w-full
-                    rounded-2xl
-                    border
-                    border-white/50
-                    bg-white/[0.03]
-                    px-5
-                    h-14
-                    text-white
-                    outline-none
-                    transition-all
-                    duration-300
-                    focus:border-[#00B4D8]
-                    "
+                    className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-all duration-300 focus:border-[#00B4D8]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-white mb-3">
-                    Enquiry Type *
+                  <label className="mb-3 block text-sm font-medium text-white">
+                    City
+                  </label>
+
+                  <input
+                    type="text"
+                    name="city"
+                    className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-all duration-300 focus:border-[#00B4D8]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-6 md:grid-cols-2">
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-white">
+                    State
+                  </label>
+
+                  <input
+                    type="text"
+                    name="state"
+                    className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-all duration-300 focus:border-[#00B4D8]"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-white">
+                    Country *
                   </label>
 
                   <select
-                    name="enquiry"
+                    name="country"
                     required
-                    defaultValue=""
-                    className="
-                    w-full
-                    rounded-2xl
-                    border
-                    border-white/50
-                    bg-white/[0.03]
-                    px-5
-                    h-14
-                    text-white
-                    outline-none
-                    focus:border-[#00B4D8]
-                    "
+                    defaultValue="United States"
+                    className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-all duration-300 focus:border-[#00B4D8]"
                   >
-                    <option value="" disabled>
-                      Select Enquiry
+                    <option
+                      value="United States"
+                      className="text-white bg-[#0A0A0A]"
+                    >
+                      United States
                     </option>
-
-                    <option className="text-white bg-[#0A0A0A]">Marketing</option>
-                    <option className="text-white bg-[#0A0A0A]">Advertising</option>
-                    <option className="text-white bg-[#0A0A0A]">Design</option>
-                    <option className="text-white bg-[#0A0A0A]">Full-Service</option>
-                    <option className="text-white bg-[#0A0A0A]">Not Sure Yet</option>
                   </select>
                 </div>
               </div>
 
-              {/* ================= Message ================= */}
+              <div className="grid gap-6 md:grid-cols-2">
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-white">
+                    Service Interest *
+                  </label>
+
+                  <select
+                    name="serviceInterest"
+                    required
+                    defaultValue=""
+                    className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-all duration-300 focus:border-[#00B4D8]"
+                  >
+                    <option
+                      value=""
+                      disabled
+                      className="text-white bg-[#0A0A0A]"
+                    >
+                      Select Service Interest
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Website Development
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Marketing
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Advertising
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Branding
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">SEO</option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Not Sure Yet
+                    </option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-white">
+                    Choose a Category *
+                  </label>
+
+                  <select
+                    name="serviceCategory"
+                    required
+                    defaultValue=""
+                    className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-all duration-300 focus:border-[#00B4D8]"
+                  >
+                    <option
+                      value=""
+                      disabled
+                      className="text-white bg-[#0A0A0A]"
+                    >
+                      Select Category
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Website Development
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Marketing Strategy
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Advertising Campaigns
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Brand Identity
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      SEO Optimization
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">
+                      Social Media
+                    </option>
+                    <option className="text-white bg-[#0A0A0A]">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* ================= Project Details ================= */}
 
               <div>
-                <label className="block text-sm font-medium text-white mb-3">
-                  Message *
+                <label className="mb-3 block text-sm font-medium text-white">
+                  Tell us about your project *
                 </label>
 
                 <textarea
@@ -347,49 +450,21 @@ const ContactSection = () => {
                   minLength={20}
                   maxLength={1000}
                   rows={6}
-                  className="
-                  w-full
-                  rounded-2xl
-                  border
-                  border-white/50
-                  bg-white/[0.03]
-                  px-5
-                  py-4
-                  text-white
-                  outline-none
-                  resize-none
-                  transition-all
-                  duration-300
-                  focus:border-[#00B4D8]
-                  "
+                  className="w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 py-4 text-white outline-none resize-none transition-all duration-300 focus:border-[#00B4D8]"
                 />
               </div>
 
               {/* ================= Referral ================= */}
 
               <div>
-                <label className="block text-sm font-medium text-white mb-3">
+                <label className="mb-3 block text-sm font-medium text-white">
                   How did you find us?
                 </label>
 
                 <select
                   name="referral"
                   defaultValue=""
-                  className="
-                  w-full
-                  rounded-2xl
-                  border
-                  border-white/50
-                  bg-white/[0.03]
-                  px-5
-                  h-14
-                  text-white
-                  outline-none
-                  transition-colors
-                  duration-300
-                  hover:border-[#00B4D8]
-                  focus:border-[#00B4D8]
-                  "
+                  className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-colors duration-300 hover:border-[#00B4D8] focus:border-[#00B4D8]"
                 >
                   <option value="" className="text-white bg-[#0A0A0A]">
                     Select Option

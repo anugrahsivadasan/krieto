@@ -104,11 +104,11 @@ const StatsSection = () => {
                   <div className="relative flex h-full flex-col justify-end p-8">
                     {item.icon ? (
                       <>
-                        <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
-                          <Infinity size={34} className="text-cyan-300" />
+                        <div className="mb-5 flex h-16 w-16 items-center justify-center ">
+                          <Infinity size={74} className="text-white" />
                         </div>
 
-                        <h3 className="text-3xl font-bold text-white leading-tight">
+                        <h3 className="text-sm font-bold text-white leading-tight">
                           {item.title}
                         </h3>
                       </>
