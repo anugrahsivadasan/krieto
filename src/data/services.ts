@@ -12,7 +12,7 @@ export const services = [
     number: "01",
     title: "ADVERTISING",
     subtitle: "The Frame That Changes Everything.",
-    paragraphheading: "Creative Advertising & Video Production",
+    paragraphheading: "Creative  & Platform Advertising",
     description:
       "AI powered video. Animated content & premium voiceovers. Production-quality advertising built for the platforms where your audience actually watches.",
     button: "Explore Advertising",
