@@ -1,12 +1,12 @@
-import { useRef, useState } from "react";
 import {
-  motion,
   AnimatePresence,
-  useScroll,
+  motion,
   useMotionValueEvent,
+  useScroll,
   type Variants,
 } from "framer-motion";
-import { ArrowRight, Mouse } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { services } from "../../data/services";
 
@@ -105,9 +105,10 @@ const ServicesShowcase = () => {
           <h2 className="font-heading text-4xl font-black leading-tight text-white sm:text-5xl">
             Built to move together.
           </h2>
-         <p className="mt-4 max-w-4xl text-sm leading-7 text-slate-400 sm:text-base">
-  Three disciplines. One integrated system. Every output connected to your growth.
-</p>
+          <p className="mt-4 max-w-4xl text-sm leading-7 text-slate-400 sm:text-base">
+            Three disciplines. One integrated system. Every output connected to
+            your growth.
+          </p>
         </div>
 
         <div className="relative mt-8 flex flex-col gap-20">
@@ -200,7 +201,7 @@ const ServicesShowcase = () => {
         className="relative left-1/2 hidden w-screen -translate-x-1/2 lg:block"
         style={{ height: `${services.length * 100}vh` }}
       >
-        <div className="sticky top-0 flex h-screen flex-col overflow-hidden bg-[#0A0A0A]">
+        <div className="sticky top-0 flex min-h-screen flex-col overflow-hidden bg-[#0A0A0A]">
           <motion.div
             aria-hidden
             className="pointer-events-none absolute -left-40 top-10 h-[700px] w-[700px] rounded-full opacity-30 blur-[180px]"
@@ -219,13 +220,13 @@ const ServicesShowcase = () => {
             Scroll to explore
           </div>
 
-          <div className="mx-auto flex h-full w-full max-w-[1600px] flex-1 flex-col px-6 sm:px-10 xl:px-20">
+          <div className="mx-auto flex h-full w-full max-w-[1600px] flex-1 flex-col px-6 sm:px-10 xl:px-16 2xl:px-20">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="flex shrink-0 flex-col items-center justify-center px-4 pb-6 pt-12 text-center lg:pb-4 lg:pt-10 xl:pb-10 xl:pt-24"
+              className="flex shrink-0 flex-col items-center justify-center px-4 pb-4 pt-8 text-center lg:pb-3 lg:pt-8 xl:pb-6 xl:pt-16"
             >
               <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-400 lg:mb-2 lg:text-sm lg:tracking-[0.35em]">
                 OUR SERVICES
@@ -236,18 +237,18 @@ const ServicesShowcase = () => {
               </h2>
 
               <p className="mt-4 max-w-3xl text-base leading-8 text-slate-400 lg:mt-5 lg:text-lg">
-                Three disciplines. One integrated system. Every output
-                connected to your growth.
+                Three disciplines. One integrated system. Every output connected
+                to your growth.
               </p>
             </motion.div>
 
             <div
               className="
                 mx-auto grid w-full min-h-0 max-w-[1400px] flex-1
-                grid-cols-1 items-center gap-12 py-4
-                lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)] lg:gap-10
-                xl:grid-cols-[520px_1fr] xl:gap-16
-                2xl:grid-cols-[600px_1fr] 2xl:gap-20
+                grid-cols-1 items-center gap-6 py-2
+                lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:gap-6
+                xl:grid-cols-[460px_1fr] xl:gap-10
+                2xl:grid-cols-[520px_1fr] 2xl:gap-14
               "
             >
               <div className="relative mx-auto flex w-full max-w-[440px] items-center justify-center lg:max-w-none lg:justify-end">
@@ -257,7 +258,7 @@ const ServicesShowcase = () => {
                       background: `linear-gradient(145deg, ${active.blobFrom} 0%, ${active.blobTo} 100%)`,
                     }}
                     transition={{ duration: 0.8 }}
-                    className="relative flex aspect-square w-full flex-col justify-between overflow-hidden p-8 shadow-[0_40px_80px_rgba(0,0,0,0.35)] lg:p-10 xl:p-14"
+                    className="relative flex aspect-square w-full flex-col justify-between overflow-hidden p-7 shadow-[0_40px_80px_rgba(0,0,0,0.35)] lg:p-8 xl:p-10"
                     style={{
                       borderRadius: "8% 52% 46% 58% / 14% 28% 68% 54%",
                     }}
@@ -360,17 +361,17 @@ const ServicesShowcase = () => {
                     exit="exit"
                     className="w-full max-w-xl text-center lg:text-left xl:max-w-2xl"
                   >
-                    <h3 className="mt-6 font-heading text-[clamp(2rem,2.8vw,4.2rem)] font-black leading-[1.05] text-white lg:mt-8">
+                    <h3 className="mt-5 font-heading text-[clamp(1.85rem,2.6vw,3.8rem)] font-black leading-[1.05] text-white lg:mt-6">
                       {active.paragraphheading}
                     </h3>
 
-                    <p className="mt-5 text-base leading-8 text-slate-400 lg:mt-8 lg:text-xl lg:leading-9">
+                    <p className="mt-4 text-base leading-7 text-slate-400 lg:mt-6 lg:text-lg lg:leading-8">
                       {active.description}
                     </p>
 
                     <Link
                       to={active.link}
-                      className="group mt-8 inline-flex items-center gap-4 rounded-full px-8 py-4 text-base font-semibold text-white transition-all duration-300 hover:gap-6 lg:mt-12 lg:text-lg"
+                      className="group mt-7 inline-flex items-center gap-4 rounded-full px-8 py-4 text-base font-semibold text-white transition-all duration-300 hover:gap-6 lg:mt-10 lg:text-lg"
                       style={{ background: active.accent }}
                     >
                       {active.button}
@@ -380,7 +381,7 @@ const ServicesShowcase = () => {
                       />
                     </Link>
 
-                    <div className="mt-12 grid grid-cols-3 gap-6 lg:mt-16 lg:gap-8 xl:mt-20 xl:gap-10">
+                    <div className="mt-8 grid grid-cols-3 gap-4 lg:mt-10 lg:gap-6 xl:mt-12 xl:gap-8">
                       {STATS.map((stat) => (
                         <div key={stat.label}>
                           <h4
