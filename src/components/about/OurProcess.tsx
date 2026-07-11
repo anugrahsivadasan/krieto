@@ -1,12 +1,4 @@
 import { useEffect, useRef } from "react";
-import {
-  Search,
-  BarChart3,
-  PenTool,
-  Zap,
-  LineChart,
-  TrendingUp,
-} from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -17,8 +9,6 @@ interface ProcessStep {
   number: string;
   title: string;
   description: string;
-  icon: React.ReactNode;
-  badge: string;
   image: string;
 }
 
@@ -27,19 +17,15 @@ const processSteps: ProcessStep[] = [
     number: "01",
     title: "Discovery & Audit",
     description:
-      "Deep-dive into your brand, market position, and competitive landscape.",
-    icon: <Search className="w-5 h-5" strokeWidth={1.5} />,
-    badge: "Foundation",
+      "Deep-dive into your brand, market position, and competitive landscape to uncover exactly where the growth is hiding.",
     image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=900&h=700&fit=crop&crop=center&q=80&auto=format",
+      "https://media.istockphoto.com/id/607912434/photo/start-up-team-meeting.jpg?s=612x612&w=0&k=20&c=TgO5j2Vqz-h_DHMEO1zEMFFnrNBd44NvlFZTuQSjCb8=",
   },
   {
     number: "02",
     title: "Research & Strategy",
     description:
-      "Data-driven insights that shape a winning go-to-market blueprint.",
-    icon: <BarChart3 className="w-5 h-5" strokeWidth={1.5} />,
-    badge: "Blueprint",
+      "Data-driven insights that shape a winning go-to-market blueprint built specifically around your customers.",
     image:
       "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&h=700&fit=crop&crop=center&q=80&auto=format",
   },
@@ -47,29 +33,23 @@ const processSteps: ProcessStep[] = [
     number: "03",
     title: "Creative Development",
     description:
-      "Crafting visuals and copy that command attention and convert.",
-    icon: <PenTool className="w-5 h-5" strokeWidth={1.5} />,
-    badge: "Craft",
+      "Crafting visuals and copy that command attention, build trust fast, and convert browsers into buyers.",
     image:
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=900&h=700&fit=crop&crop=center&q=80&auto=format",
+      "https://media.istockphoto.com/id/1630663973/photo/woman-hand-holding-virtual-global-internet-connection-metaverse-business-global-internet.jpg?s=612x612&w=0&k=20&c=uT3exMBlXQi37GvX-hANO9eJA2eqRtjrbqCtEOJ1VRE=",
   },
   {
     number: "04",
     title: "Implementation",
     description:
-      "Precise execution across every channel — on time, on brief.",
-    icon: <Zap className="w-5 h-5" strokeWidth={1.5} />,
-    badge: "Execution",
+      "Precise execution across every channel — launched on time, on brief, and built to perform from day one.",
     image:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&h=700&fit=crop&crop=center&q=80&auto=format",
+      "https://media.istockphoto.com/id/2157053032/photo/happy-business-team-working-on-reports-in-the-office.jpg?s=612x612&w=0&k=20&c=KErofhmINqEvIVL_0qKfV_n5FizB2fIr7z1awtFwCUQ=",
   },
   {
     number: "05",
     title: "Reporting & Analytics",
     description:
-      "Transparent dashboards that tie every dollar to measurable results.",
-    icon: <LineChart className="w-5 h-5" strokeWidth={1.5} />,
-    badge: "Insight",
+      "Transparent dashboards that tie every dollar spent to measurable results, so you always know what's working.",
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&h=700&fit=crop&crop=center&q=80&auto=format",
   },
@@ -77,11 +57,9 @@ const processSteps: ProcessStep[] = [
     number: "06",
     title: "Optimisation & Scale",
     description:
-      "Continuous refinement to compound growth well beyond launch.",
-    icon: <TrendingUp className="w-5 h-5" strokeWidth={1.5} />,
-    badge: "Growth",
+      "Continuous refinement to compound growth well beyond launch, turning early wins into lasting momentum.",
     image:
-      "https://images.unsplash.com/photo-1639765487008-b892a4efe924?w=900&h=700&fit=crop&crop=center&q=80&auto=format",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBUGEWGc-TAO04BuAARnKBzCqY4C7SqtH6oGWifv-BJB0z_UnvdoyrhjSr&s=10",
   },
 ];
 
@@ -92,7 +70,7 @@ function ProcessSection() {
   const introRef = useRef<HTMLDivElement>(null);
   const anchorRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Refs for theme-transition targets
+  // Refs for the intro copy's theme transition (section stays behind the cards)
   const headingRef = useRef<HTMLHeadingElement>(null);
   const labelRef = useRef<HTMLParagraphElement>(null);
   const subtextRef = useRef<HTMLDivElement>(null);
@@ -125,127 +103,7 @@ function ProcessSection() {
       else img.addEventListener("load", onImageLoad);
     });
 
-    // ── Viewport colour transition (black → white) ──────────────────────
-    // Collect all card elements for bg colour tweening
-    const cardEls = anchorRefs.current
-      .map((a) => a?.querySelector<HTMLElement>(".card"))
-      .filter(Boolean) as HTMLElement[];
-
-    // Collect all card image overlay divs (gradient from-[#0E0E0E])
-    const cardOverlays = anchorRefs.current
-      .map((a) => a?.querySelector<HTMLElement>(".card-overlay-bottom"))
-      .filter(Boolean) as HTMLElement[];
-
-    // Collect icon wrapper divs
-    const iconWrappers = anchorRefs.current
-      .map((a) => a?.querySelector<HTMLElement>(".icon-wrapper"))
-      .filter(Boolean) as HTMLElement[];
-
-    // Number spans
-    const numberSpans = anchorRefs.current
-      .map((a) => a?.querySelector<HTMLElement>(".step-number"))
-      .filter(Boolean) as HTMLElement[];
-
-    // Title h3s
-    const titleEls = anchorRefs.current
-      .map((a) => a?.querySelector<HTMLElement>(".step-title"))
-      .filter(Boolean) as HTMLElement[];
-
-    // Description p's
-    const descEls = anchorRefs.current
-      .map((a) => a?.querySelector<HTMLElement>(".step-desc"))
-      .filter(Boolean) as HTMLElement[];
-
-    if (!prefersReducedMotion) {
-      const themeTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top 80%",   // when section top hits 80% from viewport top (entering)
-          end: "top 10%",     // fully in view
-          scrub: 1.2,
-          toggleActions: "play none none reverse",
-        },
-      });
-
-      // Section background: black → white
-      themeTl.fromTo(
-        section,
-        { backgroundColor: "#000000" },
-        { backgroundColor: "#ffffff", ease: "none" },
-        0
-      );
-
-      // Ambient glow: fade out (it's a dark theme element)
-      const glowEl = section.querySelector<HTMLElement>(".ambient-glow");
-      if (glowEl) {
-        themeTl.fromTo(glowEl, { opacity: 1 }, { opacity: 0, ease: "none" }, 0);
-      }
-
-      // Heading: white → near-black
-      if (headingRef.current) {
-        themeTl.fromTo(
-          headingRef.current,
-          { color: "#F9FAFB" },
-          { color: "#111111", ease: "none" },
-          0
-        );
-      }
-
-      // Label: cyan stays but adapts (darken slightly)
-      if (labelRef.current) {
-        themeTl.fromTo(
-          labelRef.current,
-          { color: "#00B4D8" },
-          { color: "#007A94", ease: "none" },
-          0
-        );
-      }
-
-      // Sub-text: muted gray → dark gray
-      if (subtextRef.current) {
-        themeTl.fromTo(
-          subtextRef.current,
-          { color: "#afb3bc" },
-          { color: "#374151", ease: "none" },
-          0
-        );
-      }
-
-      // Cards bg: #0E0E0E → white with a subtle border
-      if (cardEls.length) {
-        themeTl.fromTo(
-          cardEls,
-          { backgroundColor: "#0E0E0E" },
-          { backgroundColor: "#ffffff", ease: "none" },
-          0
-        );
-      }
-
-      // Card title h3: light → dark
-      if (titleEls.length) {
-        themeTl.fromTo(
-          titleEls,
-          { color: "#F9FAFB" },
-          { color: "#111111", ease: "none" },
-          0
-        );
-      }
-
-      // Card description p: gray → darker gray
-      if (descEls.length) {
-        themeTl.fromTo(
-          descEls,
-          { color: "#6B7280" },
-          { color: "#374151", ease: "none" },
-          0
-        );
-      }
-
-      cleanups.push(() => {
-        themeTl.scrollTrigger?.kill();
-        themeTl.kill();
-      });
-    }
+    // ── No colour transition — section stays dark (#0A0A0A) at all times ──
 
     // ── MOBILE: normal vertical stack, no pin, no horizontal track ──────
     mm.add("(max-width: 767px)", () => {
@@ -257,24 +115,50 @@ function ProcessSection() {
         if (card) gsap.set(card, { clearProps: "all" });
       });
 
+      gsap.set(
+        anchorRefs.current
+          .flatMap((a) => [a?.querySelector(".step-number"), a?.querySelector(".step-title")])
+          .filter(Boolean) as HTMLElement[],
+        { clearProps: "transform" }
+      );
+
       if (prefersReducedMotion) return;
 
       const tweens = anchorRefs.current
         .filter(Boolean)
-        .map((anchor) =>
-          gsap.from(anchor, {
-            opacity: 0,
-            y: 40,
-            scale: 0.97,
-            duration: 0.7,
-            ease: "power3.out",
+        .map((anchor) => {
+          const tl = gsap.timeline({
             scrollTrigger: {
               trigger: anchor,
               start: "top 88%",
               toggleActions: "play none none reverse",
             },
-          })
-        );
+          });
+
+          tl.from(anchor, {
+            opacity: 0,
+            y: 40,
+            scale: 0.97,
+            duration: 0.7,
+            ease: "power3.out",
+          }, 0);
+
+          const numberEl = anchor?.querySelector<HTMLElement>(".step-number");
+          const titleEl = anchor?.querySelector<HTMLElement>(".step-title");
+          const descEl = anchor?.querySelector<HTMLElement>(".step-desc");
+
+          if (numberEl) {
+            tl.from(numberEl, { yPercent: 120, duration: 0.7, ease: "power4.out" }, 0.08);
+          }
+          if (titleEl) {
+            tl.from(titleEl, { yPercent: 120, duration: 1, ease: "power4.out" }, 0.22);
+          }
+          if (descEl) {
+            tl.from(descEl, { opacity: 0, y: 14, duration: 0.6, ease: "power3.out" }, 0.42);
+          }
+
+          return tl;
+        });
 
       cleanups.push(() => {
         tweens.forEach((t) => t.scrollTrigger?.kill());
@@ -282,11 +166,8 @@ function ProcessSection() {
       });
     });
 
-    // ── TABLET + DESKTOP: whole section pins, entire track (heading
-    //    + text + cards) scrolls horizontally as one continuous strip ──
+    // ── TABLET + DESKTOP: whole section pins, entire track scrolls ──────
     mm.add("(min-width: 768px)", () => {
-      // Always set the pinned container to exactly one viewport tall so
-      // the section can never be taller than the screen while pinned.
       gsap.set(pinEl, { clearProps: "height" });
 
       if (prefersReducedMotion) {
@@ -328,13 +209,14 @@ function ProcessSection() {
 
           const isActive = i === activeIndex;
 
+          // No colour glow — just a neutral lift via scale/opacity/shadow depth.
           gsap.to(card, {
-            scale: isActive ? 1.03 : 1,
-            opacity: isActive ? 1 : 0.75,
+            scale: isActive ? 1.02 : 1,
+            opacity: isActive ? 1 : 0.8,
             boxShadow: isActive
-              ? "0 0 0 1px rgba(0,180,216,0.4), 0 0 44px rgba(0,180,216,0.22)"
-              : "0 25px 50px rgba(0,0,0,0.4)",
-            duration: 0.45,
+              ? "0 30px 60px rgba(0,0,0,0.55)"
+              : "0 20px 40px rgba(0,0,0,0.35)",
+            duration: 0.5,
             ease: "power2.out",
             overwrite: "auto",
           });
@@ -347,7 +229,7 @@ function ProcessSection() {
         scrollTrigger: {
           trigger: section,
           pin: pinEl,
-          scrub: 1,
+          scrub: 0.6,
           start: "top top",
           end: () => `+=${getScrollDistance()}`,
           invalidateOnRefresh: true,
@@ -377,24 +259,55 @@ function ProcessSection() {
       );
       if (introFade.scrollTrigger) cardTriggers.push(introFade.scrollTrigger);
 
-      // Cards — entrance from the right as the track scrolls
+      // Cards — entrance from the right + mask reveal for number/title
       anchorRefs.current.forEach((anchor) => {
         if (!anchor) return;
 
-        const entrance = gsap.from(anchor, {
-          opacity: 0,
-          scale: 0.95,
-          x: 120,
-          duration: 0.8,
-          ease: "power4.out",
+        const cardTl = gsap.timeline({
           scrollTrigger: {
             trigger: anchor,
             containerAnimation: scrollTween,
-            start: "left 95%",
+            start: "left 92%",
             toggleActions: "play none none reverse",
           },
         });
-        if (entrance.scrollTrigger) cardTriggers.push(entrance.scrollTrigger);
+        if (cardTl.scrollTrigger) cardTriggers.push(cardTl.scrollTrigger);
+
+        cardTl.from(anchor, {
+          opacity: 0,
+          scale: 0.95,
+          x: 100,
+          duration: 0.8,
+          ease: "power4.out",
+        }, 0);
+
+        const numberEl = anchor.querySelector<HTMLElement>(".step-number");
+        const titleEl = anchor.querySelector<HTMLElement>(".step-title");
+        const descEl = anchor.querySelector<HTMLElement>(".step-desc");
+
+        // Mask reveal — number first and quicker, heading slower right after.
+        if (numberEl) {
+          cardTl.from(numberEl, {
+            yPercent: 130,
+            duration: 0.7,
+            ease: "power4.out",
+          }, 0.1);
+        }
+        if (titleEl) {
+          cardTl.from(titleEl, {
+            yPercent: 130,
+            duration: 1.05,
+            ease: "power4.out",
+          }, 0.26);
+        }
+        if (descEl) {
+          cardTl.from(descEl, {
+            opacity: 0,
+            y: 16,
+            duration: 0.7,
+            ease: "power3.out",
+          }, 0.48);
+        }
 
         const image = anchor.querySelector<HTMLElement>(".card-image");
         if (image) {
@@ -418,7 +331,7 @@ function ProcessSection() {
         }
       });
 
-      // Hover interactions (GSAP — no transform conflicts)
+      // Hover interactions — plain lift, no colour glow
       const hoverCleanups: (() => void)[] = [];
 
       anchorRefs.current.forEach((anchor) => {
@@ -428,9 +341,8 @@ function ProcessSection() {
 
         const onEnter = () => {
           gsap.to(card, {
-            y: -10,
-            boxShadow:
-              "0 0 0 1px rgba(0,180,216,0.35), 0 35px 70px rgba(0,0,0,0.65)",
+            y: -8,
+            boxShadow: "0 35px 70px rgba(0,0,0,0.6)",
             duration: 0.5,
             ease: "expo.out",
             overwrite: "auto",
@@ -492,24 +404,21 @@ function ProcessSection() {
     <section
       ref={sectionRef}
       className="relative w-full overflow-hidden"
-      style={{ backgroundColor: "#000000" }}
+      style={{ backgroundColor: "#0A0A0A" }}
     >
       {/* Subtle ambient glow */}
       <div className="ambient-glow absolute top-[-30%] right-[-20%] w-[70%] h-[120%] bg-[radial-gradient(ellipse,rgba(0,180,216,0.10),transparent)] pointer-events-none z-0" />
 
-      {/* Pin wrapper — exactly one viewport tall on desktop/tablet so the
-          section can never overflow while pinned. On mobile it's a normal
-          flowing block (height set by content). */}
       <div
         ref={pinRef}
-        className="relative z-10 w-full md:h-screen md:overflow-hidden flex flex-col justify-center py-16 md:py-20 lg:py-24 xl:py-28 2xl:py-32"
+        className="relative z-10 w-full md:h-screen md:overflow-hidden flex flex-col justify-center py-14 md:py-16 lg:py-20 xl:py-24"
       >
         {/* ── Horizontal track: intro panel + all cards live here ─────── */}
         <div
           ref={trackRef}
-          className="flex flex-col md:flex-row w-full md:w-max gap-10 sm:gap-12 md:gap-16 lg:gap-[100px] xl:gap-[120px] 2xl:gap-[140px] md:items-center will-change-transform"
+          className="flex flex-col md:flex-row w-full md:w-max gap-8 sm:gap-10 md:gap-10 lg:gap-14 xl:gap-16 2xl:gap-20 md:items-center will-change-transform"
         >
-          {/* ── Intro panel (heading + text) — first "page" of the track ── */}
+          {/* ── Intro panel (heading + text) ──────────────────────────── */}
           <div
             ref={introRef}
             className="w-full md:w-screen flex-shrink-0 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-28"
@@ -518,7 +427,7 @@ function ProcessSection() {
               <div>
                 <p
                   ref={labelRef}
-                  className="font-['JetBrains_Mono'] text-xs tracking-[0.25em] uppercase mb-2"
+                  className="font-['JetBrains_Mono'] text-md tracking-[0.25em] uppercase mb-2"
                   style={{ color: "#00B4D8" }}
                 >
                   How We Work
@@ -526,7 +435,7 @@ function ProcessSection() {
                 <h2
                   ref={headingRef}
                   className="font-['Space_Grotesk'] font-bold text-4xl md:text-5xl lg:text-6xl tracking-tight leading-tight"
-                  style={{ color: "#F9FAFB" }}
+                  style={{ color: "#FFFFFF" }}
                 >
                   Six steps. One straight line to revenue.
                 </h2>
@@ -534,7 +443,7 @@ function ProcessSection() {
               <div
                 ref={subtextRef}
                 className="font-['Inter'] text-sm md:text-base max-w-sm border-l border-[#00B4D8]/25 pl-4 md:pl-6"
-                style={{ color: "#afb3bc" }}
+                style={{ color: "#D1D5DB" }}
               >
                 No detours, no guesswork — every engagement runs the same
                 disciplined path from first audit to compounding scale.
@@ -549,64 +458,57 @@ function ProcessSection() {
               ref={(el) => {
                 anchorRefs.current[index] = el;
               }}
-              className={`w-[min(85vw,380px)] sm:w-[min(70vw,380px)] md:w-[clamp(320px,32vw,380px)] lg:w-[clamp(370px,26vw,430px)] xl:w-[clamp(390px,24vw,450px)] 2xl:w-[clamp(410px,20vw,470px)] flex-shrink-0 mx-auto md:mx-0 ${
-                index === 0 ? "md:ml-12 lg:ml-16 xl:ml-24 2xl:ml-32" : ""
+              className={`w-[min(88vw,540px)] sm:w-[min(80vw,600px)] md:w-[clamp(540px,56vw,700px)] lg:w-[clamp(640px,50vw,780px)] xl:w-[clamp(680px,44vw,840px)] 2xl:w-[clamp(720px,40vw,880px)] flex-shrink-0 mx-auto md:mx-0 ${
+                index === 0 ? "md:ml-10 lg:ml-14 xl:ml-20 2xl:ml-24" : ""
               } ${
                 index === processSteps.length - 1
-                  ? "md:mr-12 lg:mr-16 xl:mr-24 2xl:mr-32"
+                  ? "md:mr-10 lg:mr-14 xl:mr-20 2xl:mr-24"
                   : ""
               }`}
             >
               {/* Anchor — owns entrance x / opacity / scale */}
               <div
-                className="card group relative h-[clamp(340px,58vh,440px)] sm:h-[clamp(380px,60vh,500px)] md:h-[clamp(400px,58vh,520px)] lg:h-[clamp(420px,60vh,560px)] xl:h-[clamp(440px,62vh,600px)] 2xl:h-[clamp(460px,64vh,640px)] rounded-3xl cursor-pointer
+                className="card group relative flex flex-col md:flex-row
+                  h-auto md:h-[420px] lg:h-[460px] xl:h-[500px] 2xl:h-[540px]
+                  rounded-3xl cursor-pointer overflow-hidden
                   border border-white/10
                   shadow-xl shadow-black/40
                   will-change-transform"
-                style={{ backgroundColor: "#0E0E0E" }}
+                style={{ backgroundColor: "#0D1B2A" }}
               >
-                {/* ── Image (~65% height) ─────────────────────────── */}
-                <div className="relative w-full h-[50%] overflow-hidden rounded-t-[32px]">
+                {/* ── Left: content — big number, heading, description ── */}
+                <div className="order-2 md:order-1 w-full md:w-[52%] flex flex-col justify-center p-6 md:p-7 lg:p-9">
+                  <div className="overflow-hidden mb-1 md:mb-2">
+                    <span
+                      className="step-number inline-block font-['Space_Grotesk'] font-bold leading-[0.85] text-[64px] sm:text-[76px] md:text-[80px] lg:text-[96px] xl:text-[108px]"
+                      style={{ color: "#00B4D8" }}
+                    >
+                      {step.number}
+                    </span>
+                  </div>
+                  <div className="overflow-hidden mb-3 md:mb-4">
+                    <h3
+                      className="step-title inline-block font-['Space_Grotesk'] font-semibold leading-tight text-2xl sm:text-[28px] md:text-[30px] lg:text-[34px] xl:text-4xl text-white"
+                    >
+                      {step.title}
+                    </h3>
+                  </div>
+                  <p className="step-desc font-['Inter'] leading-relaxed text-base md:text-[17px] lg:text-lg text-[#9CA3AF]">
+                    {step.description}
+                  </p>
+                </div>
+
+                {/* ── Right: image ────────────────────────────────── */}
+                <div className="order-1 md:order-2 relative w-full md:w-[48%] h-[220px] sm:h-[260px] md:h-full overflow-hidden">
                   <img
                     src={step.image}
                     alt={step.title}
                     loading={index === 0 ? "eager" : "lazy"}
                     decoding="async"
                     className="card-image w-full h-full object-cover will-change-transform"
-                    style={{ borderRadius: "32px" }}
                   />
-                  <div className="card-overlay-bottom absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-30 pointer-events-none rounded-t-[32px]" />
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] via-transparent to-transparent opacity-50 pointer-events-none rounded-t-[32px]" />
-                </div>
-
-                {/* ── Content ──────────────────────────────────────── */}
-                <div className="p-6 md:p-7  flex flex-col justify-between h-[40%]">
-                  <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span
-                        className="step-number font-['JetBrains_Mono'] text-xs tracking-widest"
-                        style={{ color: "rgba(0,180,216,0.6)" }}
-                      >
-                        {step.number}
-                      </span>
-                      <div className="icon-wrapper w-8 h-8 rounded-lg bg-[#00B4D8]/10 border border-[#00B4D8]/20 flex items-center justify-center text-[#00B4D8]">
-                        {step.icon}
-                      </div>
-                    </div>
-                    <h3
-                      className="step-title font-['Space_Grotesk'] text-lg font-semibold leading-tight"
-                      style={{ color: "#F9FAFB" }}
-                    >
-                      {step.title}
-                    </h3>
-                    <p
-                      className="step-desc font-['Inter'] text-sm leading-relaxed mt-1.5 mb-4 line-clamp-2"
-                      style={{ color: "#6B7280" }}
-                    >
-                      {step.description}
-                    </p>
-                  </div>
-                  
+                  <div className="absolute inset-0 bg-gradient-to-l from-black/25 via-transparent to-transparent opacity-35 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] via-transparent to-transparent opacity-50 pointer-events-none" />
                 </div>
               </div>
             </div>
