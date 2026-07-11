@@ -9,40 +9,78 @@ const ContactSection = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+ const SCRIPT_URL =
+  "YOUR_GOOGLE_SCRIPT_WEBAPP_URL";
 
-    const form = e.currentTarget;
+const handleSubmit = async (
+  e: React.FormEvent<HTMLFormElement>
+) => {
 
-    const honeypot = (form.elements.namedItem("website") as HTMLInputElement)
-      ?.value;
+  e.preventDefault();
 
-    if (honeypot) return;
+  const form = e.currentTarget;
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    toast.error("Please complete all required fields.");
+    return;
+  }
 
-      toast.error("Please complete all required fields.");
+  setLoading(true);
 
-      return;
-    }
+  const formData = new FormData(form);
 
-    setLoading(true);
+  const data = {
+    name: formData.get("name"),
+    businessName: formData.get("businessName"),
+    industry: formData.get("industry"),
+    email: formData.get("email"),
+    phone: formData.get("phone"),
+    city: formData.get("city"),
+    state: formData.get("state"),
+    country: formData.get("country"),
+    serviceInterest: formData.get("serviceInterest"),
+    serviceCategory: formData.get("serviceCategory"),
+    message: formData.get("message"),
+    referral: formData.get("referral"),
+  };
 
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1800));
+  try {
 
-      setSuccess(true);
+    const response = await fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
 
       toast.success("Message sent successfully.");
 
+      setSuccess(true);
+
       form.reset();
-    } catch {
-      toast.error("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
+
+    } else {
+
+      toast.error("Failed to send message.");
+
     }
-  };
+
+  } catch (error) {
+
+    console.error(error);
+
+    toast.error("Network Error.");
+
+  }
+
+  setLoading(false);
+};
 
   return (
     <section
