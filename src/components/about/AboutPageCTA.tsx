@@ -75,7 +75,7 @@ const FinalCTA = () => {
                 transition-shadow duration-300
               "
             >
-              Ready to have a Conversation 
+              Start a conversation 
               <ArrowRight size={16} />
             </Link>
           </motion.div>

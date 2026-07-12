@@ -94,7 +94,7 @@ const trustBadges: TrustBadge[] = [
   },
   {
     label: "Founded",
-    sublabel: "2024",
+    sublabel: "2025",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
