@@ -7,7 +7,6 @@ import UnderConstruction from "./pages/UnderConstruction";
 
 import { ToastContainer } from "react-toastify";
 import FloatingWhatsApp from "./components/global/FloatingWhatsApp";
-import Preloader from "./components/global/Preloader";
 import ScrollProgress from "./components/global/ScrollProgress";
 import { scrollToTop } from "./lib/lenis";
 import AboutPage from "./pages/About";
@@ -41,9 +40,7 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (loading) {
-    return <Preloader onComplete={() => setLoading(false)} />;
-  }
+ 
 
   return (
     <>
