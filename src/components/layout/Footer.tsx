@@ -112,8 +112,8 @@ const Footer = () => {
               <ul className="space-y-4">
                 <li><FooterLink to="/services/advertising" text="Creative Advertising" /></li>
                 <li><FooterLink to="/services/design" text="Platform Advertising" /></li>
-                <li><FooterLink to="/services/design" text="Brand Visibility" /></li>
-                <li><FooterLink to="/services/marketing" text="Digital Marketing" /></li>
+                <li><FooterLink to="/services/design" text="Brand Identity" /></li>
+                <li><FooterLink to="/services/marketing" text="Brand Design" /></li>
                 <li><FooterLink to="/services/marketing" text="Brand Visibility
 " /></li>
                 <li><FooterLink to="/services/marketing" text="Brand Reputation" /></li>

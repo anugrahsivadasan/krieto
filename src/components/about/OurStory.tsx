@@ -248,7 +248,7 @@ const OurStory = () => {
                 seriously: a brand that communicates value before a word is
                 spoken. Marketing that reaches the right people consistently.
                 Advertising that earns attention. Design that removes doubt at
-                first glance.
+                first glance and Marketing that keeps you relevant
               </p>
 
               <p
@@ -275,7 +275,7 @@ const OurStory = () => {
               >
                 We treat every client engagement as a partnership. Your revenue
                 targets are ours. Your growth is the only metric that ultimately
-                matters.
+                matters to us.
               </p>
             </div>
 
@@ -296,14 +296,15 @@ const OurStory = () => {
               font-['Space_Grotesk']
               font-extrabold
               italic
-              text-[#00B4D8]
+              text-[#F9FAFB]
+              
               text-2xl md:text-3xl lg:text-4xl
               tracking-tight
               leading-[1.25]
             ">
               "The best businesses do not always win.{" "}
               The best-positioned ones do.{" "}
-              <span className="text-[#F9FAFB]">
+              <span className="text-[#00B4D8]">
                 We built Krieto to fix that for you."
               </span>
             </p>
