@@ -82,10 +82,10 @@ const Footer = () => {
 
               {/* Socials */}
               <div className="flex gap-3">
-                <SocialIcon href="https://www.instagram.com/krieto.co" label="Instagram"><FaInstagram /></SocialIcon>
+                <SocialIcon href="https://www.instagram.com/krietoco" label="Instagram"><FaInstagram /></SocialIcon>
                 <SocialIcon href="https://www.facebook.com/profile.php?id=61591558468476" label="Facebook"><FaFacebookF /></SocialIcon>
                 <SocialIcon href="https://linkedin.com/company/krieto" label="LinkedIn"><FaLinkedinIn /></SocialIcon>
-                <SocialIcon href="https://x.com/Krieto_co" label="X (Twitter)"><FaX /></SocialIcon>
+                <SocialIcon href="https://x.com/Krietoco" label="X (Twitter)"><FaX /></SocialIcon>
                 <SocialIcon href="https://www.tiktok.com/@krieto.co" label="TikTok"><FaTiktok /></SocialIcon>
               </div>
             </div>
