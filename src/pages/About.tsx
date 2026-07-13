@@ -40,9 +40,9 @@ const Home = () => {
         <MissionVision />
       </Suspense>
 
-      <Suspense fallback={<SectionFallback />}>
+      {/* <Suspense fallback={<SectionFallback />}>
         <ProcessSection />
-      </Suspense>
+      </Suspense> */}
 
       <Suspense fallback={<SectionFallback />}>
         <Credentials />

@@ -10,7 +10,7 @@ const ContactSection = () => {
   const [success, setSuccess] = useState(false);
 
  const SCRIPT_URL =
-  "YOUR_GOOGLE_SCRIPT_WEBAPP_URL";
+  "https://script.google.com/macros/s/AKfycbxUOiXEIQcoyOZiSMgjnex0LF5ypBzYkR0c9eTGOUjAO7KPgN6o0OLZFJFT-c5VOzWARA/exec";
 
 const handleSubmit = async (
   e: React.FormEvent<HTMLFormElement>
@@ -45,31 +45,22 @@ const handleSubmit = async (
     referral: formData.get("referral"),
   };
 
-  try {
+ try {
+  await fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(data),
+  });
 
-    const response = await fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
 
-    const result = await response.json();
 
-    if (result.success) {
+     console.log("Submitted");
 
-      toast.success("Message sent successfully.");
+  toast.success("Message sent successfully!");
 
-      setSuccess(true);
+  setSuccess(true);
 
-      form.reset();
-
-    } else {
-
-      toast.error("Failed to send message.");
-
-    }
+  form.reset();
 
   } catch (error) {
 

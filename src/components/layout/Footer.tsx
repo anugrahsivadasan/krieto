@@ -82,10 +82,10 @@ const Footer = () => {
 
               {/* Socials */}
               <div className="flex gap-3">
-                <SocialIcon href="https://www.instagram.com/krieto.co" label="Instagram"><FaInstagram /></SocialIcon>
+                <SocialIcon href="https://www.instagram.com/krietoco" label="Instagram"><FaInstagram /></SocialIcon>
                 <SocialIcon href="https://www.facebook.com/profile.php?id=61591558468476" label="Facebook"><FaFacebookF /></SocialIcon>
                 <SocialIcon href="https://linkedin.com/company/krieto" label="LinkedIn"><FaLinkedinIn /></SocialIcon>
-                <SocialIcon href="https://x.com/Krieto_co" label="X (Twitter)"><FaX /></SocialIcon>
+                <SocialIcon href="https://x.com/Krietoco" label="X (Twitter)"><FaX /></SocialIcon>
                 <SocialIcon href="https://www.tiktok.com/@krieto.co" label="TikTok"><FaTiktok /></SocialIcon>
               </div>
             </div>
@@ -112,8 +112,8 @@ const Footer = () => {
               <ul className="space-y-4">
                 <li><FooterLink to="/services/advertising" text="Creative Advertising" /></li>
                 <li><FooterLink to="/services/design" text="Platform Advertising" /></li>
-                <li><FooterLink to="/services/design" text="Brand Visibility" /></li>
-                <li><FooterLink to="/services/marketing" text="Digital Marketing" /></li>
+                <li><FooterLink to="/services/design" text="Brand Identity" /></li>
+                <li><FooterLink to="/services/marketing" text="Brand Design" /></li>
                 <li><FooterLink to="/services/marketing" text="Brand Visibility
 " /></li>
                 <li><FooterLink to="/services/marketing" text="Brand Reputation" /></li>

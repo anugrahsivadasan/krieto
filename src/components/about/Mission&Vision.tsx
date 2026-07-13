@@ -167,8 +167,8 @@ and visibility — for businesses across every industry and every market.
               transition={transitionSlow}
             >
               <div
-                className="pointer-events-none absolute -left-10 -bottom-20 h-64 w-64 rounded-full bg-[#00B4D8]/12 blur-[80px] transition-opacity duration-1000"
-                style={{ opacity: currentStage === "values" ? 1 : 0 }}
+                className="pointer-events-none absolute -right-16 -top-10 h-56 w-56 rounded-full bg-[#00B4D8]/10 blur-[70px] transition-opacity duration-1000"
+                style={{ opacity: currentStage === "vision" ? 1 : 0 }}
               />
              
               <h3 className="font-['Space_Grotesk'] text-[clamp(1.75rem,3.2vw,2.6rem)] font-semibold  leading-[0.9] tracking-[-0.03em] text-white">
