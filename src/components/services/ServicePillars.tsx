@@ -134,7 +134,7 @@ const ServicePillars = () => {
 
           <h2
             ref={headingRef}
-            className="font-heading text-[clamp(2.8rem,6vw,5.8rem)] font-bold leading-[0.98] tracking-tight"
+            className="font-heading text-[clamp(2.8rem,6vw,3.8rem)] font-bold leading-[0.98] tracking-tight"
             style={{ color: DIM_COLOR }}
             aria-label="The services work best when they move together."
           >
