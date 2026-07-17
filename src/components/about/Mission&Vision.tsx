@@ -93,13 +93,13 @@ const MissionVision = () => {
       <div className={`relative flex h-full items-center ${shouldPin ? "pointer-events-auto" : "pointer-events-none"}`}>
         <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-16 px-6 py-24 md:px-12 lg:flex-row lg:items-center lg:gap-12 lg:px-16">
           {/* Left — pinned visual anchor, never moves */}
-          <div className="relative flex min-h-[360px] w-full items-center lg:w-[30%] lg:min-h-[560px] lg:-translate-x-4">
-            <div className="flex origin-center -rotate-90 flex-col items-start gap-2 opacity-[0.48] sm:gap-3 lg:absolute lg:left-[-6.5rem] lg:top-1/2 lg:-translate-y-1/2">
-              <p className="font-['Space_Grotesk'] text-[clamp(3rem,9vw,7rem)] font-semibold uppercase leading-[0.8] tracking-[-0.06em] text-[#00B4D8]">
+          <div className="relative flex min-h-[460px] w-full lg:w-[30%] lg:min-h-[680px] lg:-translate-x-16">
+            <div className="flex origin-center -rotate-90 flex-col items-start gap-2 opacity-[0.78] sm:gap-3 lg:absolute lg:left-[-10.8rem] lg:top-1/2 lg:-translate-y-1/3">
+              <p className="whitespace-nowrap font-['Space_Grotesk'] text-[clamp(7rem,16vw,9rem)] font-semibold uppercase leading-[0.8] tracking-[-0.06em] text-[#00B4D8]">
                 What
               </p>
-              <p className="font-['Space_Grotesk'] text-[clamp(3rem,9vw,7rem)] font-semibold uppercase leading-[0.8] tracking-[-0.06em] text-white">
-                Drive Us
+              <p className="whitespace-nowrap font-['Space_Grotesk'] text-[clamp(7rem,16vw,9rem)] font-semibold uppercase leading-[0.5] tracking-[-0.10em] text-white">
+                Drives Us
               </p>
             </div>
           </div>
@@ -122,11 +122,12 @@ const MissionVision = () => {
                 style={{ opacity: currentStage === "mission" ? 1 : 0 }}
               />
               
-              <h3 className="font-['Space_Grotesk'] text-[clamp(1.75rem,3.2vw,2.6rem)] font-semibold uppercase leading-[0.9] tracking-[-0.03em] text-white">
-                Mission
+              <h3 className="font-['Space_Grotesk'] text-[clamp(1.75rem,3.2vw,2.6rem)] font-semibold  leading-[0.9] tracking-[-0.03em] text-white">
+                Our Mission
               </h3>
               <p className="mt-6 max-w-[460px] font-['Inter'] text-[1rem] leading-[1.8] text-[#F9FAFB]/75 sm:text-[1.05rem]">
-                To deliver premium advertising, design and marketing that generates real, measurable revenue for our clients — not vanity metrics.
+We build the systems that make businesses grow. Through creative advertising, exceptional design, 
+and intelligent marketing, that earns attention.
               </p>
             </motion.div>
 
@@ -146,12 +147,13 @@ const MissionVision = () => {
                 style={{ opacity: currentStage === "vision" ? 1 : 0 }}
               />
              
-              <h3 className="font-['Space_Grotesk'] text-[clamp(1.75rem,3.2vw,2.6rem)] font-semibold uppercase leading-[0.9] tracking-[-0.03em] text-white">
-                Vision
+              <h3 className="font-['Space_Grotesk'] text-[clamp(1.75rem,3.2vw,2.6rem)] font-semibold  leading-[0.9] tracking-[-0.03em] text-white">
+               Our Vision
               </h3>
               <p className="mt-6 max-w-[460px] font-['Inter'] text-[1rem] leading-[1.8] text-[#F9FAFB]/75 sm:text-[1.05rem]">
 A world where every business that deserves to grow, does. We eliminate the gap between potential 
-and visibility — for businesses across every industry and every market.               </p>
+and visibility — for businesses across every industry and every market.    
+           </p>
             </motion.div>
 
             {/* VALUES — bottom-left, beneath both */}
@@ -169,12 +171,29 @@ and visibility — for businesses across every industry and every market.       
                 style={{ opacity: currentStage === "vision" ? 1 : 0 }}
               />
              
-              <h3 className="font-['Space_Grotesk'] text-[clamp(1.75rem,3.2vw,2.6rem)] font-semibold uppercase leading-[0.9] tracking-[-0.03em] text-white">
+              <h3 className="font-['Space_Grotesk'] text-[clamp(1.75rem,3.2vw,2.6rem)] font-semibold  leading-[0.9] tracking-[-0.03em] text-white">
                 Values
               </h3>
-              <p className="mt-6 max-w-[460px] font-['Inter'] text-[1rem] leading-[1.8] text-[#F9FAFB]/75 sm:text-[1.05rem]">
-Your Business Is Our Business. Precision Over Volume. Bold Thinking. Grounded Execution. 
-Honesty & Transparency. Growth Is Shared.              </p>
+              <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
+                {valuesWords.map((word, index) => (
+                  <motion.span
+                    key={word}
+                    className="font-['Space_Grotesk'] text-[1rem] sm:text-[1.05rem]  tracking-[0.15em] text-white/90"
+                    initial={false}
+                    animate={{
+                      opacity: showValues ? 1 : 0,
+                      y: showValues ? 0 : 24,
+                    }}
+                    transition={{
+                      duration: reducedMotion ? 0.01 : 0.9,
+                      ease: EASE,
+                      delay: reducedMotion ? 0 : showValues ? index * 0.12 : 0,
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </div>
             </motion.div>
           </div>
         </div>
