@@ -29,7 +29,7 @@ const ServicesCTA = () => {
               ))}
             </div>
 
-            <h2 className="font-heading text-[clamp(2.7rem,3vw,5.6rem)] font-bold leading-[0.98] tracking-tight text-white">
+            <h2 className="font-heading max-w-4xl text-[40px] font-bold leading-[0.98] tracking-tight text-white">
 Not sure where your biggest opportunity is? That is exactly what you will hear from us. 
             </h2>
             <p className="mx-auto mt-7 max-w-2xl font-body text-base leading-8 text-white/70 md:text-lg">

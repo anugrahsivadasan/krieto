@@ -12,10 +12,15 @@ import { scrollToTop } from "./lib/lenis";
 import Contact from "./pages/Contact";
 
 import AboutPage from "./pages/About";
-import { default as Services, default as ServicesPage } from "./pages/Services";
+import { default as ServicesPage } from "./pages/Services";
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
+const MarketingPage = lazy(() => import("./pages/Marketing"));
+const AdvertisingPage = lazy(() => import("./pages/Advertising"));
+const DesignPage = lazy(() => import("./pages/Design"));
+const PortfolioPage = lazy(() => import("./pages/Portfolio"));
+const PortfolioCasePage = lazy(() => import("./pages/PortfolioCase"));
 
 function ScrollReset() {
   const location = useLocation();
@@ -51,16 +56,16 @@ function App() {
 
           <Route path="/about" element={<AboutPage />} />
 
-          {/* <Route path="/services" element={<ServicesPage />} /> */}
-          <Route path="/services" element={<UnderConstruction />} />
+          <Route path="/services" element={<ServicesPage />} />
 
-          <Route path="/portfolio" element={<UnderConstruction />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/portfolio/:slug" element={<PortfolioCasePage />} />
 
           <Route path="/contact" element={<Contact />} />
 
-          <Route path="/services/marketing" element={<UnderConstruction />} />
-          <Route path="/services/design" element={<UnderConstruction />} />
-          <Route path="/services/advertising" element={<UnderConstruction />} />
+          <Route path="/services/marketing" element={<MarketingPage />} />
+          <Route path="/services/design" element={<DesignPage />} />
+          <Route path="/services/advertising" element={<AdvertisingPage />} />
         </Routes>
       </Suspense>
 

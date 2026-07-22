@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 interface PortfolioCardProps {
   title: string;
   category: string;
+  industry?: string;
   description: string;
   image: string;
   link: string;
@@ -14,6 +15,7 @@ interface PortfolioCardProps {
 const PortfolioCard = ({
   title,
   category,
+  industry,
   description,
   image,
   link,
@@ -128,6 +130,12 @@ const PortfolioCard = ({
         >
           {title}
         </motion.h3>
+
+        {industry ? (
+          <p className="mb-4 text-sm uppercase tracking-[0.25em] text-slate-400">
+            {industry}
+          </p>
+        ) : null}
 
         <div className="overflow-hidden mb-6">
           <motion.p
