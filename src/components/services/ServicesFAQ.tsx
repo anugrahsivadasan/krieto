@@ -9,7 +9,7 @@ const ServicesFAQ = () => {
   return (
     <section className="relative overflow-hidden bg-[#0A0A0A] py-28 md:py-36">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_82%_40%,rgba(0,180,216,0.07),transparent_38%)]" />
-      <div className="relative z-10 mx-auto grid max-w-[1280px] gap-12 px-6 md:px-12 lg:grid-cols-[0.75fr_1fr]">
+      <div className="relative z-10 mx-auto grid max-w-[1280px] gap-12 px-6 md:px-12 ">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -19,7 +19,7 @@ const ServicesFAQ = () => {
           <p className="mb-5 font-body text-xs font-semibold uppercase tracking-[0.28em] text-[#00B4D8]">
             FAQ
           </p>
-          <h2 className="font-heading text-[clamp(2.6rem,5vw,4.8rem)] font-bold leading-[1] tracking-tight text-white">
+          <h2 className="font-heading text-[clamp(2.6rem,3vw,4.8rem)] font-bold leading-[1] tracking-tight text-white">
             Clear answers before we build.
           </h2>
         </motion.div>

@@ -34,17 +34,17 @@ const Services = () => {
       <ServicesHero />
       <ExpertiseDivider />
 
-      <Suspense fallback={<SectionFallback />}>
+      {/* <Suspense fallback={<SectionFallback />}>
         <ServicePillars />
-      </Suspense>
+      </Suspense> */}
 
       <Suspense fallback={<SectionFallback />}>
         <AllServices />
       </Suspense>
 
-      <Suspense fallback={<SectionFallback />}>
+      {/* <Suspense fallback={<SectionFallback />}>
         <PricingPreview />
-      </Suspense>
+      </Suspense> */}
 
       <Suspense fallback={<SectionFallback />}>
         <ServicesFAQ />

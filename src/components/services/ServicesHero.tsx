@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import Aurora from "../global/Aurora";
 
 const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -11,6 +12,23 @@ const ServicesHero = () => {
       className="relative flex min-h-[90vh] items-center justify-center overflow-hidden bg-[#0A0A0A]"
       style={{ scrollMarginTop: "96px" }}
     >
+
+ {/* Aurora */}
+
+      <div className="absolute inset-0 pointer-events-none">
+        <Aurora
+          colorStops={[
+            "#03045E",
+            "#0077B6",
+            "#00B4D8",
+          ]}
+          blend={0.35}
+          amplitude={0.8}
+          speed={0.4}
+        />
+      </div>
+
+
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_72%_35%,rgba(0,180,216,0.16),transparent_38%),radial-gradient(ellipse_at_12%_90%,rgba(144,224,239,0.08),transparent_42%)]" />
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0A0A0A] to-transparent" />
 
@@ -33,8 +51,7 @@ const ServicesHero = () => {
                 transition={{ duration: 1.3, delay: 0.2, ease }}
                 className="block leading-[1.05] text-[#F9FAFB]"
               >
-                Strategy,
-              </motion.span>
+Built to move               </motion.span>
             </span>
             <span className="block overflow-hidden pb-2">
               <motion.span
@@ -43,7 +60,7 @@ const ServicesHero = () => {
                 transition={{ duration: 1.6, delay: 0.3, ease }}
                 className="block bg-gradient-to-r from-[#00B4D8] to-[#90E0EF] bg-clip-text leading-[1.05] text-transparent"
               >
-                craft, growth.
+                together. 
               </motion.span>
             </span>
           </h1>
@@ -52,9 +69,10 @@ const ServicesHero = () => {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.42, ease }}
-            className="mx-auto max-w-2xl font-['Inter'] text-lg leading-relaxed text-[#6B7280] md:text-xl"
+            className="mx-auto max-w-xl font-['Inter'] text-lg leading-relaxed text-[#6B7280] md:text-xl"
           >
-            A complete growth studio for brands that need stronger market presence, sharper advertising, and digital experiences built with care.
+            Advertising, Design. Marketing. Three disciplines, fully integrated, all accountable to one outcome: 
+your growth. 
           </motion.p>
 
           <motion.div

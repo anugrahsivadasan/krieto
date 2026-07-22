@@ -53,7 +53,7 @@ const Hero = () => {
       bg-[#0A0A0A]
       flex
       items-center
-      justify-center
+      justify-center      
       "
     >
       {/* Aurora */}
