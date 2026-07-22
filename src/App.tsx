@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
 import Footer from "./components/layout/Footer";
@@ -10,6 +10,8 @@ import FloatingWhatsApp from "./components/global/FloatingWhatsApp";
 import ScrollProgress from "./components/global/ScrollProgress";
 import { scrollToTop } from "./lib/lenis";
 import Contact from "./pages/Contact";
+import LoaderOverlay from "./components/loader/LoaderOverlay";
+import krietoLogo from "./assets/OnlyK.png";
 
 import AboutPage from "./pages/About";
 import { default as Services, default as ServicesPage } from "./pages/Services";
@@ -32,42 +34,51 @@ function ScrollReset() {
 }
 
 function App() {
+  const [loaderDone, setLoaderDone] = useState(false);
+
   return (
-    <>
-      <ScrollProgress />
-
-      <Navbar />
-      <ScrollReset />
-
-      <Suspense
-        fallback={
-          <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
-            <div className="h-12 w-12 rounded-full border-2 border-cyan-400/30 border-t-cyan-400 animate-spin" />
-          </div>
-        }
+    <LoaderOverlay logoSrc={krietoLogo} logoAlt="Krieto" onComplete={() => setLoaderDone(true)}>
+      <div
+        style={{
+          opacity: loaderDone ? 1 : 0,
+          transition: "opacity 0.6s ease-out",
+        }}
       >
-        <Routes>
-          <Route path="/" element={<Home />} />
+        <ScrollProgress />
 
-          <Route path="/about" element={<AboutPage />} />
+        <Navbar />
+        <ScrollReset />
 
-          <Route path="/services" element={<ServicesPage />} />
+        <Suspense
+          fallback={
+            <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
+              <div className="h-12 w-12 rounded-full border-2 border-cyan-400/30 border-t-cyan-400 animate-spin" />
+            </div>
+          }
+        >
+          <Routes>
+            <Route path="/" element={<Home />} />
 
-          <Route path="/portfolio" element={<UnderConstruction />} />
+            <Route path="/about" element={<AboutPage />} />
 
-          <Route path="/contact" element={<Contact />} />
+            {/* <Route path="/services" element={<ServicesPage />} /> */}
 
-          <Route path="/services/marketing" element={<UnderConstruction />} />
-          <Route path="/services/design" element={<UnderConstruction />} />
-          <Route path="/services/advertising" element={<UnderConstruction />} />
-        </Routes>
-      </Suspense>
+            <Route path="/portfolio" element={<UnderConstruction />} />
 
-      <Footer />
+            <Route path="/contact" element={<Contact />} />
 
-      <FloatingWhatsApp />
-      <ToastContainer />
-    </>
+            <Route path="/services/marketing" element={<Services />} />
+            <Route path="/services/design" element={<Services />} />
+            <Route path="/services/advertising" element={<Services />} />
+          </Routes>
+        </Suspense>
+
+        <Footer />
+
+        <FloatingWhatsApp />
+        <ToastContainer />
+      </div>
+    </LoaderOverlay>
   );
 }
 
