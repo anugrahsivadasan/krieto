@@ -13,6 +13,8 @@ import Contact from "./pages/Contact";
 
 import AboutPage from "./pages/About";
 import { default as ServicesPage } from "./pages/Services";
+import PrivacyPolicies from "./pages/PrivacyPolicies";
+import TermsOfService from "./pages/TermsAndConditins";
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
@@ -66,6 +68,13 @@ function App() {
           <Route path="/services/marketing" element={<MarketingPage />} />
           <Route path="/services/design" element={<DesignPage />} />
           <Route path="/services/advertising" element={<AdvertisingPage />} />
+
+
+
+          <Route path="/privacy" element={<PrivacyPolicies />} />
+          <Route path="/terms" element={<TermsOfService />} />
+
+
         </Routes>
       </Suspense>
 

@@ -1,12 +1,43 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { useMemo, useState } from "react";
-import { ArrowRight, Star } from "lucide-react";
-import { Link } from "react-router-dom";
-import Section, { Container } from "@/components/global/Section";
-import PortfolioCard from "@/components/home/PortfolioCard";
-import { portfolio } from "@/data/portfolio";
+/**
+ * PORTFOLIO PAGE — premium redesign
+ * --------------------------------------------------------------
+ * Setup notes before dropping this in:
+ *
+ * 1. FONTS — this design pairs a serif display face with your body sans.
+ *    Add to index.html <head>:
+ *      <link rel="preconnect" href="https://fonts.googleapis.com">
+ *      <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&display=swap" rel="stylesheet">
+ *    Then in tailwind.config, extend fontFamily:
+ *      display: ['"Fraunces"', 'serif']
+ *    (Body font falls back to whatever sans you already use site-wide.)
+ *
+ * 2. DATA SHAPE — this assumes your `@/data/portfolio` items look like:
+ *      {
+ *        slug, title, category, tags, image,
+ *        industry?: string,        // NEW — shown under the title on cards
+ *        secondaryImage?: string,  // NEW — crossfades in on card hover
+ *        featured?: boolean,       // NEW — marks the spotlight project
+ *        caseStudy: { challenge, approach: [{title, description}], gallery: string[], results: [{metric, label}] }
+ *      }
+ *    Everything new is optional and falls back gracefully if missing —
+ *    but add `industry` and a couple of `secondaryImage`/`featured` values
+ *    for the full effect.
+ *
+ * 3. This file replaces the need for a separate <PortfolioCard /> import —
+ *    the card is defined inline below so the new visual system is self-contained.
+ * --------------------------------------------------------------
+ */
 
+import Section, { Container } from "@/components/global/Section";
+import { portfolio } from "@/data/portfolio";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, ArrowUpRight, Quote, Star } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import Aurora from "@/components/global/Aurora";
 const categories = ["All", "Marketing", "Advertising", "Design", "Strategy"];
+
+const EASE: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
 
 const testimonials = [
   {
@@ -35,6 +66,14 @@ const testimonials = [
   },
 ];
 
+// Alternating aspect ratios keep the grid from feeling like a spreadsheet.
+const cardAspect = [
+  "aspect-[4/5]",
+  "aspect-[3/4]",
+  "aspect-[16/11]",
+  "aspect-[4/5]",
+];
+
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("All");
 
@@ -47,103 +86,213 @@ const Portfolio = () => {
   }, [activeCategory]);
 
   return (
-    <main className="bg-[#02060f] text-white">
-      <section className="overflow-hidden border-b border-white/10 bg-gradient-to-b from-[#09101a] via-[#02060f] to-[#02060f] py-24 sm:py-28 lg:py-32">
-        <Container className="relative">
-          <div className="absolute -right-20 top-0 h-[420px] w-[420px] rounded-full bg-[#00B4D8]/15 blur-[160px]" />
-          <div className="absolute left-0 top-24 h-[300px] w-[300px] rounded-full bg-white/5 blur-[120px]" />
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#02060f] to-transparent" />
+    <main className="bg-black text-white">
+      {/* ---------------------------------------------------------------- */}
+      {/* HERO — single wash of atmosphere, no scattered orbs elsewhere     */}
+      {/* ---------------------------------------------------------------- */}
+     {/*
+  Replaces the existing <section> hero block in Portfolio.tsx.
+  Uses `portfolio` (already imported in the file) to pull two thumbnails
+  for the collage — no new data or imports required.
+*/}
 
-          <div className="relative mx-auto max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#90E0EF]">
-              Work That Wins
-            </p>
-            <h1 className="mt-8 text-4xl font-bold leading-tight tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl">
-              Work That Wins Clients New Business
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-              From brand identity to full-funnel campaigns — here's what we've built.
-            </p>
+<section className="relative flex min-h-[62vh] items-center overflow-hidden border-b border-white/10 lg:min-h-[72vh]">
+
+ <div className="absolute inset-0 pointer-events-none">
+        <Aurora
+          colorStops={[
+            "#03045E",
+            "#0077B6",
+            "#00B4D8",
+          ]}
+          blend={0.35}
+          amplitude={0.8}
+          speed={0.4}
+        />
+      </div>
+
+  {/* atmosphere — single wash, kept subtle */}
+  <div className="pointer-events-none absolute -right-40 -top-20 h-[600px] w-[600px] rounded-full bg-[#00B4D8]/10 blur-[200px]" />
+  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#050810] to-transparent" />
+
+  <Container className="relative w-full py-16">
+    <div className="grid gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+      {/* ------------------------------------------------------------ */}
+      {/* Copy column                                                   */}
+      {/* ------------------------------------------------------------ */}
+      <div>
+        {/* <div className="flex items-center gap-3">
+          <span className="h-px w-8 bg-[#00B4D8]" />
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-[#90E0EF]">
+            Selected Work
+          </p>
+        </div> */}
+
+        <h1 className="mt-8 font-display text-5xl font-normal leading-[1.02] tracking-[-0.02em] text-white sm:text-6xl lg:text-7xl">
+          Work That Wins
+          <br />
+          Clients{" "}
+          <span className="italic text-[#90E0EF]">New Business.</span>
+        </h1>
+
+        <p className="mt-8 max-w-md text-lg leading-8 text-slate-400">
+          From brand identity to full-funnel campaigns — here&apos;s what
+          we&apos;ve built.
+        </p>
+
+        <a
+          href="#work"
+          className="mt-10 inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-[#90E0EF]"
+        >
+          See the work
+          <span aria-hidden className="translate-y-px">
+            ↓
+          </span>
+        </a>
+      </div>
+
+      {/* ------------------------------------------------------------ */}
+      {/* Image collage — gives the hero a visual anchor instead of      */}
+      {/* leaving it as text-only, and previews real portfolio imagery   */}
+      {/* ------------------------------------------------------------ */}
+      <div className="relative hidden h-[420px] lg:block">
+        {portfolio[1]?.image ? (
+          <div className="absolute right-6 top-0 h-[260px] w-[210px] -rotate-3 overflow-hidden rounded-[20px] border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
+            <img
+              src={portfolio[1].image}
+              alt=""
+              aria-hidden
+              className="h-full w-full object-cover"
+            />
           </div>
-        </Container>
-      </section>
+        ) : null}
+        {portfolio[2]?.image ? (
+          <div className="absolute bottom-0 left-0 h-[280px] w-[230px] rotate-2 overflow-hidden rounded-[20px] border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
+            <img
+              src={portfolio[2].image}
+              alt=""
+              aria-hidden
+              className="h-full w-full object-cover"
+            />
+          </div>
+        ) : null}
+      </div>
+    </div>
+  </Container>
+</section>
 
-      <Section className="pt-20 lg:pt-24">
+      {/* ---------------------------------------------------------------- */}
+      {/* FILTER BAR — flat pills per spec, no nested pill-in-pill wrapper  */}
+      {/* ---------------------------------------------------------------- */}
+      <Section className="pt-14 lg:pt-16">
         <Container>
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
-                Filter by category
-              </p>
-              <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                See how our work changes by discipline.
-              </h2>
-            </div>
-            <div className="rounded-full border border-white/10 bg-white/5 px-4 py-3 shadow-[0_20px_80px_rgba(0,0,0,0.25)]">
-              <div className="flex flex-wrap items-center gap-3">
-                {categories.map((category) => {
-                  const active = category === activeCategory;
-                  const count = category === "All" ? portfolio.length : portfolio.filter((item) => item.tags?.includes(category)).length;
-
-                  return (
-                    <button
-                      key={category}
-                      onClick={() => setActiveCategory(category)}
-                      className={`relative rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
-                        active
-                          ? "bg-[#00B4D8] text-[#02060f] shadow-glow"
-                          : "text-slate-300 hover:text-white"
-                      }`}
-                    >
-                      {category}
-                      <span className="ml-2 text-xs text-slate-400">{count}</span>
-                    </button>
-                  );
-                })}
-              </div>
+          <div className="flex flex-col gap-6 border-b border-white/10 pb-8 lg:flex-row lg:items-end lg:justify-between">
+            <h2 className="font-display text-2xl font-normal text-white sm:text-3xl">
+              More from the studio
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => {
+                const active = category === activeCategory;
+                return (
+                  <button
+                    key={category}
+                    onClick={() => setActiveCategory(category)}
+                    className={`rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                      active
+                        ? "bg-[#00B4D8] text-white"
+                        : "bg-white/5 text-slate-400 hover:text-slate-200"
+                    }`}
+                  >
+                    {category}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          <div className="mt-16 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-            <AnimatePresence mode="popLayout">
-              {filteredWork.slice(0, 1).map((item) => (
+          {/* ---------------------------------------------------------- */}
+          {/* GRID — bento-mixed aspect ratios, hover crossfades to a      */}
+          {/* second image so more of the work is visible without a click */}
+          {/* ---------------------------------------------------------- */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCategory}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {filteredWork.map((item, index) => (
                 <motion.div
                   key={item.slug}
-                  layout
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -24 }}
-                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                  className="lg:row-span-2"
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{
+                    duration: 0.3,
+                    delay: index * 0.04,
+                    ease: "easeOut",
+                  }}
                 >
-                  <PortfolioCard {...item} large />
+                  <Link
+                    to={item.link}
+                    className="group relative block w-full overflow-hidden rounded-[22px] border border-white/10 bg-[#0A0A0A] text-left"
+                  >
+                    <div
+                      className={`relative overflow-hidden ${cardAspect[index % cardAspect.length]}`}
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500 group-hover:opacity-0"
+                      />
+                      <img
+                        src={
+                          (item as any).secondaryImage ??
+                          item.caseStudy.gallery?.[0] ??
+                          item.image
+                        }
+                        alt=""
+                        aria-hidden
+                        className="absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                      <span className="absolute left-4 top-4 rounded-full bg-black/50 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-white backdrop-blur">
+                        {item.category}
+                      </span>
+
+                      <span className="absolute bottom-4 right-4 inline-flex translate-y-2 items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#050810] opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                        View Case Study
+                        <ArrowUpRight size={14} />
+                      </span>
+                    </div>
+
+                    <div className="p-5">
+                      <h3 className="font-display text-lg font-normal text-white">
+                        {item.title}
+                      </h3>
+                      {(item as any).industry ? (
+                        <p className="mt-1 text-sm text-slate-500">
+                          {(item as any).industry}
+                        </p>
+                      ) : null}
+                    </div>
+                  </Link>
                 </motion.div>
               ))}
-            </AnimatePresence>
+            </motion.div>
+          </AnimatePresence>
 
-            <div className="grid gap-6">
-              <AnimatePresence mode="popLayout">
-                {filteredWork.slice(1).map((item) => (
-                  <motion.div
-                    key={item.slug}
-                    layout
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -24 }}
-                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <PortfolioCard {...item} />
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-          </div>
-
-          <div className="mt-10 flex items-center justify-between border-t border-white/10 pt-8 text-sm text-slate-400">
-            <span>{filteredWork.length} project{filteredWork.length === 1 ? "" : "s"} shown</span>
+          <div className="mt-10 flex items-center justify-between border-t border-white/10 pt-8 text-sm text-slate-500">
+            <span>
+              {filteredWork.length} project
+              {filteredWork.length === 1 ? "" : "s"} shown
+            </span>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 text-[#00B4D8] font-semibold transition hover:text-white"
+              className="inline-flex items-center gap-2 font-semibold text-[#00B4D8] transition hover:text-white"
             >
               Talk to a strategist
               <ArrowRight size={16} />
@@ -152,31 +301,39 @@ const Portfolio = () => {
         </Container>
       </Section>
 
-      <Section className="bg-[#070d16]">
+      {/* ---------------------------------------------------------------- */}
+      {/* TESTIMONIALS — editorial, not three identical decorated boxes     */}
+      {/* ---------------------------------------------------------------- */}
+      <Section className="mt-8 bg-[#070707]">
         <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
-              Straight From Our Clients
-            </p>
-            <h2 className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Proof from people who saw the work move their business.
-            </h2>
-          </div>
+          <h2 className="max-w-xl font-display text-3xl font-normal leading-tight text-white sm:text-4xl">
+            Straight from our clients.
+          </h2>
 
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          <div className="mt-12 grid gap-x-10 gap-y-12 lg:grid-cols-3">
             {testimonials.map((item, index) => (
-              <div key={index} className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_24px_70px_rgba(0,0,0,0.18)]">
-                <div className="absolute right-6 top-6 h-16 w-16 rounded-full bg-[#00B4D8]/10" />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-2 text-[#00B4D8]">
-                    {Array.from({ length: item.rating }).map((_, starIndex) => (
-                      <Star key={starIndex} size={18} className="text-[#00B4D8]" />
-                    ))}
+              <div key={index} className="flex flex-col">
+                <Quote size={28} className="text-[#00B4D8]" strokeWidth={1.5} />
+                <p className="mt-5 flex-1 font-display text-lg font-normal leading-8 text-slate-200">
+                  {item.quote}
+                </p>
+                <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-5">
+                  <div>
+                    <p className="text-sm font-semibold text-white">
+                      {item.author}
+                    </p>
+                    <p className="text-sm text-slate-500">
+                      {item.role}, {item.company}
+                    </p>
                   </div>
-                  <p className="mt-6 text-lg leading-8 text-slate-200">“{item.quote}”</p>
-                  <div className="mt-8 border-t border-white/10 pt-6">
-                    <p className="font-semibold text-white">{item.author}</p>
-                    <p className="text-sm text-slate-400">{item.role}, {item.company}</p>
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: item.rating }).map((_, starIndex) => (
+                      <Star
+                        key={starIndex}
+                        size={14}
+                        className="fill-[#00B4D8] text-[#00B4D8]"
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
@@ -185,28 +342,55 @@ const Portfolio = () => {
         </Container>
       </Section>
 
-      <section className="bg-[#01050c] py-24">
-        <Container>
-          <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
-                Start your next chapter
-              </p>
-              <h2 className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl">
-                Your Brand Could Be Our Next Case Study.
-              </h2>
-            </div>
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-end">
+      {/* ---------------------------------------------------------------- */}
+      {/* CTA                                                               */}
+      {/* ---------------------------------------------------------------- */}
+      <section
+        className="relative overflow-hidden bg-gradient-to-br from-[#00B4D8] via-[#0094B8] to-[#0077B6] py-[120px]"
+        id="cta"
+      >
+        <div className="pointer-events-none absolute -left-32 -top-32 h-[600px] w-[600px] rounded-full bg-white/[0.06] blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -right-32 h-[500px] w-[500px] rounded-full bg-[#03045E]/40 blur-3xl" />
+
+        <div className="relative mx-auto max-w-[1280px] px-6 text-center lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: EASE }}
+          >
+            <h2 className="mx-auto mb-6 max-w-3xl font-display text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-white">
+              Your next case study could be the one that changes your growth.
+            </h2>
+
+            <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white/80 md:text-xl">
+              Tell us about the work you want to be known for, and we&apos;ll
+              shape it into a portfolio-worthy story that moves people and
+              business.
+            </p>
+
+            <motion.div
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              className="inline-block"
+            >
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center rounded-full bg-[#00B4D8] px-10 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-[#02060f] transition hover:bg-[#90E0EF]"
+                className="inline-flex items-center gap-3 rounded-full bg-white px-10 py-5 text-sm font-semibold uppercase tracking-[0.2em] text-[#0A0A0A] shadow-[0_8px_40px_rgba(0,0,0,0.25)] transition-shadow duration-300 hover:shadow-[0_12px_48px_rgba(0,0,0,0.35)]"
               >
-                Start Your Project
+                Start a Conversation
+                <ArrowRight size={16} />
               </Link>
-            </div>
-          </div>
-        </Container>
+            </motion.div>
+
+            <p className="mt-6 text-sm text-white/50">
+              Custom strategy. No fluff. Built for growth.
+            </p>
+          </motion.div>
+        </div>
       </section>
+
     </main>
   );
 };

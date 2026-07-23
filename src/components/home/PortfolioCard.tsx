@@ -10,6 +10,7 @@ interface PortfolioCardProps {
   image: string;
   link: string;
   large?: boolean;
+  onViewCaseStudy?: () => void;
 }
 
 const PortfolioCard = ({
@@ -20,20 +21,17 @@ const PortfolioCard = ({
   image,
   link,
   large = false,
+  onViewCaseStudy,
 }: PortfolioCardProps) => {
   return (
     <motion.div
       whileHover="hover"
       initial="rest"
       animate="rest"
-      className={`group relative overflow-hidden rounded-[30px]
-      ${
-        large
-          ? "h-[650px]"
-          : "h-[315px]"
+      className={`group relative overflow-hidden rounded-[30px] ${
+        large ? "h-[420px] sm:h-[480px]" : "h-[340px] sm:h-[380px]"
       }`}
     >
-      {/* Image */}
       <motion.img
         variants={{
           rest: { scale: 1 },
@@ -46,8 +44,6 @@ const PortfolioCard = ({
         alt={title}
         className="absolute inset-0 h-full w-full object-cover"
       />
-
-      {/* ================= BLUR LAYER ================= */}
 
       <motion.div
         variants={{
@@ -62,17 +58,14 @@ const PortfolioCard = ({
           duration: 0.5,
           ease: "easeOut",
         }}
-        className="absolute bottom-0 left-0 right-0 z-10 h-[52%]"
+        className="absolute bottom-0 left-0 right-0 z-10 h-[58%]"
         style={{
           WebkitBackdropFilter: "blur(10px)",
-          maskImage:
-            "linear-gradient(to top, black 35%, transparent 100%)",
+          maskImage: "linear-gradient(to top, black 35%, transparent 100%)",
           WebkitMaskImage:
             "linear-gradient(to top, black 35%, transparent 100%)",
         }}
       />
-
-      {/* ================= DARK OVERLAY ================= */}
 
       <motion.div
         variants={{
@@ -86,38 +79,11 @@ const PortfolioCard = ({
         transition={{
           duration: 0.45,
         }}
-        className="
-          absolute
-          bottom-0
-          left-0
-          right-0
-          z-10
-          h-[52%]
-          bg-gradient-to-t
-          from-black
-          via-black/80
-          to-transparent
-        "
+        className="absolute bottom-0 left-0 right-0 z-10 h-[58%] bg-gradient-to-t from-black via-black/80 to-transparent"
       />
 
-      {/* Content */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 p-8">
-        <span
-          className="
-          inline-block
-          mb-4
-          rounded-full
-          border
-          border-white/20
-          bg-white/10
-          px-4
-          py-2
-          text-xs
-          uppercase
-          tracking-[0.15em]
-          backdrop-blur-md
-        "
-        >
+      <div className="absolute bottom-0 left-0 right-0 z-20 p-6 sm:p-8">
+        <span className="mb-4 inline-block rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.15em] backdrop-blur-md">
           {category}
         </span>
 
@@ -126,7 +92,7 @@ const PortfolioCard = ({
             rest: { y: 0 },
             hover: { y: -8 },
           }}
-          className="text-3xl font-bold mb-3"
+          className="mb-3 text-3xl font-bold"
         >
           {title}
         </motion.h3>
@@ -137,7 +103,7 @@ const PortfolioCard = ({
           </p>
         ) : null}
 
-        <div className="overflow-hidden mb-6">
+        <div className="mb-6 overflow-hidden">
           <motion.p
             variants={{
               rest: {
@@ -162,21 +128,38 @@ const PortfolioCard = ({
           </motion.p>
         </div>
 
-        <Link
-          to={link}
-          className="inline-flex items-center gap-2 text-primary font-semibold"
-        >
-          View Case Study
-
-          <motion.div
-            variants={{
-              rest: { x: 0 },
-              hover: { x: 8 },
-            }}
+        {onViewCaseStudy ? (
+          <button
+            type="button"
+            onClick={onViewCaseStudy}
+            className="inline-flex items-center gap-2 font-semibold text-[#00B4D8] transition hover:text-white"
           >
-            <ArrowRight size={18} />
-          </motion.div>
-        </Link>
+            View Case Study
+            <motion.div
+              variants={{
+                rest: { x: 0 },
+                hover: { x: 8 },
+              }}
+            >
+              <ArrowRight size={18} />
+            </motion.div>
+          </button>
+        ) : (
+          <Link
+            to={link}
+            className="inline-flex items-center gap-2 font-semibold text-[#00B4D8] transition hover:text-white"
+          >
+            View Case Study
+            <motion.div
+              variants={{
+                rest: { x: 0 },
+                hover: { x: 8 },
+              }}
+            >
+              <ArrowRight size={18} />
+            </motion.div>
+          </Link>
+        )}
       </div>
     </motion.div>
   );

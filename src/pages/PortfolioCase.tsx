@@ -1,8 +1,7 @@
-import { motion } from "framer-motion";
-import { useParams, Link, Navigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import Section, { Container } from "@/components/global/Section";
 import { portfolio } from "@/data/portfolio";
+import { ArrowLeft } from "lucide-react";
+import { Link, Navigate, useParams } from "react-router-dom";
 
 const PortfolioCase = () => {
   const { slug } = useParams();
@@ -13,9 +12,10 @@ const PortfolioCase = () => {
   }
 
   return (
-    <main className="bg-[#02060f] text-white">
-      <section className="relative overflow-hidden bg-[#050b14] pb-24 pt-20 sm:pt-24">
-        <Container>
+    <main className="bg-black text-white">
+      <section className="relative overflow-hidden border-b border-white/10 py-20 sm:py-24 lg:py-28">
+        <div className="pointer-events-none absolute -right-32 top-0 h-[520px] w-[520px] rounded-full bg-[#00B4D8]/10 blur-[180px]" />
+        <Container className="relative">
           <Link
             to="/portfolio"
             className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.32em] text-[#00B4D8]"
@@ -34,113 +34,74 @@ const PortfolioCase = () => {
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
               {project.description}
             </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300">
+                Case study page placeholder
+              </span>
+              <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300">
+                Ready for your custom content
+              </span>
+            </div>
           </div>
         </Container>
-
-        <div className="mt-16">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full object-cover"
-            style={{ minHeight: 420 }}
-          />
-        </div>
       </section>
 
       <Section>
         <Container>
-          <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-            <div>
-              <div className="rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_30px_120px_rgba(0,0,0,0.18)]">
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
-                  Challenge
-                </p>
-                <p className="mt-6 text-base leading-8 text-slate-300">
-                  {project.caseStudy.challenge}
-                </p>
-              </div>
-
-              <div className="mt-10">
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
-                  Approach
-                </p>
-                <div className="mt-6 space-y-6">
-                  {project.caseStudy.approach.map((item, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 24 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{ duration: 0.4, delay: index * 0.08 }}
-                      className="rounded-[28px] border border-white/10 bg-[#02060f] p-6"
-                    >
-                      <p className="text-sm font-semibold uppercase tracking-[0.26em] text-slate-400">
-                        Step {index + 1}
-                      </p>
-                      <p className="mt-4 text-lg font-semibold text-white">{item.title}</p>
-                      <p className="mt-3 text-sm leading-7 text-slate-300">{item.description}</p>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="rounded-[32px] border border-white/10 bg-[#0A0A0A] p-8 sm:p-10">
+              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
+                Challenge
+              </p>
+              <p className="mt-6 text-base leading-8 text-slate-300">
+                This section is ready for your project brief, goals, and the
+                problem you solved for this client.
+              </p>
             </div>
 
-            <div className="space-y-8">
-              <div className="rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_30px_120px_rgba(0,0,0,0.18)]">
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
-                  Results
-                </p>
-                <div className="mt-6 grid gap-5 sm:grid-cols-2">
-                  {project.caseStudy.results.map((result, index) => (
-                    <div key={index} className="rounded-[24px] bg-[#060d17] p-6">
-                      <p className="text-3xl font-semibold text-[#00B4D8]">{result.metric}</p>
-                      <p className="mt-3 text-sm leading-7 text-slate-300">{result.label}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_30px_120px_rgba(0,0,0,0.18)]">
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
-                  Gallery
-                </p>
-                <div className="mt-6 grid gap-5 sm:grid-cols-2">
-                  {project.caseStudy.gallery.map((src, index) => (
-                    <img
-                      key={index}
-                      src={src}
-                      alt={`${project.title} gallery ${index + 1}`}
-                      className="h-64 w-full rounded-[24px] object-cover"
-                    />
-                  ))}
-                </div>
-              </div>
+            <div className="rounded-[32px] border border-white/10 bg-[#0A0A0A] p-8 sm:p-10">
+              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
+                Approach
+              </p>
+              <p className="mt-6 text-base leading-8 text-slate-300">
+                Add your strategy, process, and creative decisions here when
+                you&apos;re ready.
+              </p>
             </div>
+          </div>
+
+          <div className="mt-8 rounded-[32px] border border-white/10 bg-[#0A0A0A] p-8 sm:p-10">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
+              Results
+            </p>
+            <p className="mt-6 text-base leading-8 text-slate-300">
+              Replace this area with your metrics, outcomes, and proof points.
+            </p>
           </div>
         </Container>
       </Section>
 
-      <section className="bg-[#070d16] py-24">
+      <section className="bg-[#070707] py-24">
         <Container>
-          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div className="flex flex-col gap-6 rounded-[32px] border border-white/10 bg-[radial-gradient(circle_at_top_left,_rgba(0,180,216,0.12),transparent_45%)] p-8 sm:p-10 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
-                Closing the loop
+                Ready when you are
               </p>
-              <h2 className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl">
-                Ready to build a portfolio piece that earns attention and converts.
+              <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                This page is ready for your real case study content.
               </h2>
             </div>
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-end">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center rounded-full bg-[#00B4D8] px-10 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-[#02060f] transition hover:bg-[#90E0EF]"
+                className="inline-flex items-center justify-center rounded-full bg-[#00B4D8] px-8 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-[#02060f] transition hover:bg-[#90E0EF]"
               >
                 Start Your Project
               </Link>
               <Link
                 to="/portfolio"
-                className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-10 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-white transition hover:border-[#00B4D8]"
+                className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-8 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-white transition hover:border-[#00B4D8]"
               >
                 Back to Portfolio
               </Link>
