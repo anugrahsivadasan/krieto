@@ -19,47 +19,46 @@ const FinalCTA = () => {
       {/* Radial light bloom bottom-right */}
       <div className="absolute -bottom-32 -right-32 w-[500px] h-[500px] rounded-full bg-[#03045E]/40 blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-[1280px] mx-auto px-6 lg:px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: EASE }}
-        >
-          {/* Eyebrow */}
-          {/* <p className="
-            font-body uppercase tracking-[0.15em]
-            text-white/70 text-[13px] font-semibold mb-6
-          ">
-            Free Strategy Session
-          </p> */}
-
+        <div className="relative max-w-[1280px] mx-auto px-6 lg:px-8 text-center">
           {/* Headline */}
-          <h2 className="
-            font-heading font-extrabold text-white
-            text-[clamp(2.5rem,5vw,4.5rem)]
-            leading-[1.02] tracking-[-0.03em]
-            max-w-4xl mx-auto mb-6
-          ">
-           Your next client is already looking for you. 
-          </h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="
+              font-heading font-extrabold text-white
+              text-[clamp(2.5rem,5vw,4.5rem)]
+              leading-[1.02] tracking-[-0.03em]
+              max-w-4xl mx-auto mb-6
+            "
+          >
+            Your next client is already looking for you. 
+          </motion.h2>
 
           {/* Subtext */}
-         <p
-  className="
-    font-body text-white/80 text-lg md:text-xl
-    max-w-2xl mx-auto leading-relaxed mb-10
-  "
->
-  Tell us about your business, your goals, and your challenges.
-  We'll review your enquiry and get back to you with the right next steps.
-</p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="
+              font-body text-white/80 text-lg md:text-xl
+              max-w-2xl mx-auto leading-relaxed mb-10
+            "
+          >
+            Tell us about your business, your goals, and your challenges.
+            We'll review your enquiry and get back to you with the right next steps.
+          </motion.p>
 
           {/* CTA Button */}
           <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.55 }}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 400, damping: 20 }}
             className="inline-block"
           >
             <Link
@@ -81,11 +80,16 @@ const FinalCTA = () => {
           </motion.div>
 
           {/* Trust line */}
-          <p className="font-body text-sm text-white/50 mt-6">
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="font-body text-sm text-white/50 mt-6"
+          >
             Custom Quotes. No hidden fees. Results guaranteed.
-          </p>
-        </motion.div>
-      </div>
+          </motion.p>
+        </div>
     </section>
   );
 };

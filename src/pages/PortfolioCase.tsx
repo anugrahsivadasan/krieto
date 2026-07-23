@@ -28,9 +28,14 @@ const PortfolioCase = () => {
             <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.32em] text-[#00B4D8]">
               {project.category}
             </span>
-            <h1 className="mt-8 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-8 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
+            >
               {project.title}
-            </h1>
+            </motion.h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
               {project.description}
             </p>
@@ -127,9 +132,15 @@ const PortfolioCase = () => {
               <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
                 Closing the loop
               </p>
-              <h2 className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl">
+              <motion.h2
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl"
+              >
                 Ready to build a portfolio piece that earns attention and converts.
-              </h2>
+              </motion.h2>
             </div>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-end">
               <Link

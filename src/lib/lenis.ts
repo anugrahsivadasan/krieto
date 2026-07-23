@@ -9,11 +9,10 @@ export const initLenis = () => {
     window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768;
 
   const lenis = new Lenis({
-    duration: isMobile ? 0.7 : 1.0,
+    lerp: isMobile ? 0.12 : 0.08,
     smoothWheel: true,
     wheelMultiplier: isMobile ? 1.3 : 1.1,
     touchMultiplier: isMobile ? 1.8 : 1.2,
-    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   });
 
   lenisInstance = lenis;

@@ -7,25 +7,37 @@ const ProcessSection = () => {
     <section className="bg-[#0A0A0A] py-20 lg:py-32 overflow-hidden">
       <div className="w-full mx-auto px-5 sm:px-8 lg:px-16">
         {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center"
-        >
-          <p className="uppercase tracking-[0.15em] text-[#00B4D8] text-sm font-semibold mb-4">
+        <div className="text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="uppercase tracking-[0.15em] text-[#00B4D8] text-sm font-semibold mb-4"
+          >
             OUR PROCESS
-          </p>
+          </motion.p>
 
-          <h2 className="font-heading font-bold text-white text-4xl sm:text-5xl lg:text-[clamp(2.5rem,5vw,4rem)]">
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="font-heading font-bold text-white text-4xl sm:text-5xl lg:text-[clamp(2.5rem,5vw,4rem)]"
+          >
             How We Work
-          </h2>
+          </motion.h2>
 
-          <p className="text-[#9CA3AF] mt-5 max-w-2xl mx-auto text-base sm:text-lg">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-[#9CA3AF] mt-5 max-w-2xl mx-auto text-base sm:text-lg"
+          >
             A proven process designed to deliver measurable growth.
-          </p>
-        </motion.div>
+          </motion.p>
+        </div>
 
         {/* ---------------- MOBILE + TABLET ---------------- */}
 
@@ -154,12 +166,16 @@ h-[500px]
                           Step {step.number}
                         </span>
 
-                        <h2
+                        <motion.h2
+                          initial={{ opacity: 0, y: 40 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                           className="mt-6 text-6xl font-black"
                           style={{ color: step.text }}
                         >
                           {step.title}
-                        </h2>
+                        </motion.h2>
 
                         <p
                           className="mt-8 max-w-xl text-lg leading-9"

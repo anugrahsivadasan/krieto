@@ -22,38 +22,39 @@ const FeaturedWork = () => {
 
         {/* Heading */}
 
-        <motion.div
-          initial={{
-            opacity:0,
-            y:40,
-          }}
-          whileInView={{
-            opacity:1,
-            y:0,
-          }}
-          viewport={{
-            once:true,
-          }}
-          transition={{
-            duration:.7,
-          }}
-          className="mb-20 text-center"
-        >
+        <div className="mb-20 text-center">
 
-          <p className="mb-4 uppercase tracking-[0.2em] text-primary">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-4 uppercase tracking-[0.2em] text-primary"
+          >
             FEATURED WORK
-          </p>
+          </motion.p>
 
-          <h2 className="mb-6 text-5xl font-heading font-bold lg:text-6xl">
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-6 text-5xl font-heading font-bold lg:text-6xl"
+          >
             The Work Speaks First. 
-          </h2>
+          </motion.h2>
 
-          <p className="mx-auto max-w-2xl text-lg text-gray-400">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mx-auto max-w-2xl text-lg text-gray-400"
+          >
             Results are not just a promise here. They are a portfolio entry. 
+          </motion.p>
 
-          </p>
-
-        </motion.div>
+        </div>
 
         {/* Grid */}
 

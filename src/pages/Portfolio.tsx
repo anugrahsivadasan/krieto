@@ -58,9 +58,14 @@ const Portfolio = () => {
             <p className="text-sm font-semibold uppercase tracking-[0.35em] text-[#90E0EF]">
               Work That Wins
             </p>
-            <h1 className="mt-8 text-4xl font-bold leading-tight tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl">
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-8 text-4xl font-bold leading-tight tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl"
+            >
               Work That Wins Clients New Business
-            </h1>
+            </motion.h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
               From brand identity to full-funnel campaigns — here's what we've built.
             </p>
@@ -75,9 +80,15 @@ const Portfolio = () => {
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
                 Filter by category
               </p>
-              <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              <motion.h2
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl"
+              >
                 See how our work changes by discipline.
-              </h2>
+              </motion.h2>
             </div>
             <div className="rounded-full border border-white/10 bg-white/5 px-4 py-3 shadow-[0_20px_80px_rgba(0,0,0,0.25)]">
               <div className="flex flex-wrap items-center gap-3">
@@ -158,9 +169,15 @@ const Portfolio = () => {
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
               Straight From Our Clients
             </p>
-            <h2 className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <motion.h2
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            >
               Proof from people who saw the work move their business.
-            </h2>
+            </motion.h2>
           </div>
 
           <div className="mt-12 grid gap-6 lg:grid-cols-3">
@@ -192,9 +209,15 @@ const Portfolio = () => {
               <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#00B4D8]">
                 Start your next chapter
               </p>
-              <h2 className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl">
+              <motion.h2
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-6 text-4xl font-bold tracking-tight text-white sm:text-5xl"
+              >
                 Your Brand Could Be Our Next Case Study.
-              </h2>
+              </motion.h2>
             </div>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-end">
               <Link

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import LoaderOverlay from "../components/loader/LoaderOverlay";
 import krietoLogo from "../assets/Krieto-logo-white.png";
 
@@ -33,9 +34,14 @@ function MainHeroPlaceholder() {
         aria-hidden="true"
       />
       <div className="relative z-10 text-center">
-        <h1 className="font-mono text-sm uppercase tracking-[0.25em] text-white/70">
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="font-mono text-sm uppercase tracking-[0.25em] text-white/70"
+        >
           Krieto
-        </h1>
+        </motion.h1>
         <p className="mt-4 max-w-xl px-6 text-3xl font-light text-white md:text-5xl">
           We build brands that move.
         </p>

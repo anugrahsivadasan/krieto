@@ -99,16 +99,34 @@ const ServicesShowcase = () => {
         />
 
         <div className="relative flex flex-col items-center text-center">
-          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-400">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mt-4 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-400"
+          >
             OUR SERVICES
-          </p>
-          <h2 className="font-heading text-4xl font-black leading-tight text-white sm:text-5xl">
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="font-heading text-4xl font-black leading-tight text-white sm:text-5xl"
+          >
             Built to move together.
-          </h2>
-          <p className="mt-4 max-w-4xl text-sm leading-7 text-slate-400 sm:text-base">
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mt-4 max-w-4xl text-sm leading-7 text-slate-400 sm:text-base"
+          >
             Three disciplines. One integrated system. Every output connected to
             your growth.
-          </p>
+          </motion.p>
         </div>
 
         <div className="relative mt-8 flex flex-col gap-20">
@@ -221,26 +239,38 @@ const ServicesShowcase = () => {
           </div>
 
           <div className="mx-auto flex h-full w-full max-w-[1600px] flex-1 flex-col px-6 sm:px-10 xl:px-16 2xl:px-20">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="flex shrink-0 flex-col items-center justify-center px-4 pb-4 pt-8 text-center lg:pb-3 lg:pt-8 xl:pb-6 xl:pt-16"
-            >
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-400 lg:mb-2 lg:text-sm lg:tracking-[0.35em]">
+            <div className="flex shrink-0 flex-col items-center justify-center px-4 pb-4 pt-8 text-center lg:pb-3 lg:pt-8 xl:pb-6 xl:pt-16">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-400 lg:mb-2 lg:text-sm lg:tracking-[0.35em]"
+              >
                 OUR SERVICES
-              </p>
+              </motion.p>
 
-              <h2 className="font-heading text-[clamp(2.6rem,4.5vw,5.4rem)] font-black leading-none text-white">
+              <motion.h2
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="font-heading text-[clamp(2.6rem,4.5vw,5.4rem)] font-black leading-none text-white"
+              >
                 Built to move together.
-              </h2>
+              </motion.h2>
 
-              <p className="mt-4 max-w-3xl text-base leading-8 text-slate-400 lg:mt-5 lg:text-lg">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="mt-4 max-w-3xl text-base leading-8 text-slate-400 lg:mt-5 lg:text-lg"
+              >
                 Three disciplines. One integrated system. Every output connected
                 to your growth.
-              </p>
-            </motion.div>
+              </motion.p>
+            </div>
 
             <div
               className="
