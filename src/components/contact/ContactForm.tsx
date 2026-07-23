@@ -10,7 +10,7 @@ const ContactSection = () => {
   const [success, setSuccess] = useState(false);
 
  const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbxUOiXEIQcoyOZiSMgjnex0LF5ypBzYkR0c9eTGOUjAO7KPgN6o0OLZFJFT-c5VOzWARA/exec";
+  "https://script.google.com/macros/s/AKfycbwv7csYNiH-9fIEyGosoWF1gP6GIb4iCWWTzCpP2FQD_cCN0HeTHCC6oZL5RdJYoXZB/exec";
 
 const handleSubmit = async (
   e: React.FormEvent<HTMLFormElement>
