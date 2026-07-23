@@ -5,73 +5,121 @@ import { toast } from "react-toastify";
 
 const EASE: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
 
+// ================= Category options mapped to each Service Interest =================
+const CATEGORY_OPTIONS: Record<string, string[]> = {
+  Advertising: [
+    "AI-Powered Video Ads",
+    "Animated Ads",
+    "Video Production",
+    "Product Photography",
+    "AI Avatars",
+    "TV Ads",
+    "Cinema Ads",
+  ],
+  Design: [
+    "Website Design",
+    "Logo Design",
+    "Motion Design",
+    "E-Com Design",
+    "Brochure",
+    "Posters",
+    "Business Cards",
+    "Greeting Cards",
+    "Letterheads",
+    "Packages",
+  ],
+  Marketing: [
+    "Social Media Marketing",
+    "Content Strategy",
+    "Campaign Management",
+    "Email Marketing",
+    "SEO",
+    "Growth Analytics",
+    "Google Reviews",
+    "Yelp Reviews",
+    "TripAdvisor Reviews",
+    "Trustpilot Reviews",
+  ],
+};
+
 const ContactSection = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
- const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwv7csYNiH-9fIEyGosoWF1gP6GIb4iCWWTzCpP2FQD_cCN0HeTHCC6oZL5RdJYoXZB/exec";
+  // Track selected Service Interest so we can render the matching Category list
+  const [serviceInterest, setServiceInterest] = useState("");
+  const [serviceCategory, setServiceCategory] = useState("");
 
-const handleSubmit = async (
-  e: React.FormEvent<HTMLFormElement>
-) => {
+  const SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbxVJlvAWD0zHGOApVfd3wOuj78mCIboIOi0gV5fSll9N8nVWVGTh0I70fUIRh6UlIOG/exec";
 
-  e.preventDefault();
-
-  const form = e.currentTarget;
-
-  if (!form.checkValidity()) {
-    form.reportValidity();
-    toast.error("Please complete all required fields.");
-    return;
-  }
-
-  setLoading(true);
-
-  const formData = new FormData(form);
-
-  const data = {
-    name: formData.get("name"),
-    businessName: formData.get("businessName"),
-    industry: formData.get("industry"),
-    email: formData.get("email"),
-    phone: formData.get("phone"),
-    city: formData.get("city"),
-    state: formData.get("state"),
-    country: formData.get("country"),
-    serviceInterest: formData.get("serviceInterest"),
-    serviceCategory: formData.get("serviceCategory"),
-    message: formData.get("message"),
-    referral: formData.get("referral"),
+  const handleServiceInterestChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setServiceInterest(e.target.value);
+    // Reset the category whenever the interest changes so stale values
+    // from a different interest can't be submitted.
+    setServiceCategory("");
   };
 
- try {
-  await fetch(SCRIPT_URL, {
-    method: "POST",
-    mode: "no-cors",
-    body: JSON.stringify(data),
-  });
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
+    const form = e.currentTarget;
 
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      toast.error("Please complete all required fields.");
+      return;
+    }
 
-     console.log("Submitted");
+    setLoading(true);
 
-  toast.success("Message sent successfully!");
+    const formData = new FormData(form);
 
-  setSuccess(true);
+    const data = {
+      name: formData.get("name"),
+      businessName: formData.get("businessName"),
+      industry: formData.get("industry"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      city: formData.get("city"),
+      state: formData.get("state"),
+      country: formData.get("country"),
+      serviceInterest: formData.get("serviceInterest"),
+      serviceCategory: formData.get("serviceCategory"),
+      message: formData.get("message"),
+      referral: formData.get("referral"),
+    };
 
-  form.reset();
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify(data),
+      });
 
-  } catch (error) {
+      console.log("Submitted");
 
-    console.error(error);
+      toast.success("Message sent successfully!");
 
-    toast.error("Network Error.");
+      setSuccess(true);
 
-  }
+      form.reset();
+      setServiceInterest("");
+      setServiceCategory("");
+    } catch (error) {
+      console.error(error);
 
-  setLoading(false);
-};
+      toast.error("Network Error.");
+    }
+
+    setLoading(false);
+  };
+
+  const availableCategories = serviceInterest
+    ? CATEGORY_OPTIONS[serviceInterest] ?? []
+    : [];
 
   return (
     <section
@@ -396,7 +444,8 @@ const handleSubmit = async (
                   <select
                     name="serviceInterest"
                     required
-                    defaultValue=""
+                    value={serviceInterest}
+                    onChange={handleServiceInterestChange}
                     className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-all duration-300 focus:border-[#00B4D8]"
                   >
                     <option
@@ -407,20 +456,13 @@ const handleSubmit = async (
                       Select Service Interest
                     </option>
                     <option className="text-white bg-[#0A0A0A]">
-                      Website Development
-                    </option>
-                    <option className="text-white bg-[#0A0A0A]">
-                      Marketing
-                    </option>
-                    <option className="text-white bg-[#0A0A0A]">
                       Advertising
                     </option>
                     <option className="text-white bg-[#0A0A0A]">
-                      Branding
+                      Design
                     </option>
-                    <option className="text-white bg-[#0A0A0A]">SEO</option>
                     <option className="text-white bg-[#0A0A0A]">
-                      Not Sure Yet
+                      Marketing
                     </option>
                   </select>
                 </div>
@@ -433,35 +475,28 @@ const handleSubmit = async (
                   <select
                     name="serviceCategory"
                     required
-                    defaultValue=""
-                    className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-all duration-300 focus:border-[#00B4D8]"
+                    disabled={!serviceInterest}
+                    value={serviceCategory}
+                    onChange={(e) => setServiceCategory(e.target.value)}
+                    className="h-14 w-full rounded-2xl border border-white/50 bg-white/[0.03] px-5 text-white outline-none transition-all duration-300 focus:border-[#00B4D8] disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <option
                       value=""
                       disabled
                       className="text-white bg-[#0A0A0A]"
                     >
-                      Select Category
+                      {serviceInterest
+                        ? "Select Category"
+                        : "Select Service Interest First"}
                     </option>
-                    <option className="text-white bg-[#0A0A0A]">
-                      Website Development
-                    </option>
-                    <option className="text-white bg-[#0A0A0A]">
-                      Marketing Strategy
-                    </option>
-                    <option className="text-white bg-[#0A0A0A]">
-                      Advertising Campaigns
-                    </option>
-                    <option className="text-white bg-[#0A0A0A]">
-                      Brand Identity
-                    </option>
-                    <option className="text-white bg-[#0A0A0A]">
-                      SEO Optimization
-                    </option>
-                    <option className="text-white bg-[#0A0A0A]">
-                      Social Media
-                    </option>
-                    <option className="text-white bg-[#0A0A0A]">Other</option>
+                    {availableCategories.map((category) => (
+                      <option
+                        key={category}
+                        className="text-white bg-[#0A0A0A]"
+                      >
+                        {category}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
