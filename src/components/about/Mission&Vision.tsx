@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -19,10 +19,116 @@ const VISION_IN = 0.42;
 const VALUES_IN = 0.74;
 const RELEASE = 0.97;
 
+// ─── Desktop detection ────────────────────────────────────────────────────────
+// The pinned/rotated scrollytelling layout only makes sense once there's
+// enough width for Mission / Vision / Values to sit in their own asymmetrical
+// spots without colliding. Below that breakpoint we render a completely
+// different, simple static layout instead (see MissionVisionMobile below),
+// so GSAP never even attempts to pin the section on small screens.
+function useIsDesktop(breakpoint = 1024) {
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia(`(min-width: ${breakpoint}px)`).matches
+      : true
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(min-width: ${breakpoint}px)`);
+    const update = () => setIsDesktop(mq.matches);
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [breakpoint]);
+
+  return isDesktop;
+}
+
+// ─── Mobile / tablet layout ───────────────────────────────────────────────────
+// Plain stacked flow: eyebrow + heading (styled like the "Our Story" heading),
+// then Mission, then Vision, then Values — each in normal document order, no
+// pinning, no rotation, no scroll-jacking. Simple fade-in on scroll only.
+function MissionVisionMobile() {
+  const fadeUp = {
+    initial: { opacity: 0, y: 32 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.3 } as const,
+  };
+
+  return (
+    <section className="relative overflow-hidden bg-[#0A0A0A] px-5 py-16 sm:px-6 sm:py-20 md:px-10 md:py-24">
+      {/* Background — atmosphere only, kept subtle and static (no parallax) */}
+      <div className="absolute inset-0">
+        <img
+          src={missionImage}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover opacity-[0.35] saturate-150"
+        />
+        <div className="absolute inset-0 bg-[#0A0A0A]/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,180,216,0.06),transparent_50%)]" />
+      </div>
+
+      <div className="relative z-10 mx-auto flex max-w-[640px] flex-col gap-14">
+        {/* Heading — same treatment as the "Our Story" heading elsewhere */}
+        <motion.div {...fadeUp} transition={{ duration: 1, ease: EASE }}>
+          <p className="font-['JetBrains_Mono'] text-xs uppercase tracking-[0.25em] text-[#00B4D8]">
+            What Drives Us
+          </p>
+          <h2 className="mt-3 font-['Space_Grotesk'] text-3xl font-bold leading-tight tracking-tight text-[#F9FAFB] sm:text-4xl">
+            <span className="text-[#00B4D8]">What</span>{" "}
+            <span>Drives Us</span>
+          </h2>
+        </motion.div>
+
+        {/* Mission */}
+        <motion.div {...fadeUp} transition={{ duration: 1, delay: 0.05, ease: EASE }}>
+          <h3 className="font-['Space_Grotesk'] text-2xl font-semibold leading-tight tracking-[-0.02em] text-white sm:text-[1.75rem]">
+            Our Mission
+          </h3>
+          <p className="mt-4 font-['Inter'] text-[0.98rem] leading-[1.75] text-[#F9FAFB]/75">
+            We build the systems that make businesses grow. Through creative
+            advertising, exceptional design, and intelligent marketing, that
+            earns attention.
+          </p>
+        </motion.div>
+
+        {/* Vision */}
+        <motion.div {...fadeUp} transition={{ duration: 1, delay: 0.1, ease: EASE }}>
+          <h3 className="font-['Space_Grotesk'] text-2xl font-semibold leading-tight tracking-[-0.02em] text-white sm:text-[1.75rem]">
+            Our Vision
+          </h3>
+          <p className="mt-4 font-['Inter'] text-[0.98rem] leading-[1.75] text-[#F9FAFB]/75">
+            A world where every business that deserves to grow, does. We
+            eliminate the gap between potential and visibility — for
+            businesses across every industry and every market.
+          </p>
+        </motion.div>
+
+        {/* Values */}
+        <motion.div {...fadeUp} transition={{ duration: 1, delay: 0.15, ease: EASE }}>
+          <h3 className="font-['Space_Grotesk'] text-2xl font-semibold leading-tight tracking-[-0.02em] text-white sm:text-[1.75rem]">
+            Values
+          </h3>
+          <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
+            {valuesWords.map((word) => (
+              <span
+                key={word}
+                className="font-['Space_Grotesk'] text-[0.98rem] tracking-[0.15em] text-white/90"
+              >
+                {word}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Desktop layout (unchanged pinned scrollytelling) ────────────────────────
 const MissionVision = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const isDesktop = useIsDesktop(1024);
 
   useLayoutEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -30,7 +136,9 @@ const MissionVision = () => {
   }, []);
 
   useLayoutEffect(() => {
-    if (reducedMotion || !sectionRef.current) return;
+    // Only pin on desktop widths — below that we render MissionVisionMobile
+    // instead, so this effect intentionally no-ops there.
+    if (reducedMotion || !isDesktop || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
@@ -52,7 +160,11 @@ const MissionVision = () => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [reducedMotion]);
+  }, [reducedMotion, isDesktop]);
+
+  if (!isDesktop) {
+    return <MissionVisionMobile />;
+  }
 
   const showMission = reducedMotion || scrollProgress >= MISSION_IN;
   const showVision = reducedMotion || scrollProgress >= VISION_IN;

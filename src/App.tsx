@@ -15,6 +15,7 @@ import AboutPage from "./pages/About";
 import { default as ServicesPage } from "./pages/Services";
 import PrivacyPolicies from "./pages/PrivacyPolicies";
 import TermsOfService from "./pages/TermsAndConditins";
+import NotFound from "./pages/NotFound";
 
 // Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
@@ -73,6 +74,9 @@ function App() {
 
           <Route path="/privacy" element={<PrivacyPolicies />} />
           <Route path="/terms" element={<TermsOfService />} />
+
+
+          <Route path="*" element={<NotFound />} />
 
 
         </Routes>

@@ -14,11 +14,20 @@ export default {
         card: "#1E1E1E",
         text: "#F9FAFB",
         muted: "#6B7280",
+        // Loader-specific tokens
+        "krieto-bg": "#050505",
+        "krieto-white": "#F9FAFB",
+        "krieto-primary": "#00B4D8",
+        "krieto-secondary": "#90E0EF",
       },
 
       fontFamily: {
         heading: ["Space Grotesk"],
         body: ["Inter"],
+      },
+
+      letterSpacing: {
+        loader: "0.25em",
       },
 
       maxWidth: {

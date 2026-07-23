@@ -43,27 +43,45 @@ const HowWeWork = () => {
 
       <Container>
         {/* ─── Heading ──────────────────────────────────── */}
-        <motion.div {...fadeUp(0)} className="text-center mb-16">
-          <p className="
-            font-body uppercase tracking-[0.15em]
-            text-[#00B4D8] text-[13px] font-semibold mb-4
-          ">
+        <div className="text-center mb-16">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="
+              font-body uppercase tracking-[0.15em]
+              text-[#00B4D8] text-[13px] font-semibold mb-4
+            "
+          >
             Our Process
-          </p>
-          <h2 className="
-            font-heading font-extrabold text-white
-            text-[clamp(2rem,4.5vw,3.5rem)]
-            leading-[1.05] tracking-[-0.02em]
-          ">
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="
+              font-heading font-extrabold text-white
+              text-[clamp(2rem,4.5vw,3.5rem)]
+              leading-[1.05] tracking-[-0.02em]
+            "
+          >
             How We Work
-          </h2>
-          <p className="
-            font-body text-[#9CA3AF] text-lg
-            mt-6 max-w-xl mx-auto leading-relaxed
-          ">
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="
+              font-body text-[#9CA3AF] text-lg
+              mt-6 max-w-xl mx-auto leading-relaxed
+            "
+          >
             A proven three-step framework that turns strategy into results.
-          </p>
-        </motion.div>
+          </motion.p>
+        </div>
 
         {/* ─── Steps ────────────────────────────────────── */}
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -68,9 +68,9 @@ const testimonials = [
 
 // Alternating aspect ratios keep the grid from feeling like a spreadsheet.
 const cardAspect = [
-  "aspect-[4/5]",
   "aspect-[3/4]",
-  "aspect-[16/11]",
+  "aspect-[3/4]",
+  "aspect-[3/4]",
   "aspect-[4/5]",
 ];
 

@@ -18,9 +18,14 @@ const UnderConstruction = () => {
           <Construction className="text-cyan-400" size={42} />
         </div>
 
-        <h1 className="text-5xl font-black text-white mb-4">
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="text-5xl font-black text-white mb-4"
+        >
           Under Construction
-        </h1>
+        </motion.h1>
 
         <p className="text-slate-400 leading-8 text-lg mb-10">
           We're currently building this page to provide an amazing

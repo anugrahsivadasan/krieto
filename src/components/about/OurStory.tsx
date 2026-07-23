@@ -1,5 +1,27 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+
+// ─── Desktop detection (drives whether the collage tilt applies) ────────────
+// Framer Motion writes its animated values (y, scale, etc.) straight into the
+// element's inline `transform` style, and inline styles always win over a CSS
+// class for that same property. So a Tailwind `lg:rotate-[9deg]` class alone
+// would get silently overwritten. Instead we track viewport width in JS and
+// only feed a non-zero `rotate` value into Framer Motion once we're actually
+// at a "desktop collage" width — below that, rotate stays 0 and the cards
+// stack straight, one under another.
+function useIsDesktop(breakpoint = 1024) {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(min-width: ${breakpoint}px)`);
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [breakpoint]);
+
+  return isDesktop;
+}
 
 // ─── Scroll reveal (class-based, for text children) ──────────────────────────
 function useScrollReveal() {
@@ -54,6 +76,8 @@ const CAPTION_EASE = [0.22, 1, 0.36, 1] as const;
 // Approx spring settle + 0.2s after each card's own delay
 const getCaptionDelay = (cardDelay: number) => cardDelay + 0.95 + 0.2;
 
+// NOTE: Only layout/sizing classes below were adjusted for responsiveness.
+// All copy, titles, and subtitles are unchanged.
 const COLLAGE_CARDS = [
   {
     src: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=80&auto=format&fit=crop",
@@ -63,10 +87,15 @@ const COLLAGE_CARDS = [
     title: "Built With Strategy",
     subtitle:
       "Every project begins with research, positioning, and a clear growth roadmap.",
+    // Stacked & full-width up to lg, then absolute-positioned collage from lg upward.
     positionClass:
       "relative lg:absolute lg:top-0 lg:left-0 lg:w-[58%] z-10 mb-4 lg:mb-0",
+    // Below `lg`: small, fixed heights that shrink as the screen narrows
+    // (cards stack straight in a single column). From `lg` up: heights
+    // graduate across lg -> xl -> 2xl to keep proportions consistent in the
+    // absolute-positioned collage.
     frameClass:
-      "aspect-[3/4] lg:aspect-auto lg:h-[400px]",
+      "h-[220px] sm:h-[260px] md:h-[300px] lg:h-[320px] xl:h-[375px] 2xl:h-[427px]",
     imgClass: "w-full h-full object-cover",
   },
   {
@@ -77,10 +106,12 @@ const COLLAGE_CARDS = [
     title: "Creative That Converts",
     subtitle:
       "Ideas designed to capture attention and move audiences to action.",
+    // top offset in % (not px) so it scales automatically as the collage
+    // container height itself grows from lg -> xl -> 2xl.
     positionClass:
-      "relative lg:absolute lg:top-[24px] lg:right-0 lg:w-[46%] z-20 mb-4 lg:mb-0",
+      "relative lg:absolute lg:top-[4%] lg:right-0 lg:w-[46%] z-20 mb-4 lg:mb-0",
     frameClass:
-      "aspect-[3/4] lg:aspect-auto lg:h-[300px]",
+      "h-[200px] sm:h-[230px] md:h-[260px] lg:h-[240px] xl:h-[280px] 2xl:h-[320px]",
     imgClass: "w-full h-full object-cover object-top",
   },
   {
@@ -94,7 +125,7 @@ const COLLAGE_CARDS = [
     positionClass:
       "relative lg:absolute lg:bottom-0 lg:left-[12%] lg:w-[72%] z-10",
     frameClass:
-      "aspect-[16/9] lg:aspect-auto lg:h-[195px]",
+      "h-[180px] sm:h-[200px] md:h-[220px] lg:h-[160px] xl:h-[185px] 2xl:h-[208px]",
     imgClass: "w-full h-full object-cover object-center",
   },
 ] as const;
@@ -110,26 +141,31 @@ function CollageCard({
   positionClass,
   frameClass,
   imgClass,
-}: (typeof COLLAGE_CARDS)[number]) {
+  isDesktop,
+}: (typeof COLLAGE_CARDS)[number] & { isDesktop: boolean }) {
+  // Tilt only ever applies at desktop collage widths. Below that the value
+  // is forced to 0 so cards sit flat, stacked one under another.
+  const effectiveRotate = isDesktop ? rotate : 0;
+
   return (
     <motion.div
       initial={{
         opacity: 0,
         y: 180,
         scale: 0.92,
-        rotate,
+        rotate: effectiveRotate,
         filter: "blur(8px)",
       }}
       whileInView={{
         opacity: 1,
         y: 0,
         scale: 1,
-        rotate,
+        rotate: effectiveRotate,
         filter: "blur(0px)",
       }}
       whileHover={{
         scale: 1.04,
-        rotate,
+        rotate: effectiveRotate,
       }}
       viewport={COLLAGE_VP}
       transition={{
@@ -174,13 +210,13 @@ function CollageCard({
             }}
           >
             <p
-              className="font-['Inter'] text-[13px] font-medium tracking-[0.04em]"
+              className="font-['Inter'] text-[12px] sm:text-[13px] font-medium tracking-[0.04em]"
               style={{ color: "rgba(255,255,255,0.9)" }}
             >
               {title}
             </p>
             <p
-              className="mt-1 font-['Inter'] text-[13px] font-medium tracking-[0.04em] leading-snug"
+              className="mt-1 font-['Inter'] text-[12px] sm:text-[13px] font-medium tracking-[0.04em] leading-snug"
               style={{ color: "rgba(255,255,255,0.9)" }}
             >
               {subtitle}
@@ -195,25 +231,35 @@ function CollageCard({
 // ─── Component ────────────────────────────────────────────────────────────────
 const OurStory = () => {
   const ref = useScrollReveal();
+  const isDesktop = useIsDesktop(1024);
 
   return (
-    <section className="relative bg-[#0A0A0A] py-[120px] md:py-[120px] overflow-hidden">
+    <section className="relative bg-[#0A0A0A] py-16 sm:py-20 md:py-24 lg:py-28 xl:py-[120px] overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_0%_50%,rgba(0,180,216,0.05),transparent)] pointer-events-none" />
 
       <div
         ref={ref}
-        className="relative z-10 max-w-[1280px] mx-auto px-6 md:px-12"
+        className="relative z-10 max-w-[1280px] 2xl:max-w-[1440px] mx-auto px-5 sm:px-6 md:px-10 lg:px-12 2xl:px-16"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 xl:gap-24 2xl:gap-28 items-center">
 
-          {/* ── LEFT — Editorial collage (ONLY this block changed) ─────── */}
+          {/* ── LEFT — Editorial collage ─────────────────────────────────── */}
           <div className="order-2 lg:order-1">
-            <div className="relative w-full lg:h-[600px]">
+            {/*
+              Below `lg`: cards stack full-width in a single column with
+              small, fixed heights (no tilt) — see useIsDesktop above.
+              From `lg` upward: cards switch to an absolute layered collage
+              with tilt re-enabled. Container height (and each card's
+              height) graduates across lg -> xl -> 2xl so proportions stay
+              consistent instead of stretching at narrow "lg" widths or
+              staying static on very large monitors.
+            */}
+            <div className="relative w-full lg:h-[480px] xl:h-[560px] 2xl:h-[640px]">
               {/* Subtle glow behind collage only */}
               <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(0,180,216,0.08),transparent_70%)]" />
 
               {COLLAGE_CARDS.map((card) => (
-                <CollageCard key={card.title} {...card} />
+                <CollageCard key={card.title} {...card} isDesktop={isDesktop} />
               ))}
             </div>
           </div>
@@ -233,7 +279,7 @@ const OurStory = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.35 }}
               transition={{ duration: 1.3, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="font-['Space_Grotesk'] font-bold text-[#F9FAFB] text-4xl md:text-5xl leading-tight tracking-tight"
+              className="font-['Space_Grotesk'] font-bold text-[#F9FAFB] text-3xl sm:text-4xl md:text-5xl leading-tight tracking-tight"
             >
               Why Krieto Exists
             </motion.h2>
@@ -282,23 +328,23 @@ const OurStory = () => {
           </div>
         </div>
 
-        {/* ── Pull quote (untouched) ───────────────────────────────────── */}
+        {/* ── Pull quote (untouched text, responsive sizing tightened) ──── */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={VP}
           transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
-          className="mt-24 md:mt-32"
+          className="mt-16 sm:mt-20 md:mt-24 lg:mt-28 xl:mt-32"
         >
-          <blockquote className="flex gap-8 items-stretch max-w-3xl">
+          <blockquote className="flex gap-6 sm:gap-8 items-stretch max-w-3xl">
             <div className="w-px bg-[#00B4D8] flex-shrink-0 self-stretch" />
             <p className="
               font-['Space_Grotesk']
               font-extrabold
               italic
               text-[#F9FAFB]
-              
-              text-2xl md:text-3xl lg:text-4xl
+
+              text-xl sm:text-2xl md:text-3xl lg:text-4xl
               tracking-tight
               leading-[1.25]
             ">
